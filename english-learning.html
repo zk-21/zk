@@ -1258,25 +1258,44 @@ let speechRate = 0.6;
 let currentUtterance = null;
 let englishVoice = null;
 let chineseVoice = null;
+let speechInitialized = false; // 标记语音是否已初始化（需要用户交互）
 const localAudioBasePath = 'audio/en';
 const localAudioPlayer = new Audio();
 const missingAudioCache = new Set();
 
+// 初始化语音功能（需要用户交互）
+function initSpeech() {
+  if (speechInitialized) return;
+  
+  // 尝试播放一个静音来激活语音合成
+  const testUtterance = new SpeechSynthesisUtterance('');
+  window.speechSynthesis.speak(testUtterance);
+  window.speechSynthesis.cancel();
+  
+  speechInitialized = true;
+  loadVoices();
+  
+  const statusEl = document.getElementById('voiceStatus');
+  if (statusEl) {
+    statusEl.textContent = '🎙️ 语音已就绪';
+    statusEl.style.color = '#6bcb77';
+  }
+}
+
 // Preload voices
 function loadVoices() {
   const voices = window.speechSynthesis.getVoices();
-  englishVoice = voices.find(v => v.lang.toLowerCase().startsWith('en')) || null;
-  chineseVoice = voices.find(v => v.lang.toLowerCase().startsWith('zh')) || null;
+  englishVoice = voices.find(v => v.lang.toLowerCase().startsWith('en')) || voices.find(v => v.lang.includes('en')) || null;
+  chineseVoice = voices.find(v => v.lang.toLowerCase().startsWith('zh')) || voices.find(v => v.lang.includes('zh')) || null;
   const statusEl = document.getElementById('voiceStatus');
   if (statusEl) {
-    const voiceLabel = englishVoice ? ` | 兜底语音: ${englishVoice.name}` : ' | 未检测到英文兜底语音';
-    statusEl.textContent = '📁 本地音频优先' + voiceLabel;
-    statusEl.style.color = englishVoice ? '#6bcb77' : '#ffa500';
+    const voiceLabel = englishVoice ? ` | 语音: ${englishVoice.name}` : ' | 系统语音';
+    statusEl.textContent = '🎙️ 语音已就绪' + voiceLabel;
+    statusEl.style.color = englishVoice ? '#6bcb77' : '#6bcb77';
   }
 }
 
 if (window.speechSynthesis) {
-  loadVoices();
   window.speechSynthesis.onvoiceschanged = loadVoices;
 }
 
@@ -1418,6 +1437,9 @@ function speak(text, optionsOrCallback, maybeCallback) {
   }
 
   if (!voiceEnabled || !text) { if (callback) callback(); return; }
+  
+  // 在调用语音合成前确保已初始化（需要用户交互）
+  initSpeech();
 
   if (options.cancel !== false) {
     stopCurrentPlayback();
@@ -1824,6 +1846,32 @@ function restartQuiz(unitId) {
   document.getElementById(`qp-${unitId}`).style.display = 'block';
   showQuizQuestion(unitId);
 }
+
+// ====== 页面加载完成后的初始化 ======
+document.addEventListener('DOMContentLoaded', function() {
+  // 显示语音初始化提示
+  const statusEl = document.getElementById('voiceStatus');
+  if (statusEl) {
+    statusEl.textContent = '👆 点击任意位置激活语音';
+    statusEl.style.color = '#ffa500';
+  }
+  
+  // 全局点击事件：首次点击时初始化语音功能
+  let firstClickHandled = false;
+  document.addEventListener('click', function handleFirstClick() {
+    if (firstClickHandled) return;
+    firstClickHandled = true;
+    
+    // 初始化语音
+    initSpeech();
+    
+    // 更新状态显示
+    if (statusEl) {
+      statusEl.textContent = '🎙️ 语音已就绪';
+      statusEl.style.color = '#6bcb77';
+    }
+  }, { once: true });
+});
 </script>
 </body>
 </html>
