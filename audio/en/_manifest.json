@@ -1,0 +1,862 @@
+﻿[
+    {
+        "text":  "school",
+        "file":  "school-ndvdir.wav"
+    },
+    {
+        "text":  "pen",
+        "file":  "pen-15hcd.wav"
+    },
+    {
+        "text":  "pencil",
+        "file":  "pencil-1k8r57.wav"
+    },
+    {
+        "text":  "ruler",
+        "file":  "ruler-qvuvvp.wav"
+    },
+    {
+        "text":  "rubber",
+        "file":  "rubber-5iwbas.wav"
+    },
+    {
+        "text":  "schoolbag",
+        "file":  "schoolbag-b0pacn.wav"
+    },
+    {
+        "text":  "pencil case",
+        "file":  "pencil-case-ryc1pe.wav"
+    },
+    {
+        "text":  "that",
+        "file":  "that-4cbx17.wav"
+    },
+    {
+        "text":  "put",
+        "file":  "put-15iyr.wav"
+    },
+    {
+        "text":  "guess",
+        "file":  "guess-8tmo2d.wav"
+    },
+    {
+        "text":  "again",
+        "file":  "again-eldokt.wav"
+    },
+    {
+        "text":  "long",
+        "file":  "long-41p1x8.wav"
+    },
+    {
+        "text":  "What\u0027s that?",
+        "file":  "whats-that-x2rmlp.wav"
+    },
+    {
+        "text":  "That\u0027s a pencil case.",
+        "file":  "thats-a-pencil-case-gdwsxd.wav"
+    },
+    {
+        "text":  "Put your pen in the pencil case.",
+        "file":  "put-your-pen-in-the-pencil-case-wsol26.wav"
+    },
+    {
+        "text":  "It\u0027s a long ruler.",
+        "file":  "its-a-long-ruler-q97ddc.wav"
+    },
+    {
+        "text":  "Guess! What\u0027s this?",
+        "file":  "guess-whats-this-4n1n0u.wav"
+    },
+    {
+        "text":  "Say it again, please.",
+        "file":  "say-it-again-please-vtfkz9.wav"
+    },
+    {
+        "text":  "Good idea!",
+        "file":  "good-idea-csr4fd.wav"
+    },
+    {
+        "text":  "What\u0027s that in your schoolbag?",
+        "file":  "whats-that-in-your-schoolbag-hvfvop.wav"
+    },
+    {
+        "text":  "Guess!",
+        "file":  "guess-nm5541.wav"
+    },
+    {
+        "text":  "Is it a pen?",
+        "file":  "is-it-a-pen-lcgw1k.wav"
+    },
+    {
+        "text":  "Yes! Put your pencil in the pencil case, too.",
+        "file":  "yes-put-your-pencil-in-the-pencil-case-too-72qv1y.wav"
+    },
+    {
+        "text":  "our",
+        "file":  "our-155q0.wav"
+    },
+    {
+        "text":  "classroom",
+        "file":  "classroom-sllj25.wav"
+    },
+    {
+        "text":  "close",
+        "file":  "close-oiw3c9.wav"
+    },
+    {
+        "text":  "window",
+        "file":  "window-cc4s54.wav"
+    },
+    {
+        "text":  "blackboard",
+        "file":  "blackboard-uysnr3.wav"
+    },
+    {
+        "text":  "chair",
+        "file":  "chair-ode6em.wav"
+    },
+    {
+        "text":  "sweep",
+        "file":  "sweep-vtsu23.wav"
+    },
+    {
+        "text":  "floor",
+        "file":  "floor-3mciqm.wav"
+    },
+    {
+        "text":  "let",
+        "file":  "let-140dr.wav"
+    },
+    {
+        "text":  "us",
+        "file":  "us-bwy.wav"
+    },
+    {
+        "text":  "desk",
+        "file":  "desk-3qvwwt.wav"
+    },
+    {
+        "text":  "dirty",
+        "file":  "dirty-ta8suz.wav"
+    },
+    {
+        "text":  "clean",
+        "file":  "clean-oisd42.wav"
+    },
+    {
+        "text":  "keep",
+        "file":  "keep-4095yt.wav"
+    },
+    {
+        "text":  "Let\u0027s put away our things.",
+        "file":  "lets-put-away-our-things-umi9s0.wav"
+    },
+    {
+        "text":  "Close the window, please.",
+        "file":  "close-the-window-please-izbj98.wav"
+    },
+    {
+        "text":  "Let\u0027s sweep the floor.",
+        "file":  "lets-sweep-the-floor-ut49oa.wav"
+    },
+    {
+        "text":  "The floor is dirty.",
+        "file":  "the-floor-is-dirty-y0x1p8.wav"
+    },
+    {
+        "text":  "Me too!",
+        "file":  "me-too-ny0sek.wav"
+    },
+    {
+        "text":  "All right.",
+        "file":  "all-right-c433fe.wav"
+    },
+    {
+        "text":  "Keep the classroom clean.",
+        "file":  "keep-the-classroom-clean-pneex6.wav"
+    },
+    {
+        "text":  "Our classroom is dirty. Let\u0027s sweep the floor.",
+        "file":  "our-classroom-is-dirty-lets-sweep-the-floor-4qbkdq.wav"
+    },
+    {
+        "text":  "Me too! Let\u0027s clean the blackboard.",
+        "file":  "me-too-lets-clean-the-blackboard-qusshc.wav"
+    },
+    {
+        "text":  "Good. Keep the classroom clean.",
+        "file":  "good-keep-the-classroom-clean-4s2aog.wav"
+    },
+    {
+        "text":  "rule",
+        "file":  "rule-49sczw.wav"
+    },
+    {
+        "text":  "library",
+        "file":  "library-ca0unv.wav"
+    },
+    {
+        "text":  "shout",
+        "file":  "shout-v9tsis.wav"
+    },
+    {
+        "text":  "talk",
+        "file":  "talk-4c9dg4.wav"
+    },
+    {
+        "text":  "eat",
+        "file":  "eat-11fac.wav"
+    },
+    {
+        "text":  "run",
+        "file":  "run-169fz.wav"
+    },
+    {
+        "text":  "sit down",
+        "file":  "sit-down-xnb76r.wav"
+    },
+    {
+        "text":  "late",
+        "file":  "late-41jx5a.wav"
+    },
+    {
+        "text":  "quiet",
+        "file":  "quiet-m0hmkb.wav"
+    },
+    {
+        "text":  "follow",
+        "file":  "follow-r4amxo.wav"
+    },
+    {
+        "text":  "sweet",
+        "file":  "sweet-vtsu27.wav"
+    },
+    {
+        "text":  "fun",
+        "file":  "fun-11ujn.wav"
+    },
+    {
+        "text":  "Don\u0027t run in the library.",
+        "file":  "dont-run-in-the-library-u3cqwr.wav"
+    },
+    {
+        "text":  "Don\u0027t shout. Be quiet.",
+        "file":  "dont-shout-be-quiet-mjk2pu.wav"
+    },
+    {
+        "text":  "Sit down, please.",
+        "file":  "sit-down-please-hycmk4.wav"
+    },
+    {
+        "text":  "Don\u0027t be late.",
+        "file":  "dont-be-late-eiapjx.wav"
+    },
+    {
+        "text":  "Follow the rules.",
+        "file":  "follow-the-rules-q83ns.wav"
+    },
+    {
+        "text":  "Would you like a sweet?",
+        "file":  "would-you-like-a-sweet-dxvph0.wav"
+    },
+    {
+        "text":  "Look at the rules.",
+        "file":  "look-at-the-rules-k6z7kv.wav"
+    },
+    {
+        "text":  "That\u0027s all right.",
+        "file":  "thats-all-right-p4uy68.wav"
+    },
+    {
+        "text":  "Sit down, please. Don\u0027t talk in the library.",
+        "file":  "sit-down-please-dont-talk-in-the-library-kgfmh1.wav"
+    },
+    {
+        "text":  "I\u0027m sorry, Mrs Li.",
+        "file":  "im-sorry-mrs-li-3pk64g.wav"
+    },
+    {
+        "text":  "That\u0027s all right. Follow the rules.",
+        "file":  "thats-all-right-follow-the-rules-jbxj3n.wav"
+    },
+    {
+        "text":  "Look! Would you like a sweet?",
+        "file":  "look-would-you-like-a-sweet-ehscc2.wav"
+    },
+    {
+        "text":  "No, thank you.",
+        "file":  "no-thank-you-c6tcd5.wav"
+    },
+    {
+        "text":  "have fun",
+        "file":  "have-fun-pb5ymy.wav"
+    },
+    {
+        "text":  "after class",
+        "file":  "after-class-gnrfa2.wav"
+    },
+    {
+        "text":  "behind",
+        "file":  "behind-ir7tq8.wav"
+    },
+    {
+        "text":  "tree",
+        "file":  "tree-4cflua.wav"
+    },
+    {
+        "text":  "by",
+        "file":  "by-9zz.wav"
+    },
+    {
+        "text":  "under",
+        "file":  "under-5pv39w.wav"
+    },
+    {
+        "text":  "flower",
+        "file":  "flower-cmeqpm.wav"
+    },
+    {
+        "text":  "play",
+        "file":  "play-470ng8.wav"
+    },
+    {
+        "text":  "outside",
+        "file":  "outside-mdmfvz.wav"
+    },
+    {
+        "text":  "ready",
+        "file":  "ready-qabvx2.wav"
+    },
+    {
+        "text":  "plane",
+        "file":  "plane-gt0w6z.wav"
+    },
+    {
+        "text":  "very",
+        "file":  "very-4ez8b2.wav"
+    },
+    {
+        "text":  "far",
+        "file":  "far-11siz.wav"
+    },
+    {
+        "text":  "where",
+        "file":  "where-f8ip6f.wav"
+    },
+    {
+        "text":  "find",
+        "file":  "find-3tlqn5.wav"
+    },
+    {
+        "text":  "student",
+        "file":  "student-fe1rdl.wav"
+    },
+    {
+        "text":  "from",
+        "file":  "from-3tp1xa.wav"
+    },
+    {
+        "text":  "nice",
+        "file":  "nice-44b6mx.wav"
+    },
+    {
+        "text":  "garden",
+        "file":  "garden-sxuig4.wav"
+    },
+    {
+        "text":  "butterfly",
+        "file":  "butterfly-ucdbd6.wav"
+    },
+    {
+        "text":  "beautiful",
+        "file":  "beautiful-46gdgn.wav"
+    },
+    {
+        "text":  "duck",
+        "file":  "duck-3r1r5p.wav"
+    },
+    {
+        "text":  "Let\u0027s have fun after class!",
+        "file":  "lets-have-fun-after-class-w04vis.wav"
+    },
+    {
+        "text":  "Where is the duck?",
+        "file":  "where-is-the-duck-62krur.wav"
+    },
+    {
+        "text":  "It\u0027s under the tree.",
+        "file":  "its-under-the-tree-b3318q.wav"
+    },
+    {
+        "text":  "The flower is behind the tree.",
+        "file":  "the-flower-is-behind-the-tree-y002zn.wav"
+    },
+    {
+        "text":  "Are you ready? Let\u0027s play outside.",
+        "file":  "are-you-ready-lets-play-outside-tidlpw.wav"
+    },
+    {
+        "text":  "The garden is very beautiful.",
+        "file":  "the-garden-is-very-beautiful-yqgdzs.wav"
+    },
+    {
+        "text":  "Look at the butterfly!",
+        "file":  "look-at-the-butterfly-vmvjok.wav"
+    },
+    {
+        "text":  "Let\u0027s have fun after class! Are you ready?",
+        "file":  "lets-have-fun-after-class-are-you-ready-s7cqsn.wav"
+    },
+    {
+        "text":  "Yes! Where is my plane?",
+        "file":  "yes-where-is-my-plane-1dcb7g.wav"
+    },
+    {
+        "text":  "It\u0027s behind the tree.",
+        "file":  "its-behind-the-tree-8u4am2.wav"
+    },
+    {
+        "text":  "Look! The garden is very beautiful. A butterfly!",
+        "file":  "look-the-garden-is-very-beautiful-a-butterfly-xf2ip4.wav"
+    },
+    {
+        "text":  "fruit",
+        "file":  "fruit-3ufteu.wav"
+    },
+    {
+        "text":  "orange",
+        "file":  "orange-u4kj23.wav"
+    },
+    {
+        "text":  "grape",
+        "file":  "grape-8pkmvd.wav"
+    },
+    {
+        "text":  "banana",
+        "file":  "banana-z0de8i.wav"
+    },
+    {
+        "text":  "apple",
+        "file":  "apple-exkv8n.wav"
+    },
+    {
+        "text":  "mango",
+        "file":  "mango-1sf5u1.wav"
+    },
+    {
+        "text":  "share",
+        "file":  "share-v9omtq.wav"
+    },
+    {
+        "text":  "like",
+        "file":  "like-41mu63.wav"
+    },
+    {
+        "text":  "they",
+        "file":  "they-4cbxfw.wav"
+    },
+    {
+        "text":  "make",
+        "file":  "make-42w2vi.wav"
+    },
+    {
+        "text":  "salad",
+        "file":  "salad-v0fcao.wav"
+    },
+    {
+        "text":  "together",
+        "file":  "together-a4ftoz.wav"
+    },
+    {
+        "text":  "I like oranges.",
+        "file":  "i-like-oranges-bcj7hp.wav"
+    },
+    {
+        "text":  "What about you?",
+        "file":  "what-about-you-8bsxsq.wav"
+    },
+    {
+        "text":  "Let\u0027s make a fruit salad together.",
+        "file":  "lets-make-a-fruit-salad-together-329hzu.wav"
+    },
+    {
+        "text":  "They are very sweet.",
+        "file":  "they-are-very-sweet-zbmt0m.wav"
+    },
+    {
+        "text":  "I like apples. They are good.",
+        "file":  "i-like-apples-they-are-good-phn9ij.wav"
+    },
+    {
+        "text":  "Let\u0027s share!",
+        "file":  "lets-share-qphiu0.wav"
+    },
+    {
+        "text":  "I like grapes. What about you?",
+        "file":  "i-like-grapes-what-about-you-ci0188.wav"
+    },
+    {
+        "text":  "I like bananas. They are sweet.",
+        "file":  "i-like-bananas-they-are-sweet-6wmqmi.wav"
+    },
+    {
+        "text":  "Let\u0027s make a fruit salad together!",
+        "file":  "lets-make-a-fruit-salad-together-329hzh.wav"
+    },
+    {
+        "text":  "Good! Let\u0027s share!",
+        "file":  "good-lets-share-9dcq4p.wav"
+    },
+    {
+        "text":  "farm",
+        "file":  "farm-3tit4e.wav"
+    },
+    {
+        "text":  "cow",
+        "file":  "cow-10q7z.wav"
+    },
+    {
+        "text":  "sheep",
+        "file":  "sheep-v9q2hi.wav"
+    },
+    {
+        "text":  "rabbit",
+        "file":  "rabbit-entasr.wav"
+    },
+    {
+        "text":  "chicken",
+        "file":  "chicken-m0en1f.wav"
+    },
+    {
+        "text":  "carrot",
+        "file":  "carrot-xx48z6.wav"
+    },
+    {
+        "text":  "pig",
+        "file":  "pig-15hqq.wav"
+    },
+    {
+        "text":  "home",
+        "file":  "home-3wcb9n.wav"
+    },
+    {
+        "text":  "these",
+        "file":  "these-mi8hz.wav"
+    },
+    {
+        "text":  "those",
+        "file":  "those-mlwwx.wav"
+    },
+    {
+        "text":  "help",
+        "file":  "help-3w8mrd.wav"
+    },
+    {
+        "text":  "cute",
+        "file":  "cute-3ppm8f.wav"
+    },
+    {
+        "text":  "move",
+        "file":  "move-4319d9.wav"
+    },
+    {
+        "text":  "Welcome to my farm!",
+        "file":  "welcome-to-my-farm-los27p.wav"
+    },
+    {
+        "text":  "What are these?",
+        "file":  "what-are-these-70vku3.wav"
+    },
+    {
+        "text":  "They\u0027re sheep.",
+        "file":  "theyre-sheep-5nwok9.wav"
+    },
+    {
+        "text":  "What are those?",
+        "file":  "what-are-those-7e9f7t.wav"
+    },
+    {
+        "text":  "They\u0027re rabbits. They\u0027re very cute.",
+        "file":  "theyre-rabbits-theyre-very-cute-inlz6w.wav"
+    },
+    {
+        "text":  "Can you help me?",
+        "file":  "can-you-help-me-inxzlm.wav"
+    },
+    {
+        "text":  "Don\u0027t move!",
+        "file":  "dont-move-trv1bx.wav"
+    },
+    {
+        "text":  "They\u0027re sheep. And those are cows.",
+        "file":  "theyre-sheep-and-those-are-cows-8dyu0i.wav"
+    },
+    {
+        "text":  "How cute! Can I help you?",
+        "file":  "how-cute-can-i-help-you-vgauzh.wav"
+    },
+    {
+        "text":  "animal",
+        "file":  "animal-scuyet.wav"
+    },
+    {
+        "text":  "monkey",
+        "file":  "monkey-ihhmq8.wav"
+    },
+    {
+        "text":  "lion",
+        "file":  "lion-41mukw.wav"
+    },
+    {
+        "text":  "bear",
+        "file":  "bear-3o7htk.wav"
+    },
+    {
+        "text":  "tiger",
+        "file":  "tiger-nv47r.wav"
+    },
+    {
+        "text":  "panda",
+        "file":  "panda-gefmat.wav"
+    },
+    {
+        "text":  "elephant",
+        "file":  "elephant-m31r4l.wav"
+    },
+    {
+        "text":  "fish",
+        "file":  "fish-3tlr5g.wav"
+    },
+    {
+        "text":  "feed",
+        "file":  "feed-3tk8rm.wav"
+    },
+    {
+        "text":  "zoo",
+        "file":  "zoo-196rq.wav"
+    },
+    {
+        "text":  "see",
+        "file":  "see-16l27.wav"
+    },
+    {
+        "text":  "high five",
+        "file":  "high-five-j6o1ji.wav"
+    },
+    {
+        "text":  "Let\u0027s go to the zoo.",
+        "file":  "lets-go-to-the-zoo-2vd0tr.wav"
+    },
+    {
+        "text":  "I want to see the pandas.",
+        "file":  "i-want-to-see-the-pandas-qw3fzh.wav"
+    },
+    {
+        "text":  "I like monkeys. They\u0027re fun.",
+        "file":  "i-like-monkeys-theyre-fun-vs5jy9.wav"
+    },
+    {
+        "text":  "Don\u0027t feed the animals.",
+        "file":  "dont-feed-the-animals-2t411n.wav"
+    },
+    {
+        "text":  "Look at the elephant!",
+        "file":  "look-at-the-elephant-pju7d9.wav"
+    },
+    {
+        "text":  "High five!",
+        "file":  "high-five-ye6lgt.wav"
+    },
+    {
+        "text":  "Let\u0027s go to the zoo!",
+        "file":  "lets-go-to-the-zoo-2vd0te.wav"
+    },
+    {
+        "text":  "Great! I want to see the pandas.",
+        "file":  "great-i-want-to-see-the-pandas-bywczb.wav"
+    },
+    {
+        "text":  "Look at the elephant! It\u0027s so big!",
+        "file":  "look-at-the-elephant-its-so-big-tc1eyb.wav"
+    },
+    {
+        "text":  "Don\u0027t feed the animals. Look only.",
+        "file":  "dont-feed-the-animals-look-only-qp8fjo.wav"
+    },
+    {
+        "text":  "colour",
+        "file":  "colour-uuo6d1.wav"
+    },
+    {
+        "text":  "yellow",
+        "file":  "yellow-pt6hcf.wav"
+    },
+    {
+        "text":  "blue",
+        "file":  "blue-3oa4iu.wav"
+    },
+    {
+        "text":  "red",
+        "file":  "red-167th.wav"
+    },
+    {
+        "text":  "pink",
+        "file":  "pink-46zl12.wav"
+    },
+    {
+        "text":  "green",
+        "file":  "green-8pm2qd.wav"
+    },
+    {
+        "text":  "brown",
+        "file":  "brown-jvl1zj.wav"
+    },
+    {
+        "text":  "black",
+        "file":  "black-jneqr4.wav"
+    },
+    {
+        "text":  "white",
+        "file":  "white-f8k6ch.wav"
+    },
+    {
+        "text":  "buy",
+        "file":  "buy-10dl6.wav"
+    },
+    {
+        "text":  "balloon",
+        "file":  "balloon-v1lf6m.wav"
+    },
+    {
+        "text":  "sure",
+        "file":  "sure-4b4k8p.wav"
+    },
+    {
+        "text":  "chameleon",
+        "file":  "chameleon-coyorp.wav"
+    },
+    {
+        "text":  "little",
+        "file":  "little-q8xavs.wav"
+    },
+    {
+        "text":  "What colour is it?",
+        "file":  "what-colour-is-it-75vd24.wav"
+    },
+    {
+        "text":  "It\u0027s yellow.",
+        "file":  "its-yellow-nyryq9.wav"
+    },
+    {
+        "text":  "It\u0027s blue and red.",
+        "file":  "its-blue-and-red-3qidmx.wav"
+    },
+    {
+        "text":  "Let\u0027s buy some balloons.",
+        "file":  "lets-buy-some-balloons-mzswbm.wav"
+    },
+    {
+        "text":  "Sure!",
+        "file":  "sure-hyodtj.wav"
+    },
+    {
+        "text":  "How come? It\u0027s green now!",
+        "file":  "how-come-its-green-now-2a9gpb.wav"
+    },
+    {
+        "text":  "The little balloon is pink.",
+        "file":  "the-little-balloon-is-pink-ykqux4.wav"
+    },
+    {
+        "text":  "Let\u0027s buy some balloons!",
+        "file":  "lets-buy-some-balloons-mzswb9.wav"
+    },
+    {
+        "text":  "Sure! What colour do you like?",
+        "file":  "sure-what-colour-do-you-like-h4p8bj.wav"
+    },
+    {
+        "text":  "I like pink. What colour is that?",
+        "file":  "i-like-pink-what-colour-is-that-bypiof.wav"
+    },
+    {
+        "text":  "How come? It was blue before!",
+        "file":  "how-come-it-was-blue-before-x4gk3k.wav"
+    },
+    {
+        "text":  "thing",
+        "file":  "thing-mjoym.wav"
+    },
+    {
+        "text":  "put away",
+        "file":  "put-away-31vnxh.wav"
+    },
+    {
+        "text":  "Mrs",
+        "file":  "mrs-sn7i.wav"
+    },
+    {
+        "text":  "look out of",
+        "file":  "look-out-of-z7wdjg.wav"
+    },
+    {
+        "text":  "on",
+        "file":  "on-baz.wav"
+    },
+    {
+        "text":  "shh",
+        "file":  "shh-16ld7.wav"
+    },
+    {
+        "text":  "Would you like...?",
+        "file":  "would-you-like-8zhmsr.wav"
+    },
+    {
+        "text":  "look at",
+        "file":  "look-at-wc4rax.wav"
+    },
+    {
+        "text":  "break time",
+        "file":  "break-time-sm138.wav"
+    },
+    {
+        "text":  "go",
+        "file":  "go-ahw.wav"
+    },
+    {
+        "text":  "over",
+        "file":  "over-45s5mk.wav"
+    },
+    {
+        "text":  "Art Club",
+        "file":  "art-club-yhwv04.wav"
+    },
+    {
+        "text":  "of",
+        "file":  "of-bar.wav"
+    },
+    {
+        "text":  "an",
+        "file":  "an-9w1.wav"
+    },
+    {
+        "text":  "good",
+        "file":  "good-3v04tx.wav"
+    },
+    {
+        "text":  "Welcome to...",
+        "file":  "welcome-to-5y3ik0.wav"
+    },
+    {
+        "text":  "lunchtime",
+        "file":  "lunchtime-j5w3cb.wav"
+    },
+    {
+        "text":  "What colour is...?",
+        "file":  "what-colour-is-7o01o1.wav"
+    },
+    {
+        "text":  "How come?",
+        "file":  "how-come-kg7tzu.wav"
+    }
+]
