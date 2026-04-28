@@ -1259,42 +1259,83 @@ let currentUtterance = null;
 let englishVoice = null;
 let chineseVoice = null;
 let speechInitialized = false; // 标记语音是否已初始化（需要用户交互）
+let speechSupported = true; // 标记浏览器是否支持语音合成
 const localAudioBasePath = 'audio/en';
 const localAudioPlayer = new Audio();
 const missingAudioCache = new Set();
 
+// 检测浏览器是否支持语音合成
+function checkSpeechSupport() {
+  if (!window.speechSynthesis) {
+    speechSupported = false;
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🔇 当前浏览器不支持语音';
+      statusEl.style.color = '#e74c3c';
+    }
+    return false;
+  }
+  return true;
+}
+
 // 初始化语音功能（需要用户交互）
 function initSpeech() {
   if (speechInitialized) return;
+  if (!checkSpeechSupport()) return;
   
-  // 尝试播放一个静音来激活语音合成
-  const testUtterance = new SpeechSynthesisUtterance('');
-  window.speechSynthesis.speak(testUtterance);
-  window.speechSynthesis.cancel();
-  
-  speechInitialized = true;
-  loadVoices();
-  
-  const statusEl = document.getElementById('voiceStatus');
-  if (statusEl) {
-    statusEl.textContent = '🎙️ 语音已就绪';
-    statusEl.style.color = '#6bcb77';
+  try {
+    // 尝试播放一个静音来激活语音合成
+    const testUtterance = new SpeechSynthesisUtterance('');
+    testUtterance.lang = 'en-US';
+    testUtterance.rate = 0.1;
+    window.speechSynthesis.speak(testUtterance);
+    
+    // 设置一个短延迟后取消
+    setTimeout(() => {
+      window.speechSynthesis.cancel();
+    }, 50);
+    
+    speechInitialized = true;
+    loadVoices();
+    
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🎙️ 语音已就绪';
+      statusEl.style.color = '#6bcb77';
+    }
+  } catch (e) {
+    console.warn('语音初始化失败:', e);
+    speechSupported = false;
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🔇 语音初始化失败，请换浏览器';
+      statusEl.style.color = '#e74c3c';
+    }
   }
 }
 
 // Preload voices
 function loadVoices() {
+  if (!window.speechSynthesis) return;
+  
   const voices = window.speechSynthesis.getVoices();
-  englishVoice = voices.find(v => v.lang.toLowerCase().startsWith('en')) || voices.find(v => v.lang.includes('en')) || null;
-  chineseVoice = voices.find(v => v.lang.toLowerCase().startsWith('zh')) || voices.find(v => v.lang.includes('zh')) || null;
+  englishVoice = voices.find(v => v.lang.toLowerCase().startsWith('en')) || 
+                 voices.find(v => v.lang.includes('en')) || 
+                 voices.find(v => v.lang.includes('EN')) || null;
+  chineseVoice = voices.find(v => v.lang.toLowerCase().startsWith('zh')) || 
+                 voices.find(v => v.lang.includes('zh')) || 
+                 voices.find(v => v.lang.includes('ZH')) || null;
+  
   const statusEl = document.getElementById('voiceStatus');
-  if (statusEl) {
+  if (statusEl && speechInitialized) {
     const voiceLabel = englishVoice ? ` | 语音: ${englishVoice.name}` : ' | 系统语音';
     statusEl.textContent = '🎙️ 语音已就绪' + voiceLabel;
     statusEl.style.color = englishVoice ? '#6bcb77' : '#6bcb77';
   }
 }
 
+// 初始化检查
+checkSpeechSupport();
 if (window.speechSynthesis) {
   window.speechSynthesis.onvoiceschanged = loadVoices;
 }
@@ -1406,15 +1447,43 @@ function playWithSpeechSynthesis(text, options, callback) {
   const utter = new SpeechSynthesisUtterance(text);
   const lang = getSpeechLang(text);
   utter.lang = lang;
-  utter.rate = getSpeechRate(text, options.rate);
+  
+  // 根据浏览器调整语速（Edge浏览器优化）
+  let rate = getSpeechRate(text, options.rate);
+  const isEdge = navigator.userAgent.indexOf('Edge') !== -1 || navigator.userAgent.indexOf('Edg') !== -1;
+  if (isEdge) {
+    // Edge浏览器使用稍微慢一点的语速，更清晰
+    rate = Math.max(0.5, rate * 0.85);
+  }
+  utter.rate = rate;
+  
+  // 调整音调，让声音更自然
   utter.pitch = typeof options.pitch === 'number'
     ? options.pitch
-    : (lang === 'zh-CN' ? 1 : 1.05);
+    : (lang === 'zh-CN' ? 1 : 1); // 降低英文音调，更自然
+  
+  // 设置音量
+  utter.volume = 1;
 
-  if (lang === 'zh-CN' && chineseVoice) {
-    utter.voice = chineseVoice;
-  } else if (lang === 'en-US' && englishVoice) {
-    utter.voice = englishVoice;
+  // 优化语音选择（优先选择自然声音）
+  if (lang === 'zh-CN') {
+    if (chineseVoice) {
+      utter.voice = chineseVoice;
+    } else {
+      // 如果没有找到中文语音，尝试选择女性语音
+      const voices = window.speechSynthesis.getVoices();
+      const femaleVoice = voices.find(v => v.lang.includes('zh') && v.name && v.name.includes('Female'));
+      if (femaleVoice) utter.voice = femaleVoice;
+    }
+  } else if (lang === 'en-US') {
+    if (englishVoice) {
+      utter.voice = englishVoice;
+    } else {
+      // 如果没有找到英文语音，尝试选择女性语音（通常更清晰）
+      const voices = window.speechSynthesis.getVoices();
+      const femaleVoice = voices.find(v => (v.lang.includes('en') || v.lang.includes('EN')) && v.name && v.name.includes('Female'));
+      if (femaleVoice) utter.voice = femaleVoice;
+    }
   }
 
   utter.onerror = function(e) {
@@ -1438,8 +1507,20 @@ function speak(text, optionsOrCallback, maybeCallback) {
 
   if (!voiceEnabled || !text) { if (callback) callback(); return; }
   
+  // 检查浏览器是否支持语音合成
+  if (!speechSupported) {
+    if (callback) callback();
+    return;
+  }
+  
   // 在调用语音合成前确保已初始化（需要用户交互）
   initSpeech();
+  
+  // 如果初始化后仍然不支持，直接返回
+  if (!speechSupported) {
+    if (callback) callback();
+    return;
+  }
 
   if (options.cancel !== false) {
     stopCurrentPlayback();
@@ -1849,8 +1930,18 @@ function restartQuiz(unitId) {
 
 // ====== 页面加载完成后的初始化 ======
 document.addEventListener('DOMContentLoaded', function() {
-  // 显示语音初始化提示
   const statusEl = document.getElementById('voiceStatus');
+  
+  // 如果浏览器不支持语音合成，显示提示
+  if (!speechSupported) {
+    if (statusEl) {
+      statusEl.textContent = '🔇 当前浏览器不支持语音功能';
+      statusEl.style.color = '#e74c3c';
+    }
+    return;
+  }
+  
+  // 显示语音初始化提示
   if (statusEl) {
     statusEl.textContent = '👆 点击任意位置激活语音';
     statusEl.style.color = '#ffa500';
@@ -1858,7 +1949,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 全局点击事件：首次点击时初始化语音功能
   let firstClickHandled = false;
-  document.addEventListener('click', function handleFirstClick() {
+  document.addEventListener('click', function handleFirstClick(event) {
     if (firstClickHandled) return;
     firstClickHandled = true;
     
@@ -1867,8 +1958,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 更新状态显示
     if (statusEl) {
-      statusEl.textContent = '🎙️ 语音已就绪';
-      statusEl.style.color = '#6bcb77';
+      if (speechSupported) {
+        statusEl.textContent = '🎙️ 语音已就绪';
+        statusEl.style.color = '#6bcb77';
+      } else {
+        statusEl.textContent = '🔇 语音初始化失败，请使用其他浏览器';
+        statusEl.style.color = '#e74c3c';
+      }
     }
   }, { once: true });
 });
