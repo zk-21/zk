@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三年级下语文 · 趣味学习乐园</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans SC', sans-serif; }
+        .bounce { animation: bounce 1s infinite; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .card-flip {
+            perspective: 1000px;
+        }
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card-flip:hover .card-inner, .card-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            border-radius: 50%;
+            animation: fall 3s linear forwards;
+            z-index: 1000;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .hidden-section { display: none; }
+        .hidden-section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .lesson-page {
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid #dbeafe;
+            background: white;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sky-100 via-pink-50 to-yellow-100 min-h-screen">
+    <!-- 顶部导航 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl bounce inline-block">🎒</span>
+                <h1 class="text-xl font-bold text-indigo-700">三年级下语文 · 趣味学习乐园</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-yellow-100 px-3 py-1 rounded-full">
+                    <span class="text-lg">⭐</span>
+                    <span id="score" class="font-bold text-yellow-700">0</span>
+                </div>
+                <div class="text-sm text-gray-500">加油，小达人！</div>
+                <button id="sound-toggle" class="text-xl hover:text-indigo-600 transition-colors">
+                    <i class="fa fa-volume-up"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 单元选择主页 -->
+    <div id="home-section" class="max-w-6xl mx-auto px-4 py-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-black text-indigo-800 mb-3">选择一个单元，开始冒险吧！</h2>
+            <p class="text-gray-600">每个单元都有好玩的互动游戏，边玩边学记得牢~</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <!-- 单元卡片模板 -->
+            <div onclick="openUnit(1)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-green-200">
+                <div class="text-4xl mb-2">🌿</div>
+                <h3 class="font-bold text-lg text-green-700">第一单元</h3>
+                <p class="text-sm text-gray-500">可爱的生灵</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">古诗</span>
+                    <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">燕子</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(2)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-orange-200">
+                <div class="text-4xl mb-2">📖</div>
+                <h3 class="font-bold text-lg text-orange-700">第二单元</h3>
+                <p class="text-sm text-gray-500">寓言故事</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">成语</span>
+                    <span class="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">道理</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(3)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-red-200">
+                <div class="text-4xl mb-2">🔍</div>
+                <h3 class="font-bold text-lg text-red-700">第三单元</h3>
+                <p class="text-sm text-gray-500">观察与发现</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">海底世界</span>
+                    <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">小虾</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(4)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-purple-200">
+                <div class="text-4xl mb-2">🏮</div>
+                <h3 class="font-bold text-lg text-purple-700">第四单元</h3>
+                <p class="text-sm text-gray-500">传统文化</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">赵州桥</span>
+                    <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">纸的发明</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(5)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-blue-200">
+                <div class="text-4xl mb-2">🚀</div>
+                <h3 class="font-bold text-lg text-blue-700">第五单元</h3>
+                <p class="text-sm text-gray-500">奇妙的想象</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">创意</span>
+                    <span class="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">写作</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(6)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-pink-200">
+                <div class="text-4xl mb-2">🎈</div>
+                <h3 class="font-bold text-lg text-pink-700">第六单元</h3>
+                <p class="text-sm text-gray-500">多彩的童年</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full">趣事</span>
+                    <span class="text-xs bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full">游戏</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(7)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-purple-200">
+                <div class="text-4xl mb-2">🌈</div>
+                <h3 class="font-bold text-lg text-purple-700">第七单元</h3>
+                <p class="text-sm text-gray-500">奇妙的世界</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">火烧云</span>
+                    <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">暴风雨</span>
+                </div>
+            </div>
+
+            <div onclick="openUnit(8)" class="cursor-pointer bg-white rounded-2xl p-5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all border-4 border-yellow-200">
+                <div class="text-4xl mb-2">📚</div>
+                <h3 class="font-bold text-lg text-yellow-700">第八单元</h3>
+                <p class="text-sm text-gray-500">有趣的故事</p>
+                <div class="mt-3 flex gap-1">
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">裁缝</span>
+                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">枣核</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 单元学习页面 -->
+    <div id="unit-section" class="hidden-section max-w-5xl mx-auto px-4 py-6">
+        <button onclick="goHome()" class="mb-4 flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium">
+            <span>←</span> 返回单元列表
+        </button>
+        <div id="unit-header" class="bg-white rounded-2xl p-6 shadow-md mb-6">
+            <h2 id="unit-title" class="text-2xl font-bold text-indigo-800"></h2>
+            <p id="unit-desc" class="text-gray-500 mt-1"></p>
+        </div>
+
+        <!-- 课文内容 -->
+        <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>📖</span> 课文内容
+                <span class="text-xs font-normal text-gray-400">点击课文标题，查看教材原页、版本化拓展提优；点“参考答案”可展开查看~</span>
+            </h3>
+            <div id="lessons-container" class="space-y-4"></div>
+        </div>
+
+        <!-- 知识点卡片翻翻看 -->
+        <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>🃏</span> 知识点翻翻看
+                <span class="text-xs font-normal text-gray-400">点击卡片翻转，看看背面是什么~</span>
+            </h3>
+            <div id="flashcards" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- 互动答题闯关 -->
+        <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>🎯</span> 答题大闯关
+                <span class="text-xs font-normal text-gray-400">答对加分，连续答对有惊喜哦！</span>
+            </h3>
+            <div id="quiz-container">
+                <div id="quiz-question" class="text-lg font-medium text-gray-700 mb-4 p-4 bg-gray-50 rounded-xl"></div>
+                <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                <div id="quiz-feedback" class="mt-4 text-center font-bold hidden"></div>
+                <button id="next-btn" onclick="nextQuestion()" class="hidden mt-4 mx-auto block bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition">下一题 →</button>
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+                <div class="text-sm text-gray-500">当前进度: <span id="quiz-progress">0/0</span></div>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-500">连胜:</span>
+                    <span id="streak" class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-sm font-bold">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 词语连连看 -->
+        <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>🔗</span> 词语连连看
+                <span class="text-xs font-normal text-gray-400">把意思相近或相关的词语连起来吧！</span>
+            </h3>
+            <div id="match-game" class="grid grid-cols-2 gap-4 max-w-2xl mx-auto"></div>
+        </div>
+    </div>
+
+    <!-- 完成庆祝弹窗 -->
+    <div id="celebration" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-3xl p-8 text-center max-w-sm mx-4 transform scale-100">
+            <div class="text-6xl mb-4">🎉</div>
+            <h3 class="text-2xl font-bold text-indigo-800 mb-2">太棒了！</h3>
+            <p class="text-gray-600 mb-4">你已经完成了这个单元的挑战！</p>
+            <div class="text-3xl font-black text-yellow-500 mb-6">+<span id="bonus-points">50</span>分</div>
+            <button onclick="closeCelebration()" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold hover:bg-indigo-700 transition">继续加油</button>
+        </div>
+    </div>
+
+    <!-- 底部信息 -->
+    <footer class="bg-white/80 backdrop-blur-md shadow-sm mt-8 py-4">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-600">三年级下语文 · 趣味学习乐园 &copy; 2026</p>
+            <p class="text-sm mt-1 text-gray-500">专为小学生设计的互动学习工具</p>
+        </div>
+    </footer>
+
+    <script>
+    // ===================== 数据配置区 =====================
+    // 根据实际教材内容修改此处数据
+    const unitData = {
+        1: {
+            title: "第一单元：亲近动物植物，热爱自然与生命",
+            desc: "走进大自然，认识身边可爱的动物和植物朋友",
+            lessons: [
+                { 
+                    title: "《绝句》", 
+                    author: "[唐]杜甫",
+                    content: "迟日江山丽，春风花草香。泥融飞燕子，沙暖睡鸳鸯。",
+                    explanation: "这是一首描写春天景色的诗。诗人以'迟日'领起全篇，突出了春天日光和煦、万物欣欣向荣的特点，并使诗中描写的物象有机地组合为一体，构成一幅明丽和谐的春色图。"
+                },
+                { 
+                    title: "《惠崇春江晚景》", 
+                    author: "[宋]苏轼",
+                    content: "竹外桃花三两枝，春江水暖鸭先知。蒌蒿满地芦芽短，正是河豚欲上时。",
+                    explanation: "这是一首题画诗，诗人通过想象，把画上景物写活了。初春，大地复苏，竹林已被新叶染成一片嫩绿，更引人注目的是桃树上也已绽开了三两枝粉红的桃花。"
+                },
+                { 
+                    title: "《三衢道中》", 
+                    author: "[宋]曾几",
+                    content: "梅子黄时日日晴，小溪泛尽却山行。绿阴不减来时路，添得黄鹂四五声。",
+                    explanation: "诗人是初夏时在三衢山游玩的。从'梅子黄时'得知。这首诗描写了初夏时三衢山的景色，表达了诗人的愉悦心情。"
+                },
+                { 
+                    title: "《燕子》", 
+                    author: "郑振铎",
+                    content: "一身乌黑的羽毛，一对轻快有力的翅膀，加上剪刀似的尾巴，凑成了那样可爱的活泼的小燕子。二三月的春日里，轻风微微地吹拂着，如毛的细雨由天上洒落着，千条万条的柔柳，红的白的黄的花，青的草，绿的叶，都像赶集似的聚拢来，形成了烂漫无比的春天。这时候，那些小燕子，那么伶俐可爱的小燕子，也由南方飞来，加入这光彩夺目的图画中，为春光平添了许多生趣。小燕子带了它的剪刀似的尾巴，在阳光满地时，斜飞于旷亮无比的天空，叽的一声，已由这里的稻田上，飞到那边的高柳下了。另有几只却在波光粼粼的湖面上横掠着，小燕子的翼尖或剪尾，偶尔沾了一下水面，那小圆晕便一圈一圈地荡漾开去。",
+                    explanation: "课文描写了燕子活泼可爱的外形、飞行姿态和停歇时的样子，表达了对燕子的喜爱之情。作者观察细致，描写生动，把燕子写得栩栩如生。"
+                },
+                { 
+                    title: "《荷花》", 
+                    author: "叶圣陶",
+                    content: "清晨，我到公园去玩，一进门就闻到一阵清香。我赶紧往荷花池边跑去。荷花已经开了不少了。荷叶挨挨挤挤的，像一个个碧绿的大圆盘。白荷花在这些大圆盘之间冒出来。有的才展开两三片花瓣儿。有的花瓣儿全展开了，露出嫩黄色的小莲蓬。有的还是花骨朵儿，看起来饱胀得马上要破裂似的。这么多的白荷花，一朵有一朵的姿势。看看这一朵，很美；看看那一朵，也很美。如果把眼前的一池荷花看作一大幅活的画，那画家的本领可真了不起。我忽然觉得自己仿佛就是一朵荷花，穿着雪白的衣裳，站在阳光里。一阵微风吹来，我就翩翩起舞，雪白的衣裳随风飘动。不光是我一朵，一池的荷花都在舞蹈。风过了，我停止了舞蹈，静静地站在那儿。蜻蜓飞过来，告诉我清早飞行的快乐。小鱼在脚下游过，告诉我昨夜做的好梦。",
+                    explanation: "课文通过闻到清香—观察形状—欣赏姿势—展开想象的顺序，描写了荷花的美丽，表达了对荷花的喜爱和赞美。作者观察细致，想象丰富，把荷花写得活灵活现。"
+                },
+                { 
+                    title: "《昆虫备忘录》", 
+                    author: "汪曾祺",
+                    content: "蜻蜓：蜻蜓的眼睛很大，结构很复杂，是由成千上万只小眼睛组成的，这样的眼睛叫做复眼。复眼视力很好，能看清四面八方的虫子。瓢虫：瓢虫的硬翅是朱红的，上面有小圆点，圆点是有定数的，不能瞎点。独角仙：独角仙在甲虫里可能算是最大的，从头到脚，约有两寸。它的甲壳多为深色，挺硬的，头部尖端有一只犀牛一样的角。蚂蚱：河北人把尖头绿蚂蚱叫'挂大扁儿'。尖头蚂蚱是国画家很喜欢画的。画草虫的很少有没画过蚂蚱的。蚂蚱飞起来会咯咯作响，不知道它是怎么弄出这种声音的。",
+                    explanation: "课文介绍了蜻蜓、瓢虫、独角仙、蚂蚱等昆虫的特点，展现了昆虫的可爱之处。作者观察细致，描写生动，把昆虫写得栩栩如生。【略读课文】"
+                }
+            ],
+            flashcards: [
+                { front: "《绝句》", back: "[唐]杜甫 · 迟日江山丽，春风花草香。泥融飞燕子，沙暖睡鸳鸯。描绘了春天的美丽景色和活泼的燕子、悠闲的鸳鸯。" },
+                { front: "《惠崇春江晚景》", back: "[宋]苏轼 · 竹外桃花三两枝，春江水暖鸭先知。蒌蒿满地芦芽短，正是河豚欲上时。通过桃花、鸭子、蒌蒿、芦芽等景物表现春天的到来。" },
+                { front: "《三衢道中》", back: "[宋]曾几 · 梅子黄时日日晴，小溪泛尽却山行。绿阴不减来时路，添得黄鹂四五声。描写了初夏时三衢山的景色，表达了诗人的愉悦心情。" },
+                { front: "《燕子》", back: "郑振铎 · 描写燕子活泼可爱的外形、飞行姿态和停歇时的样子，表达了对燕子的喜爱之情。" },
+                { front: "《荷花》", back: "叶圣陶 · 通过闻到清香—观察形状—欣赏姿势—展开想象的顺序，描写了荷花的美丽，表达了对荷花的喜爱和赞美。" },
+                { front: "《昆虫备忘录》", back: "汪曾祺 · 介绍了蜻蜓、瓢虫、独角仙、蚂蚱等昆虫的特点，展现了昆虫的可爱之处。【略读课文】" },
+                { front: "重点字词", back: "吹拂、聚拢、形式、偶尔、花瓣、莲蓬、饱胀、破裂、姿势、仿佛" },
+                { front: "日积月累", back: "《忆江南》[唐]白居易：江南好，风景旧曾谙。日出江花红胜火，春来江水绿如蓝。能不忆江南？" }
+            ],
+            quiz: [
+                { q: "'泥融飞燕子，沙暖睡鸳鸯'出自哪首诗？", options: ["《绝句》", "《惠崇春江晚景》", "《三衢道中》", "《山行》"], a: 0 },
+                { q: "《燕子》的作者是谁？", options: ["叶圣陶", "郑振铎", "老舍", "巴金"], a: 1 },
+                { q: "'春江水暖鸭先知'的作者是？", options: ["杜甫", "曾几", "苏轼", "李白"], a: 2 },
+                { q: "《荷花》一课中，作者把荷花比作了什么？", options: ["蝴蝶", "一大幅活的画", "少女", "白云"], a: 1 },
+                { q: "《三衢道中》描写的是什么季节？", options: ["春天", "夏天", "秋天", "冬天"], a: 1 },
+                { q: "下列哪个词语不是描写春天的？", options: ["烂漫无比", "春暖花开", "生机勃勃", "果实累累"], a: 3 }
+            ],
+            match: [
+                { left: "乌黑", right: "洁白", related: false },
+                { left: "活泼", right: "伶俐", related: true },
+                { left: "蜻蜓", right: "昆虫", related: true },
+                { left: "荷花", right: "清香", related: true },
+                { left: "聚拢", right: "分散", related: false },
+                { left: "偶尔", right: "经常", related: false }
+            ]
+        },
+        2: {
+            title: "第二单元：寓言是生活的一面镜子",
+            desc: "读寓言故事，明白生活中的道理",
+            lessons: [
+                { 
+                    title: "《守株待兔》", 
+                    author: "选自《韩非子·五蠹》",
+                    content: "宋人有耕者。田中有株。兔走触株，折颈而死。因释其耒而守株，冀复得兔。兔不可复得，而身为宋国笑。",
+                    explanation: "讲述了一个农夫因偶然捡到一只撞死在树桩上的兔子，从此不再耕田，整天守在树桩旁等待兔子的故事。告诉我们：不努力而抱侥幸心理，指望好运气，是不会有好结果的。"
+                },
+                { 
+                    title: "《会摇尾巴的狼》", 
+                    author: "严文井",
+                    content: "一只狼掉进了陷阱里，怎么爬也爬不出来。老山羊从这里路过，狼连忙打招呼说：'好朋友！为了我们的友情，快救救我吧！'老山羊说：'你是一只狼，怎么会是我的朋友呢？'狼说：'我真的是一只狼，但是我已经改好了，现在不吃羊了。你看，我的尾巴还会摇呢！'说着，狼就摇起了尾巴。老山羊看了看狼的尾巴，说：'你会摇尾巴，可你还是一只狼。狼的本性是不会改变的，我不能救你。'说完，老山羊就走了。狼在陷阱里饿死了。",
+                    explanation: "讲述了一只掉进陷阱的狼，用花言巧语欺骗老山羊救它，最终被老山羊识破的故事。告诉我们：要善于识破坏人的伪装，不要被花言巧语所迷惑。"
+                },
+                { 
+                    title: "《鹿角和鹿腿》", 
+                    author: "根据《伊索寓言》改写",
+                    content: "丛林中，住着一只漂亮的鹿。有一天，鹿口渴了，找到一个池塘，痛痛快快地喝起水来。池水清清的，像一面镜子。鹿忽然发现了自己倒映在水中的影子：'咦，这是我吗？'鹿摆摆身子，水中的倒影也跟着摆动起来。他从来没有注意到自己是这么漂亮！他不着急离开了，对着池水欣赏自己的美丽：'啊！我的身段多么匀称，我的角多么精美别致，好像两束美丽的珊瑚！'一阵清风吹过，池水泛起了层层波纹。鹿忽然看到了自己的腿，不禁噘起了嘴，皱起了眉头：'唉，这四条腿太细了，怎么配得上这两只美丽的角呢！'鹿开始抱怨起自己的腿来。就在他没精打采地准备离开的时候，忽然听到远处传来一阵脚步声。他机灵地支起耳朵，不错，正是脚步声！鹿猛一回头，哎呀，一头狮子正悄悄地向自己逼近。鹿不敢犹豫，撒开长腿就跑。有力的长腿在灌木丛中蹦来跳去，不一会儿，就把凶猛的狮子远远地甩在了后面。就在狮子灰心丧气不想再追的时候，鹿的角却被树枝挂住了。狮子赶紧抓住这个机会，猛扑过来。眼看就要追上了，鹿用尽全身力气，使劲一扯，才把两只角从树枝中挣脱出来，然后又拼命向前奔去。这次，狮子再也没有追上。鹿跑到一条小溪边，停下脚步，一边喘气，一边休息。他叹了口气，说：'两只美丽的角差点儿送了我的命，可四条难看的腿却让我狮口逃生！'",
+                    explanation: "讲述了一只鹿欣赏自己美丽的鹿角，却嫌弃自己细长的腿，后来在遇到狮子时，正是腿帮助它逃脱了危险。告诉我们：事物各有价值，不能只凭外表去判断事物的好坏。"
+                },
+                { 
+                    title: "《池子与河流》", 
+                    author: "克雷洛夫",
+                    content: "池子在不断地想着：'这一切真是太好不过了！偏安一隅，多么舒适，又多么宁静！我这一辈子，就这样安安静静地过日子吧。'有一天，池子对河流说：'你总是滚滚滔滔，亲爱的姐姐，你几时才能抛开这样的生涯？要是换了我，说句老实话，我可真要愁死啦！我的命运有多好，比起来，你我相差竟这么大！我安闲地躺在柔软的泥土里，像贵妇人躺在鸭绒垫上一样。我不用为大船和木筏操心，小划子有多重也用不着想，至多，有一两片树叶被微风吹落，在我的胸膛上轻轻摇荡。'河流回答说：'水要流动才能保持清洁，这个自然规律，难道你已经忘掉？我是一条伟大的河流，那是因为我遵循着这条规律，不顾自身的安逸。我用源源不断的清洁的水，年年给人们带来利益。这就使我受到尊敬，光荣无比。也许，我将永远奔流不息；可你早被遗忘，不再有人提起。'河流的话果然应验。河流至今长流不断，而可怜的池子却一年年淤塞，整个让青苔铺满，又让芦苇遮掩，到头来完全枯干。",
+                    explanation: "讲述了池子和河流的对话，池子贪图安逸，而河流则勤奋流动。最终，池子干涸了，而河流却永远奔流不息。告诉我们：才能不利用就要衰退，才能一旦让懒惰支配，它就一无所为。【略读课文】"
+                }
+            ],
+            flashcards: [
+                { front: "《守株待兔》", back: "选自《韩非子·五蠹》，讲述了一个农夫因偶然捡到一只撞死在树桩上的兔子，从此不再耕田，整天守在树桩旁等待兔子的故事。告诉我们：不努力而抱侥幸心理，指望好运气，是不会有好结果的。" },
+                { front: "《会摇尾巴的狼》", back: "严文井 · 讲述了一只掉进陷阱的狼，用花言巧语欺骗老山羊救它，最终被老山羊识破的故事。告诉我们：要善于识破坏人的伪装，不要被花言巧语所迷惑。" },
+                { front: "《鹿角和鹿腿》", back: "根据《伊索寓言》改写，讲述了一只鹿欣赏自己美丽的鹿角，却嫌弃自己细长的腿，后来在遇到狮子时，正是腿帮助它逃脱了危险。告诉我们：事物各有价值，不能只凭外表去判断事物的好坏。" },
+                { front: "《池子与河流》", back: "作者克雷洛夫，讲述了池子和河流的对话，池子贪图安逸，而河流则勤奋流动。最终，池子干涸了，而河流却永远奔流不息。告诉我们：才能不利用就要衰退，才能一旦让懒惰支配，它就一无所为。【略读课文】" },
+                { front: "寓言", back: "用假托的故事或自然物的拟人手法来说明某个道理的文学作品，常带有讽刺或劝诫的性质。" },
+                { front: "重点字词", back: "守株待兔、谦虚、骄傲、傲慢、轻蔑、相提并论、和睦相处" },
+                { front: "日积月累", back: "寓言成语：掩耳盗铃、自相矛盾、井底之蛙、杞人忧天、刻舟求剑、杯弓蛇影、邯郸学步、滥竽充数、画蛇添足" },
+                { front: "快乐读书吧", back: "推荐阅读：伊索寓言、拉封丹寓言、克雷洛夫寓言" }
+            ],
+            quiz: [
+                { q: "《守株待兔》出自哪本书？", options: ["《论语》", "《韩非子》", "《孟子》", "《庄子》"], a: 1 },
+                { q: "《会摇尾巴的狼》的作者是谁？", options: ["严文井", "伊索", "克雷洛夫", "安徒生"], a: 0 },
+                { q: "《池子与河流》的作者是谁？", options: ["中国古代寓言", "伊索寓言", "克雷洛夫", "安徒生"], a: 2 },
+                { q: "以下哪个是寓言故事的特点？", options: ["很长很长", "用故事说明道理", "只写动物", "没有结局"], a: 1 },
+                { q: "《鹿角和鹿腿》中，鹿最终是靠什么逃脱狮子的追捕？", options: ["美丽的鹿角", "有力的鹿腿", "聪明的头脑", "运气"], a: 1 },
+                { q: "下列哪个成语不是来自寓言故事？", options: ["守株待兔", "亡羊补牢", "画蛇添足", "背水一战"], a: 3 }
+            ],
+            match: [
+                { left: "守株待兔", right: "侥幸心理", related: true },
+                { left: "狼", right: "花言巧语", related: true },
+                { left: "鹿角", right: "美丽", related: true },
+                { left: "河流", right: "勤奋", related: true },
+                { left: "池子", right: "懒惰", related: true },
+                { left: "老山羊", right: "聪明", related: true }
+            ]
+        },
+        3: {
+            title: "第三单元：观察自然，探索世界",
+            desc: "观察自然现象，探索科学奥秘",
+            lessons: [
+                { 
+                    title: "《海底世界》", 
+                    author: "石友",
+                    content: "你可知道，大海深处是什么样的吗？海面上波涛澎湃的时候，海底依然很宁静。最大的风浪也只能影响到海面以下几十米深。阳光射不到海底，水越深光线越暗，五百米以下就全黑了。在这一片黑暗的深海里，却有许多光点像闪烁的星星，那是有发光器官的深水鱼在游动。海底是否没有一点儿声音呢？不是的。海底的动物常常在窃窃私语。你用水中听音器一听，就能听见各种声音：有的像蜜蜂一样嗡嗡，有的像小鸟一样啾啾，有的像小狗一样汪汪，有的还好像在打鼾。海底的动物，各有各的活动方法。海参靠肌肉伸缩爬行，每小时只能前进四米。有一种鱼身体像梭子，每小时能游几十千米，攻击其他动物的时候，比普通的火车还快。乌贼和章鱼能突然向前方喷水，利用水的反推力迅速后退。还有些贝类自己不动，却能巴在轮船底下做免费的长途旅行。海底的植物差异也很大。它们的色彩多种多样，有褐色的，有紫色的，还有红色的。最小的单细胞海藻，要用显微镜才能看清楚。最大的海藻长达二三百米，是地球上最长的生物。海底蕴藏着丰富的煤、铁、石油和天然气，还有陆地上储量很少的稀有金属。",
+                    explanation: "介绍了海底的奇异景象和丰富的物产，展现了海底世界的奇妙。作者观察细致，描写生动，把海底世界写得神秘而美丽。"
+                },
+                { 
+                    title: "《石蜂》", 
+                    author: "法布尔",
+                    content: "石蜂是一种勤劳的昆虫。它们用泥土筑巢，巢里有许多小房间，每个房间里都有一只小石蜂。石蜂妈妈在房间里放上一只小虫子，作为小石蜂的食物。小石蜂孵化出来后，就吃这只小虫子长大。石蜂的巢很坚固，不容易被破坏。",
+                    explanation: "介绍了石蜂的生活习性和筑巢过程，展现了昆虫世界的奇妙。作者观察细致，描写生动，把石蜂写得栩栩如生。"
+                },
+                { 
+                    title: "《小虾》", 
+                    author: "菁莽",
+                    content: "院子里的葡萄架下，一口缸闲着，积了大半缸雨水。从葡萄架的空隙里漏下的阳光，洒落在水面上，像许多大大小小的圆镜。我想，这不正好用来养小鱼小虾吗？我和邻居阿成哥跑到村边小溪里，在竹筛里捉了一些小虾，带回家养在缸里。这些小虾，有的通体透明，像玻璃似的，这是才长大的；有的稍带灰黑色，甚至背上、尾巴上还积着泥，长着青苔，这是老的，大家叫它千年虾。小虾真有趣。它们吃东西的时候非常小心，总是先用钳子轻轻碰一下食物，然后迅速后退，接着再碰一下，又后退，直到觉得没有危险了，才用两个钳子捧着食物吃起来。吃饱了的小虾显得十分自在，有的独自游来游去，有的互相追逐，有的紧贴在缸壁上休息。小虾脾气不好。要是你用小竹枝去动那些正在休息的小虾，它们会立即向别的安静的角落蹦去，一路上像生了气似的，不停地舞动着前面那双细长的脚，脚末端那副钳子一张一张的，胡须也一翘一翘地摆动着，连眼珠子也一突一突的。如果这时碰到正在闲游的同伴，它们就会打起来。小虾的搏斗很激烈，蹦出水面是常有的事。",
+                    explanation: "观察小虾的外形、活动、搏斗和繁殖，表现了小虾的有趣和作者对小虾的喜爱之情。作者观察细致，描写生动，把小虾写得栩栩如生。【略读课文】"
+                }
+            ],
+            flashcards: [
+                { front: "《海底世界》", back: "石友 · 介绍了海底的奇异景象和丰富的物产，展现了海底世界的奇妙。" },
+                { front: "《石蜂》", back: "法布尔 · 介绍了石蜂的生活习性和筑巢过程，展现了昆虫世界的奇妙。" },
+                { front: "《小虾》", back: "菁莽 · 观察小虾的外形、活动、搏斗和繁殖，表现了小虾的有趣和作者对小虾的喜爱之情。【略读课文】" },
+                { front: "观察", back: "用眼睛仔细看，用心认真想，是科学研究的重要方法。" },
+                { front: "实验", back: "按照一定步骤进行操作，验证某个猜想，是科学探究的重要手段。" },
+                { front: "海底世界", back: "海洋深处的神秘世界，有丰富的物产和奇异的景象。" },
+                { front: "重点字词", back: "呈现、变幻、蜡烛、诱人、圆润、乘凉、光芒、刀剑、普通、模型" },
+                { front: "日积月累", back: "《滁州西涧》[唐]韦应物：独怜幽草涧边生，上有黄鹂深树鸣。春潮带雨晚来急，野渡无人舟自横。" }
+            ],
+            quiz: [
+                { q: "《海底世界》的作者是谁？", options: ["石友", "法布尔", "菁莽", "叶圣陶"], a: 0 },
+                { q: "《石蜂》的作者是谁？", options: ["石友", "法布尔", "菁莽", "叶圣陶"], a: 1 },
+                { q: "《小虾》是一篇什么类型的课文？", options: ["精读课文", "略读课文", "古诗", "童话"], a: 1 },
+                { q: "下列哪个不是观察的方法？", options: ["用眼睛看", "用耳朵听", "用鼻子闻", "凭空想象"], a: 3 },
+                { q: "海底世界有什么特点？", options: ["只有动物", "只有植物", "奇异景象和丰富物产", "只有石头"], a: 2 },
+                { q: "《滁州西涧》的作者是谁？", options: ["李白", "杜甫", "韦应物", "白居易"], a: 2 }
+            ],
+            match: [
+                { left: "海底", right: "物产丰富", related: true },
+                { left: "石蜂", right: "筑巢", related: true },
+                { left: "小虾", right: "搏斗", related: true },
+                { left: "观察", right: "实验", related: true },
+                { left: "海底世界", right: "奇异景象", related: true },
+                { left: "石蜂", right: "法布尔", related: true }
+            ]
+        },
+        4: {
+            title: "第四单元：感受古人智慧，领略中华文化的魅力",
+            desc: "了解中国传统文化，感受古代劳动人民的智慧",
+            lessons: [
+                { 
+                    title: "《元日》", 
+                    author: "[宋]王安石",
+                    content: "爆竹声中一岁除，春风送暖入屠苏。千门万户曈曈日，总把新桃换旧符。",
+                    explanation: "描写了春节的热闹景象。诗人以'爆竹声中一岁除'开篇，写出了辞旧迎新的喜悦。'春风送暖入屠苏'写出了春天的温暖。'千门万户曈曈日，总把新桃换旧符'写出了家家户户贴春联、挂灯笼的热闹景象。"
+                },
+                { 
+                    title: "《清明》", 
+                    author: "[唐]杜牧",
+                    content: "清明时节雨纷纷，路上行人欲断魂。借问酒家何处有？牧童遥指杏花村。",
+                    explanation: "描写了清明节的景象和人们的心情。'清明时节雨纷纷'写出了清明时节的天气特点。'路上行人欲断魂'写出了行人的悲伤心情。'借问酒家何处有？牧童遥指杏花村'写出了诗人寻找酒家的情景。"
+                },
+                { 
+                    title: "《九月九日忆山东兄弟》", 
+                    author: "[唐]王维",
+                    content: "独在异乡为异客，每逢佳节倍思亲。遥知兄弟登高处，遍插茱萸少一人。",
+                    explanation: "表达了重阳节对亲人的思念。'独在异乡为异客'写出了诗人在异乡的孤独。'每逢佳节倍思亲'写出了诗人对亲人的思念。'遥知兄弟登高处，遍插茱萸少一人'写出了诗人想象兄弟们登高插茱萸的情景，更加思念亲人。"
+                },
+                { 
+                    title: "《纸的发明》", 
+                    author: "",
+                    content: "造纸术的发明，是中国对世界文明的伟大贡献之一。早在几千年前，我们的祖先就创造了文字。那时候还没有纸，人们把文字刻或写在竹片、木片、玉石、陶器、兽骨、青铜、丝帛等材料上。后来，东汉的蔡伦吸收了人们长期积累的经验，改进了造纸术。蔡伦改进的造纸方法原料容易得到，可以大量制造，价格又便宜，能满足多数人的需要，所以这种造纸方法就传承下来了。",
+                    explanation: "课文按时间顺序介绍了造纸材料的发展和蔡伦改进造纸术的过程，说明造纸术是我国古代四大发明之一，也是中国对世界文明的重要贡献。"
+                },
+                { 
+                    title: "《赵州桥》", 
+                    author: "李春",
+                    content: "河北省赵县的洨河上，有一座世界闻名的石拱桥，叫安济桥，又叫赵州桥。它是隋朝的石匠李春设计并参加建造的，到现在已经有一千四百多年了。赵州桥非常雄伟。桥长五十多米，有九米多宽，中间行车马，两旁走人。这么长的桥，全部用石头砌成，下面没有桥墩，只有一个拱形的大桥洞，横跨在三十七米多宽的河面上。大桥洞顶上的左右两边，还各有两个拱形的小桥洞。平时，河水从大桥洞流过，发大水的时候，河水还可以从四个小桥洞流过。这种设计，在建桥史上是一个创举，既减轻了流水对桥身的冲击力，使桥不容易被大水冲毁，又减轻了桥身的重量，节省了石料。",
+                    explanation: "隋朝石匠李春设计并参加建造的，是世界上现存最古老的石拱桥之一。特点：雄伟、坚固、美观。作者观察细致，描写生动，把赵州桥写得栩栩如生。"
+                },
+                { 
+                    title: "《一幅名扬中外的画》", 
+                    author: "张择端",
+                    content: "北宋时候，有位画家叫张择端。他画了一幅著名的画——《清明上河图》，画的是北宋都城汴京热闹的场面。这幅画有八米多长，是张择端画的。画上有八百多个人物，有六百多匹牲畜，有二十多艘船只，还有各种各样的人物、动物、建筑。这幅画描绘了北宋都城汴京的繁华景象，是我国宝贵的文化遗产。",
+                    explanation: "介绍了北宋画家张择端的《清明上河图》，这幅画描绘了北宋都城汴京的繁华景象，是我国宝贵的文化遗产。作者观察细致，描写生动，把《清明上河图》写得栩栩如生。"
+                }
+            ],
+            flashcards: [
+                { front: "《元日》", back: "[宋]王安石 · 爆竹声中一岁除，春风送暖入屠苏。千门万户曈曈日，总把新桃换旧符。描写了春节的热闹景象。" },
+                { front: "《清明》", back: "[唐]杜牧 · 清明时节雨纷纷，路上行人欲断魂。借问酒家何处有？牧童遥指杏花村。描写了清明节的景象和人们的心情。" },
+                { front: "《九月九日忆山东兄弟》", back: "[唐]王维 · 独在异乡为异客，每逢佳节倍思亲。遥知兄弟登高处，遍插茱萸少一人。表达了重阳节对亲人的思念。" },
+                { front: "《纸的发明》", back: "按时间顺序介绍书写材料的演变和蔡伦改进造纸术的过程，说明造纸术是中国对世界文明的伟大贡献之一。" },
+                { front: "《赵州桥》", back: "隋朝石匠李春设计并参加建造的，是世界上现存最古老的石拱桥之一。特点：雄伟、坚固、美观。" },
+                { front: "《一幅名扬中外的画》", back: "介绍了北宋画家张择端的《清明上河图》，这幅画描绘了北宋都城汴京的繁华景象，是我国宝贵的文化遗产。" },
+                { front: "中华传统节日", back: "包括春节、元宵节、清明节、端午节、中秋节、重阳节等，是中华民族的重要文化遗产。" },
+                { front: "重点字词", back: "创举、坚固、美观、石匠、设计、智慧、历史、遗产" },
+                { front: "传统文化", back: "包括建筑、绘画、书法、节日等，是中华民族的宝贵财富。" }
+            ],
+            quiz: [
+                { q: "《元日》描写的是哪个节日？", options: ["春节", "清明节", "中秋节", "重阳节"], a: 0 },
+                { q: "《清明》的作者是谁？", options: ["李白", "杜甫", "杜牧", "王维"], a: 2 },
+                { q: "《九月九日忆山东兄弟》中的'九月九日'是指什么节日？", options: ["春节", "清明节", "中秋节", "重阳节"], a: 3 },
+                { q: "东汉时改进造纸术的人是谁？", options: ["张衡", "蔡伦", "毕昇", "祖冲之"], a: 1 },
+                { q: "赵州桥是由谁设计的？", options: ["鲁班", "李春", "蔡伦", "张择端"], a: 1 },
+                { q: "《清明上河图》的作者是谁？", options: ["张择端", "顾恺之", "吴道子", "齐白石"], a: 0 },
+                { q: "下列哪个不是中华传统节日？", options: ["春节", "清明节", "圣诞节", "中秋节"], a: 2 }
+            ],
+            match: [
+                { left: "元日", right: "春节", related: true },
+                { left: "清明", right: "杜牧", related: true },
+                { left: "九月九日", right: "重阳节", related: true },
+                { left: "赵州桥", right: "李春", related: true },
+                { left: "清明上河图", right: "张择端", related: true },
+                { left: "传统文化", right: "宝贵财富", related: true }
+            ]
+        },
+        5: {
+            title: "第五单元：走进想象的世界",
+            desc: "展开想象的翅膀，创造奇妙的世界（习作单元）",
+            lessons: [
+                { 
+                    title: "《胡萝卜先生的长胡子》", 
+                    author: "",
+                    content: "胡萝卜先生常常为胡子发愁，因为他长着浓密的胡子，必须每天刮。有一天，胡萝卜先生不小心把果酱沾到了胡子上。胡子沾到了果酱，就慢慢地长了起来。胡萝卜先生很高兴，他的胡子越来越长了。长胡子帮助了很多小动物。小猴子用胡子荡秋千，小松鼠用胡子跳绳，小兔子用胡子做围巾。胡萝卜先生觉得自己的胡子真有用。",
+                    explanation: "讲述了胡萝卜先生的胡子因为沾到了果酱而不断变长，帮助了很多小动物的故事，展现了想象力的魅力。作者想象丰富，描写生动，把胡萝卜先生的长胡子写得有趣而有用。"
+                },
+                { 
+                    title: "《我变成了一棵树》", 
+                    author: "",
+                    content: "我真希望自己能变成一棵树，这样就没有人知道我在哪里了。我心里想着，就觉得身上痒痒的，低头一看，发现我的头发正在变成树枝，我的手正在变成树干，我的脚正在变成树根。我真的变成了一棵树！我变成的这棵树上，长满了各种形状的鸟窝：三角形的、正方形的、长方形的、圆形的、椭圆形的、菱形的……风一吹，鸟窝就在枝头跳起了舞，还会发出丁零当啷的声音。妈妈来了，她带着食物来找我。她看见了鸟窝，就拿出食物放在鸟窝里。我闻到了食物的香味，肚子咕咕叫了起来。可是，我不能说话，因为我是一棵树。",
+                    explanation: "'我'变成了一棵树，树上结满了各种形状的鸟窝，妈妈带着食物来寻找'我'，体现了母爱的温暖和孩子的想象力。作者想象丰富，描写生动，把'我'变成树的经历写得有趣而感人。"
+                }
+            ],
+            flashcards: [
+                { front: "《胡萝卜先生的长胡子》", back: "讲述了胡萝卜先生的胡子因为沾到了果酱而不断变长，帮助了很多小动物的故事，展现了想象力的魅力。" },
+                { front: "《我变成了一棵树》", back: "'我'变成了一棵树，树上结满了各种形状的鸟窝，妈妈带着食物来寻找'我'，体现了母爱的温暖和孩子的想象力。" },
+                { front: "想象", back: "在头脑中创造出未曾有过的事物或情景，是一种重要的思维能力。" },
+                { front: "奇妙", back: "稀奇巧妙，让人惊奇。" },
+                { front: "想象的方法", back: "1. 大胆想象：突破现实的限制；2. 合理想象：符合逻辑；3. 具体描写：细节生动。" },
+                { front: "想象的作用", back: "丰富我们的精神世界，帮助我们创造新的事物。" },
+                { front: "习作：奇妙的想象", back: "写一个想象故事，创造一个奇妙的世界。" },
+                { front: "例文", back: "《一支铅笔的梦想》《尾巴它有一只猫》" }
+            ],
+            quiz: [
+                { q: "《胡萝卜先生的长胡子》中，胡萝卜先生的胡子为什么会变长？", options: ["天生很长", "沾到了果酱", "用了生发水", "被施了魔法"], a: 1 },
+                { q: "《我变成了一棵树》中，'我'为什么想变成树？", options: ["喜欢树", "不想吃饭", "想玩游戏", "想看风景"], a: 1 },
+                { q: "写想象作文最重要的是什么？", options: ["写得很长", "想象大胆又合理", "用很多成语", "写真实的事"], a: 1 },
+                { q: "第五单元是什么单元？", options: ["阅读单元", "习作单元", "口语交际单元", "综合性学习单元"], a: 1 },
+                { q: "下列哪个是第五单元的例文？", options: ["《小真的长头发》", "《一支铅笔的梦想》", "《漏》", "《方帽子店》"], a: 1 },
+                { q: "想象作文应该怎样写？", options: ["写真实的事", "想象大胆又合理", "抄袭别人的", "写得很短"], a: 1 }
+            ],
+            match: [
+                { left: "胡萝卜先生", right: "长胡子", related: true },
+                { left: "我", right: "树", related: true },
+                { left: "想象", right: "创造", related: true },
+                { left: "奇妙", right: "普通", related: false },
+                { left: "习作", right: "想象", related: true },
+                { left: "例文", right: "参考", related: true }
+            ]
+        },
+        6: {
+            title: "第六单元：运用多种方法理解难懂的句子",
+            desc: "学习运用多种方法理解难懂的句子，感受童年的快乐时光",
+            lessons: [
+                { 
+                    title: "《童年的水墨画》", 
+                    author: "",
+                    content: "溪边：垂柳把溪水当作梳妆的镜子，山溪像绿玉带一样平静。人影给溪水染绿了，钓竿上立着一只红蜻蜓。忽然扑腾一声人影碎了，草地上蹦跳着鱼儿和笑声。江上：像刚下水的鸭群，扇动翅膀拍水戏耍。一双双小手拨动着浪花，你拨我溅笑哈哈笑。是哪个'水葫芦'一下钻入水中，出水时只见一阵水花两对银牙。林中：松树刚洗过澡一身清清爽爽，松针上一串串雨珠明明亮亮。小蘑菇钻出泥土戴一顶斗笠，像一朵朵山花在树下开放。是谁一声欢叫把雨珠抖落，那是松鼠在快乐地玩耍。",
+                    explanation: "三首短诗分别描绘了溪边、江上、林中三个童年生活场景，充满了童真童趣。作者观察细致，描写生动，把童年的快乐写得栩栩如生。"
+                },
+                { 
+                    title: "《肥皂泡》", 
+                    author: "冰心",
+                    content: "小的时候，游戏的种类很多，其中我最爱玩的是吹肥皂泡。下雨的时节，不能到山上海边去玩，母亲就教我们在廊子上吹肥皂泡。她说阴雨时节天气潮湿，肥皂泡不容易破裂。我们把用剩的肥皂头儿，放在一只小木碗里，加上点水，和弄和弄，使它融化。然后用一支竹笔套管，蘸上那黏稠的肥皂水，慢慢地吹起，吹成一个轻圆的网球大小的泡儿，再轻轻地一提，那轻圆的球儿，便从管上落了下来，软悠悠地在空中飘游。若用扇子在下面轻轻地扇送，有时能飞得很高很高。这肥皂泡，吹起来很美丽，五色的浮光，在那轻清透明的球面上乱转。若是扇得好，一个大球，会分裂成两三个玲珑娇软的小球，四散分飞。有时吹得太大了，扇得太急了，这脆薄的球，会扯成长圆的形式，颤巍巍的，光影零乱。这时大家都悬着心，仰着头，停着呼吸，——不久，这光丽的薄球，就无声地散裂了，肥皂水落了下来，洒到眼睛里，大家都忽然低了头，揉出了眼泪。",
+                    explanation: "冰心回忆小时候吹肥皂泡的快乐，描写了肥皂泡的美丽和童年的欢乐。作者观察细致，描写生动，把肥皂泡写得美丽而梦幻。"
+                },
+                { 
+                    title: "《灰雀》", 
+                    author: "",
+                    content: "有一年冬天，列宁在郊外养病。他每天到公园散步。公园里有一棵高大的白桦树，树上有三只灰雀：两只胸脯是粉红的，一只胸脯是深红的。它们在树枝间来回跳动，婉转地歌唱，非常惹人喜爱。列宁每次走到白桦树下，都要停下来，仰望这三只欢快的灰雀，还经常给它们带来面包渣和谷粒。一天，列宁又来到公园，走到白桦树下，发现那只胸脯深红的灰雀不见了。他在周围的树林中找遍了，也没有找到。这时，列宁看见一个小男孩，就问：'孩子，你看见过一只深红色胸脯的灰雀吗？'男孩说：'没看见，我没看见。'列宁说：'一定是飞走了或者是冻死了。天气严寒，它怕冷。'那个男孩本来想告诉列宁灰雀没有死，但又不敢讲。列宁自言自语地说：'多好的灰雀呀，可惜再也飞不回来了。'男孩看看列宁，说：'会飞回来的，一定会飞回来的。它还活着。'列宁问：'会飞回来？'男孩肯定地说：'一定会飞回来！'第二天，列宁来到白桦树下，果然又看到那只灰雀欢蹦乱跳地在枝头歌唱。那个男孩站在白桦树旁，低着头。列宁看看男孩，又看看灰雀，微笑着说：'你好！灰雀，昨天你到哪儿去了？'当然，灰雀没有告诉列宁昨天它去哪儿了。列宁也没再问那个男孩，因为他已经知道，男孩是诚实的。",
+                    explanation: "讲述了列宁和一个小男孩之间关于灰雀的故事，表现了列宁对灰雀的喜爱和对男孩的尊重，以及男孩的诚实品质。"
+                },
+                { 
+                    title: "《我不能失信》", 
+                    author: "",
+                    content: "一个星期天，宋耀如一家准备到一位朋友家去。二女儿宋庆龄显得特别高兴。她早就盼着到这位伯伯家去了。伯伯家养的鸽子，尖尖的嘴巴，红红的眼睛，漂亮极了。伯伯还说准备送她一只呢。宋庆龄正准备和爸爸、妈妈一起去伯伯家，突然想起今天上午她答应了小珍，要教她叠花篮。爸爸说：'你不是一直想去伯伯家吗？改天再教小珍吧！'宋庆龄想了想，说：'不行！我答应了小珍，今天她要来我们家，我要教她叠花篮。'妈妈说：'那你就别去了，我们去了，你留在家里等小珍。'宋庆龄说：'可是，我也很想去伯伯家呀！'爸爸说：'那我们先去伯伯家，回来再教小珍，怎么样？'宋庆龄说：'不行！我答应了小珍，就要等她。'妈妈说：'那小珍要是不来呢？'宋庆龄说：'她会来的，我等她。'爸爸妈妈都同意了。宋庆龄一个人留在家里，等小珍来教她叠花篮。过了一会儿，小珍的妈妈来了，说小珍今天有事情，来不了了。宋庆龄虽然有些失望，但是她还是很高兴，因为她遵守了自己的诺言。",
+                    explanation: "宋庆龄小时候信守诺言的故事，告诉我们要诚实守信。作者观察细致，描写生动，把宋庆龄的守信写得感人。【略读课文】"
+                }
+            ],
+            flashcards: [
+                { front: "《童年的水墨画》", back: "三首短诗分别描绘了溪边、江上、林中三个童年生活场景，充满了童真童趣。" },
+                { front: "《肥皂泡》", back: "冰心回忆小时候吹肥皂泡的快乐，描写了肥皂泡的美丽和童年的欢乐。" },
+                { front: "《灰雀》", back: "讲述了列宁和一个小男孩之间的故事，体现了列宁对男孩的尊重和男孩的诚实。" },
+                { front: "《我不能失信》", back: "宋庆龄小时候信守诺言的故事，告诉我们要诚实守信。【略读课文】" },
+                { front: "理解难懂的句子", back: "可以通过联系上下文、查字典、请教他人等方法来理解。" },
+                { front: "阅读要素", back: "运用多种方法理解难懂的句子，将具体的方法内化为语文学习经验。" },
+                { front: "重点字词", back: "水墨画、肥皂泡、失信、守信、诚实、列宁" },
+                { front: "口语交际", back: "应该怎样安排座位" }
+            ],
+            quiz: [
+                { q: "《童年的水墨画》描写了哪三幅画面？", options: ["钓鱼、游泳、爬山", "溪边、江上、林中", "读书、写字、画画", "吃饭、睡觉、玩耍"], a: 1 },
+                { q: "《肥皂泡》的作者是谁？", options: ["鲁迅", "冰心", "老舍", "巴金"], a: 1 },
+                { q: "《我不能失信》讲的是谁的故事？", options: ["鲁迅", "宋庆龄", "周恩来", "毛泽东"], a: 1 },
+                { q: "《灰雀》讲述了谁和谁之间的故事？", options: ["列宁和小男孩", "列宁和斯大林", "毛泽东和周恩来", "鲁迅和闰土"], a: 0 },
+                { q: "第六单元的阅读要素是什么？", options: ["理解词语意思", "借助关键语句概括大意", "运用多种方法理解难懂的句子", "学习默读"], a: 2 },
+                { q: "下列哪个故事告诉我们要诚实守信？", options: ["《童年的水墨画》", "《肥皂泡》", "《我不能失信》", "《灰雀》"], a: 2 }
+            ],
+            match: [
+                { left: "溪边", right: "钓鱼", related: true },
+                { left: "冰心", right: "肥皂泡", related: true },
+                { left: "宋庆龄", right: "守信", related: true },
+                { left: "列宁", right: "灰雀", related: true },
+                { left: "难懂的句子", right: "联系上下文", related: true },
+                { left: "童年", right: "快乐", related: true }
+            ]
+        },
+        7: {
+            title: "第七单元：了解课文是从哪几个方面把事物写清楚的",
+            desc: "学习从不同方面把事物写清楚，感受大自然的神奇与生活中的乐趣",
+            lessons: [
+                { 
+                    title: "《火烧云》", 
+                    author: "萧红",
+                    content: "晚饭过后，火烧云上来了。霞光照得小孩子的脸红红的。大白狗变成红的了，红公鸡变成金的了。喂猪的老头儿在墙根靠着，笑盈盈地看着他的两头小白猪变成小金猪了。他刚想说：'你们也变了……'旁边走来个乘凉的人对他说：'您老人家必要高寿，您老是金胡子了。'天空的云从西边一直烧到东边，红彤彤的，好像是天空着了火。这地方的火烧云变化极多，一会儿红彤彤的，一会儿金灿灿的，一会儿半紫半黄，一会儿半灰半百合色。葡萄灰，梨黄，茄子紫，这些颜色天空都有。还有些说也说不出来、见也未曾见过的颜色。一会儿，天空出现一匹马，马头向南，马尾向西。马是跪着的，像等人骑上它的背，它才站起来似的。过了两三秒钟，那匹马大起来了，腿伸开了，脖子也长了，尾巴可不见了。看的人正在寻找马尾巴，那匹马变模糊了。忽然又来了一条大狗。那条狗十分凶猛，在向前跑，后边似乎还跟着好几条小狗。跑着跑着，小狗不知哪里去了，大狗也不见了。接着又来了一头大狮子，跟庙门前的石头狮子一模一样，也那么大，也那样蹲着，很威武很镇静地蹲着。可是一转眼就变了，再也找不着了。",
+                    explanation: "萧红笔下的火烧云，有着颜色多、变化快、形态多的特点，表达了作者对火烧云、对大自然的喜爱与赞叹。作者观察细致，描写生动，把火烧云写得绚丽多彩。"
+                },
+                { 
+                    title: "《暴风雨来临之前》", 
+                    author: "",
+                    content: "夏天的午后，常常会有暴风雨。暴风雨来临之前，天气会有一些变化。起初，空气变得闷热，没有一丝风。树叶一动也不动，知了也不叫了。突然，一阵风吹来，树叶沙沙地响起来。知了又开始叫了，但叫得很急促。天空中乌云密布，越来越黑。闪电划破天空，雷声轰隆隆地响起来。雨点开始落下，先是稀稀疏疏的，然后越下越大。暴风雨来了！",
+                    explanation: "按时间顺序描写了暴风雨来临前，从微风阵阵到大风呼啸、雷声轰鸣的变化过程，展现了大自然的神奇。作者观察细致，描写生动，把暴风雨来临前的景象写得栩栩如生。"
+                },
+                { 
+                    title: "《我们奇妙的世界》", 
+                    author: "",
+                    content: "这是一个奇妙的世界，一切看上去都是有生命的。你看天空的珍藏——清晨，太阳升起，带来新的一天。开始，天空呈粉红色，慢慢地变成了蔚蓝色，太阳就像一个大火球一样升起来了。有时，太阳云层周围，一道道彩色光环，有红色、有黄色、有蓝色、有绿色，真美丽！一天结束了，落日的余晖洒在波光粼粼的海面上，就像有人撒了一把把金子似的。海洋也是蓝色的。但更妙的是，深蓝的海洋里，还有许多奇妙的景象呢！",
+                    explanation: "用优美的语言描写了天空和大地上的奇妙事物，展现了世界的美好，告诉我们要善于发现生活中的美。作者观察细致，描写生动，把世界的奇妙写得栩栩如生。"
+                }
+            ],
+            flashcards: [
+                { front: "《火烧云》", back: "萧红笔下的火烧云，有着颜色多、变化快、形态多的特点，表达了作者对火烧云、对大自然的喜爱与赞叹。" },
+                { front: "《暴风雨来临之前》", back: "按时间顺序描写了暴风雨来临前，从微风阵阵到大风呼啸、雷声轰鸣的变化过程，展现了大自然的神奇。" },
+                { front: "《我们奇妙的世界》", back: "用优美的语言描写了天空和大地上的奇妙事物，展现了世界的美好，告诉我们要善于发现生活中的美。" },
+                { front: "描写事物的方法", back: "1. 从不同方面描写；2. 抓住特点描写；3. 按顺序描写；4. 运用修辞手法。" },
+                { front: "火烧云", back: "日出或日落时出现的赤色云霞，颜色绚丽，变化多端。" },
+                { front: "暴风雨", back: "伴有大雨的强风天气，通常有闪电和雷声。" },
+                { front: "重点字词", back: "呈现、变幻、蜡烛、诱人、圆润、乘凉、光芒、刀剑、普通、模型" },
+                { front: "习作", back: "国宝大熊猫" }
+            ],
+            quiz: [
+                { q: "《我们奇妙的世界》从哪两个方面描写了世界的奇妙？", options: ["天空和大地", "动物和植物", "白天和黑夜", "陆地和海洋"], a: 0 },
+                { q: "《火烧云》的作者是谁？", options: ["鲁迅", "萧红", "冰心", "老舍"], a: 1 },
+                { q: "下列哪个不是火烧云的特点？", options: ["颜色多", "变化快", "形态多", "固定不变"], a: 3 },
+                { q: "《暴风雨来临之前》是按什么顺序描写的？", options: ["时间顺序", "空间顺序", "逻辑顺序", "随机顺序"], a: 0 },
+                { q: "第七单元的阅读要素是什么？", options: ["理解词语意思", "借助关键语句概括大意", "了解课文是从哪几个方面把事物写清楚的", "学习默读"], a: 2 },
+                { q: "第七单元的习作是什么？", options: ["我的植物朋友", "看图画，写一写", "奇妙的想象", "国宝大熊猫"], a: 3 }
+            ],
+            match: [
+                { left: "火烧云", right: "颜色多", related: true },
+                { left: "暴风雨", right: "强风大雨", related: true },
+                { left: "我们奇妙的世界", right: "天空和大地", related: true },
+                { left: "描写事物", right: "不同方面", related: true },
+                { left: "习作", right: "国宝大熊猫", related: true },
+                { left: "火烧云", right: "萧红", related: true }
+            ]
+        },
+        8: {
+            title: "第八单元：了解故事的主要内容，复述故事",
+            desc: "读有趣的故事，学习复述故事，明白生活中的道理",
+            lessons: [
+                { 
+                    title: "《慢性子裁缝和急性子顾客》", 
+                    author: "",
+                    content: "故事发生在冬天。一位顾客走进了一家裁缝店。这位顾客是个急性子，他想马上就做好衣服。裁缝是个慢性子，他慢悠悠地说：'您要做件什么样的衣服？'顾客说：'我要做件棉袄。'裁缝说：'好吧，您先回去，过几天再来取。'顾客说：'不行！我马上就要穿！'裁缝说：'那好吧，您等着。'裁缝慢悠悠地拿起剪刀，慢悠悠地剪布料，慢悠悠地缝衣服。顾客等得着急了，说：'你怎么这么慢啊！'裁缝说：'我就是这样，您要是着急，就去找别人吧。'顾客说：'算了，我就等你吧。'过了好几天，衣服终于做好了。顾客穿上新衣服，高兴地走了。",
+                    explanation: "讲述了一个慢性子裁缝和一个急性子顾客之间的故事，告诉我们做事要合理安排时间，不要急躁。作者观察细致，描写生动，把慢性子裁缝和急性子顾客的互动写得有趣。"
+                },
+                { 
+                    title: "《漏》", 
+                    author: "",
+                    content: "从前，有一户人家，养着一只驴。一天晚上，贼来偷驴。贼刚要牵驴，老虎也来了，要吃驴。贼和老虎都怕对方，就都躲在一边。这时，老爷爷和老奶奶在屋里说话。老爷爷说：'我不怕贼，就怕漏。'老奶奶说：'我也不怕老虎，就怕漏。'贼和老虎听了，都以为'漏'是个很厉害的东西。贼想：'漏肯定比老虎还厉害，我得赶紧跑。'老虎想：'漏肯定比贼还厉害，我得赶紧跑。'贼和老虎都吓跑了，驴也没偷走，也没被吃掉。",
+                    explanation: "讽刺了老虎和贼的愚蠢和贪婪，告诉人们做贼心虚、干坏事没有好下场。作者观察细致，描写生动，把老虎和贼的愚蠢写得可笑。"
+                },
+                { 
+                    title: "《枣核》", 
+                    author: "",
+                    content: "从前，有个孩子叫枣核。枣核很小，只有枣核那么大。但是，枣核很聪明。有一年，县官要抢村民的牲口。枣核想了个办法，他钻进了县官的靴子里。县官穿上靴子，觉得脚痒痒的，就脱下来看。枣核从靴子里钻出来，跑到了牲口群里。他大声喊：'快跑！县官来抢牲口了！'村民们听到了，赶紧把牲口藏了起来。县官来了，没抢到牲口，很生气。枣核又想了个办法，他钻进了县官的帽子里。县官戴上帽子，觉得头痒痒的，就摘下来看。枣核从帽子里钻出来，跑到了县官的脸上，狠狠地咬了一口。县官疼得大叫，枣核趁机跑了。",
+                    explanation: "讲述了一个叫'枣核'的孩子，用自己的智慧帮助村民夺回牲口、惩治恶官的故事。【略读课文】"
+                }
+            ],
+            flashcards: [
+                { front: "《慢性子裁缝和急性子顾客》", back: "讲述了一个慢性子裁缝和一个急性子顾客之间的故事，告诉我们做事要合理安排时间，不要急躁。" },
+                { front: "《漏》", back: "讽刺了老虎和贼的愚蠢和贪婪，告诉人们做贼心虚、干坏事没有好下场。" },
+                { front: "《枣核》", back: "讲述了一个叫'枣核'的孩子，用自己的智慧帮助村民夺回牲口、惩治恶官的故事。【略读课文】" },
+                { front: "复述故事", back: "用自己的话把故事的主要内容讲出来，要抓住重点，顺序清楚。" },
+                { front: "故事的主要内容", back: "故事的起因、经过、结果，以及主要人物和事件。" },
+                { front: "重点字词", back: "裁缝、顾客、慢性子、急性子、漏、贼、枣核、智慧" },
+                { front: "口语交际", back: "趣味故事会" },
+                { front: "习作", back: "这样想象真有趣" }
+            ],
+            quiz: [
+                { q: "《慢性子裁缝和急性子顾客》中，裁缝是怎样的人？", options: ["慢性子", "急性子", "中等速度", "不知道"], a: 0 },
+                { q: "《漏》讽刺了谁？", options: ["老虎和贼", "老人和妻子", "村民", "官员"], a: 0 },
+                { q: "《枣核》中的枣核是一个怎样的孩子？", options: ["懒惰", "聪明勇敢", "胆小", "自私"], a: 1 },
+                { q: "第八单元的阅读要素是什么？", options: ["理解词语意思", "借助关键语句概括大意", "了解故事的主要内容，复述故事", "学习默读"], a: 2 },
+                { q: "第八单元的口语交际是什么？", options: ["春游去哪里", "劝告", "应该怎样安排座位", "趣味故事会"], a: 3 },
+                { q: "第八单元的习作是什么？", options: ["我的植物朋友", "奇妙的想象", "身边那些有特点的人", "这样想象真有趣"], a: 3 }
+            ],
+            match: [
+                { left: "慢性子裁缝", right: "急性子顾客", related: true },
+                { left: "漏", right: "做贼心虚", related: true },
+                { left: "枣核", right: "智慧", related: true },
+                { left: "复述故事", right: "抓住重点", related: true },
+                { left: "老虎", right: "愚蠢", related: true },
+                { left: "贼", right: "贪婪", related: true }
+            ]
+        }
+    };
+
+    function getTextbookPagePath(pageNo) {
+        return `textbook-pages/p${String(pageNo).padStart(3, '0')}.jpg`;
+    }
+
+    const lessonPageMap = {
+        "《绝句》": [2, 3],
+        "《惠崇春江晚景》": [2, 3],
+        "《三衢道中》": [2, 3],
+        "《燕子》": [4, 5],
+        "《荷花》": [6, 7],
+        "《昆虫备忘录》": [8, 9, 10],
+        "《守株待兔》": [16, 17],
+        "《会摇尾巴的狼》": [18, 19, 20],
+        "《鹿角和鹿腿》": [21, 22],
+        "《池子与河流》": [23, 24, 25, 26],
+        "《海底世界》": [34, 35],
+        "《石蜂》": [36, 37],
+        "《小虾》": [38, 39],
+        "《元日》": [44, 45],
+        "《清明》": [44, 45],
+        "《九月九日忆山东兄弟》": [44, 45],
+        "《纸的发明》": [47, 48, 49],
+        "《赵州桥》": [50, 51],
+        "《一幅名扬中外的画》": [52, 53],
+        "《胡萝卜先生的长胡子》": [58, 59, 60],
+        "《我变成了一棵树》": [61, 62, 63, 64],
+        "《童年的水墨画》": [70, 71],
+        "《肥皂泡》": [72, 73, 74],
+        "《灰雀》": [75, 76],
+        "《我不能失信》": [77, 78],
+        "《火烧云》": [84, 85, 86],
+        "《暴风雨来临之前》": [87, 88],
+        "《我们奇妙的世界》": [89, 90, 91],
+        "《慢性子裁缝和急性子顾客》": [96, 97, 98, 99],
+        "《漏》": [100, 101, 102, 103],
+        "《枣核》": [104, 105, 106]
+    };
+
+    const lessonMetaMap = {
+        "《纸的发明》": { author: "教材课文", note: "已按教材原页展示，便于对照书上内容。" },
+        "《赵州桥》": { author: "教材课文", note: "李春是赵州桥的设计建造者，不是课文作者。" },
+        "《一幅名扬中外的画》": { author: "教材课文", note: "张择端是《清明上河图》的作者，课文是介绍性说明文。" },
+        "《我们奇妙的世界》": { author: "彼得·西摩（马丽译，选文有改动）" },
+        "《慢性子裁缝和急性子顾客》": { author: "周锐" },
+        "《漏》": { author: "民间故事（整理后入选课文）" },
+        "《枣核》": { author: "民间故事（整理后入选课文）" }
+    };
+
+    const defaultLessonSupport = {
+        extension: [
+            "读一读文中的优美句子，试着说说自己最喜欢哪一句。",
+            "联系生活经验，说说这篇课文让你想到了什么。"
+        ],
+        challenge: [
+            "用两三句话概括课文主要内容。",
+            "挑一个关键词，说说它在文中起了什么作用。"
+        ]
+    };
+
+    const defaultLessonSupportAnswers = {
+        extension: [
+            "可以先找到文中的关键词句，再用“我最喜欢……，因为……”这样的句式说清理由。",
+            "可以先说这篇课文让你想到的人、事、景，再联系课文内容说明原因。"
+        ],
+        challenge: [
+            "概括时可以按“写了谁或什么、发生了什么、结果怎样”来说，两三句话说完整即可。",
+            "先回到课文里找到这个关键词，再说它写出了什么特点，或表达了什么感情。"
+        ]
+    };
+
+    const lessonSupportMap = {
+        "《绝句》": {
+            extension: ["找出诗中写到的景物，按“看到的—闻到的—想到的”整理。", "背诵古诗，试着配上自己的春景小插画。"],
+            challenge: ["比较《绝句》和《惠崇春江晚景》都写了哪些春天信号。", "用“XX了，XX也XX了”仿说一句春景。"]
+        },
+        "《惠崇春江晚景》": {
+            extension: ["圈出诗中最能表现早春气息的景物。", "查一查“河豚欲上时”为什么能说明时令。"],
+            challenge: ["说说这首题画诗里哪些内容是看到的，哪些是想到的。", "尝试把诗意改写成两三句白话。"]
+        },
+        "《三衢道中》": {
+            extension: ["找出表示声音和颜色的词，体会初夏景色。", "说说诗人一路上的心情为什么越来越好。"],
+            challenge: ["把“绿阴不减来时路”换成自己的话说一说。", "试着把这首诗改成一段简短游记。"]
+        },
+        "《燕子》": {
+            extension: ["按“外形—飞行—停歇”整理课文写燕子的顺序。", "积累“剪刀似的尾巴”“光彩夺目的图画”等优美短语。"],
+            challenge: ["背诵第1到第2自然段，练习有感情地朗读。", "仿照课文写一种你熟悉的小动物，抓住外形和动作。"]
+        },
+        "《荷花》": {
+            extension: ["圈出描写荷花姿态的句子，读出画面感。", "积累“挨挨挤挤、翩翩起舞、饱胀”等词语。"],
+            challenge: ["说说作者为什么会觉得自己仿佛就是一朵荷花。", "仿照第2自然段写一种植物不同的样子。"]
+        },
+        "《昆虫备忘录》": {
+            extension: ["给喜欢的昆虫做一张“小小备忘录”卡片。", "找出最有趣的一处描写，说说有趣在哪里。"],
+            challenge: ["按“样子—本领—趣味”介绍一种昆虫。", "比较瓢虫、独角仙、蚂蚱的描写方法有什么不同。"]
+        },
+        "《守株待兔》": {
+            extension: ["借助注释说一说每句话的意思。", "说说农夫为什么会被宋国人笑话。"],
+            challenge: ["用自己的话完整复述这个寓言故事。", "联系现实，说说生活中有没有“守株待兔”的例子。"]
+        },
+        "《会摇尾巴的狼》": {
+            extension: ["找出老山羊识破狼的关键语句。", "说说狼是怎样一步步伪装自己的。"],
+            challenge: ["把故事分成“设局—诱骗—识破”三个部分复述。", "如果你是老山羊，你还会怎么反驳狼？"]
+        },
+        "《鹿角和鹿腿》": {
+            extension: ["找出鹿前后态度变化的词句。", "说说鹿角和鹿腿各自有什么价值。"],
+            challenge: ["试着从鹿的角度讲述这个故事。", "联系生活，说一说“不能只看外表”的例子。"]
+        },
+        "《池子与河流》": {
+            extension: ["圈出池子和河流各自的观点。", "说说河流为什么会“光荣无比”。"],
+            challenge: ["比较池子和河流的不同命运。", "把这篇寓言的道理用一句话写下来。"]
+        },
+        "《海底世界》": {
+            extension: ["按“景象—声音—动物—植物—矿产”整理课文。", "找出课文中运用设问的地方，体会表达效果。"],
+            challenge: ["试着给海底世界设计一张导游介绍卡。", "用“有的……有的……有的……”仿写一组句子。"]
+        },
+        "《石蜂》": {
+            extension: ["说说石蜂最让你惊讶的习性是什么。", "找一找法布尔是怎样细致观察昆虫的。"],
+            challenge: ["把石蜂筑巢的过程按顺序讲出来。", "试着模仿课文介绍一种你知道的小动物。"]
+        },
+        "《小虾》": {
+            extension: ["圈出描写小虾吃食、休息、打斗的句子。", "说说作者为什么觉得小虾“真有趣”。"],
+            challenge: ["从外形和动作两个方面介绍小虾。", "仿照课文观察一种小动物，写一段话。"]
+        },
+        "《元日》": {
+            extension: ["找出诗中体现春节习俗的词句。", "说说你知道哪些过春节的传统活动。"],
+            challenge: ["把这首诗描写的场面用自己的话说出来。", "比较《元日》和今天过春节有什么相同与不同。"]
+        },
+        "《清明》": {
+            extension: ["说说“雨纷纷”“欲断魂”写出了怎样的气氛。", "联系节日习俗，想想诗人为什么想找酒家。"],
+            challenge: ["用简洁的话描绘一幅“清明路上图”。", "试着读出这首诗低回含蓄的语气。"]
+        },
+        "《九月九日忆山东兄弟》": {
+            extension: ["找出最能表达思乡之情的一句诗。", "查一查重阳节有哪些习俗。"],
+            challenge: ["说说诗人是怎样借想象表达思亲之情的。", "把“遍插茱萸少一人”写成一句现代汉语。"]
+        },
+        "《纸的发明》": {
+            extension: ["按时间顺序整理书写材料的变化过程。", "说说蔡伦改进造纸术的方法为什么能流传下来。"],
+            challenge: ["用表格比较“竹木简—丝帛—蔡伦纸”的优缺点。", "查一查中国古代四大发明，再和同学交流。"]
+        },
+        "《赵州桥》": {
+            extension: ["找出写赵州桥“雄伟、坚固、美观”的句子。", "说说“小桥洞”的设计妙在哪里。"],
+            challenge: ["画一张赵州桥结构示意图并做口头介绍。", "找出文中运用数字说明的地方，体会准确表达。"]
+        },
+        "《一幅名扬中外的画》": {
+            extension: ["说说课文从哪几个方面介绍《清明上河图》。", "观察教材原页，感受“繁华”和“热闹”的画面。"],
+            challenge: ["练习按“总—分—总”结构概括课文。", "选择画中的一个场景，展开想象写两三句。"]
+        },
+        "《胡萝卜先生的长胡子》": {
+            extension: ["想想长胡子还可以帮助谁。", "说说这个故事最有趣的地方是什么。"],
+            challenge: ["续编一个“长胡子又帮了谁”的小片段。", "试着用“因为……所以……”说清故事发展的原因。"]
+        },
+        "《我变成了一棵树》": {
+            extension: ["找出文中最有想象力的地方读一读。", "说说妈妈对“我”的爱体现在哪里。"],
+            challenge: ["仿照课文想象：如果你也会变，你想变成什么？", "把鸟窝的样子再补充写两种。"]
+        },
+        "《童年的水墨画》": {
+            extension: ["分别找出“溪边、江上、林中”最有画面感的句子。", "说说三幅画面表现了怎样的童年快乐。"],
+            challenge: ["试着给三首小诗分别起一个小标题。", "模仿其中一首写一个校园生活片段。"]
+        },
+        "《肥皂泡》": {
+            extension: ["圈出写肥皂泡形状和颜色的词句。", "说说冰心小时候为什么喜欢吹肥皂泡。"],
+            challenge: ["按“做肥皂水—吹泡泡—看泡泡”梳理顺序。", "仿写一个你玩过的小游戏片段。"]
+        },
+        "《灰雀》": {
+            extension: ["读一读列宁和小男孩的对话，体会人物心情。", "说说列宁为什么没有再追问小男孩。"],
+            challenge: ["从小男孩的角度讲讲自己做错事又改正的过程。", "找出能表现男孩心虚和变化的动作神态。"]
+        },
+        "《我不能失信》": {
+            extension: ["说说宋庆龄为什么最终选择留在家里。", "找出表现她守信的关键语句。"],
+            challenge: ["联系生活，说说守信用会带来什么。", "试着把这个故事讲给低年级同学听。"]
+        },
+        "《火烧云》": {
+            extension: ["从颜色和形状两方面找出最美的描写。", "积累“红彤彤、金灿灿、葡萄灰”等词语。"],
+            challenge: ["按“颜色变化—形状变化”梳理课文。", "仿照课文写一段天空云彩变化的小片段。"]
+        },
+        "《暴风雨来临之前》": {
+            extension: ["按时间顺序找出天气变化的词句。", "说说暴风雨来临前你还观察到过哪些现象。"],
+            challenge: ["用自己的话复述“暴风雨来临前”的变化过程。", "比较这篇课文和《火烧云》在写景顺序上的不同。"]
+        },
+        "《我们奇妙的世界》": {
+            extension: ["分别找出写天空和大地奇妙的句子。", "说说作者为什么觉得“一切看上去都是有生命的”。"],
+            challenge: ["按“天空—大地”整理课文结构。", "仿照课文写一段你眼中的“奇妙世界”。"]
+        },
+        "《慢性子裁缝和急性子顾客》": {
+            extension: ["找出最能体现顾客“急”和裁缝“慢”的对话。", "说说这篇课文为什么读起来特别有趣。"],
+            challenge: ["给故事分段，按时间顺序复述。", "试着分角色朗读，读出人物语气。"]
+        },
+        "《漏》": {
+            extension: ["说说老虎和贼为什么都怕“漏”。", "找出故事中最有趣、最紧张的情节。"],
+            challenge: ["画一张故事情节图，理清“老虎—贼—老爷爷—老奶奶”的关系。", "用自己的话把故事讲完整，注意前因后果。"]
+        },
+        "《枣核》": {
+            extension: ["说说枣核帮助乡亲时用了哪些办法。", "找出最能表现枣核机智勇敢的情节。"],
+            challenge: ["如果继续编故事，枣核还会怎么帮助大家？", "试着从“人物特点—事情经过—结果”三个方面复述。"]
+        }
+    };
+
+    const lessonSupportAnswerMap = {
+        "《绝句》": {
+            extension: [
+                "看到的有迟日、江山、燕子、鸳鸯；闻到的是花草香；想到的是春天来了，万物都很有生机。",
+                "插画可以画温暖的太阳、青青的江山、飞舞的燕子和睡在沙洲上的鸳鸯，和诗里的画面对应起来。"
+            ],
+            challenge: [
+                "《绝句》写了春风、花草香、燕子、鸳鸯；《惠崇春江晚景》写了桃花、江水、鸭子、蒌蒿、芦芽、河豚，都是在告诉我们春天到了。",
+                "示例：春风暖了，花儿也开了。"
+            ]
+        },
+        "《惠崇春江晚景》": {
+            extension: [
+                "最能表现早春气息的景物有桃花、江水、鸭子、蒌蒿和芦芽，这些景物都刚刚显出春意。",
+                "因为河豚一般在春天逆流而上，所以“河豚欲上时”点明了这是春江回暖的时候。"
+            ],
+            challenge: [
+                "看到的有竹林、桃花、江水、鸭子、蒌蒿、芦芽；想到的是河豚快要顺江而上了。",
+                "示例：竹林外几枝桃花开了，江水变暖了，鸭子最先知道。岸边长出了蒌蒿和芦芽，正是河豚要上来的时候。"
+            ]
+        },
+        "《三衢道中》": {
+            extension: [
+                "颜色词主要是“绿阴”，声音写的是“黄鹂四五声”，让人感到初夏山路又绿又静又有生气。",
+                "因为一路上绿树成阴，黄鹂不停地叫，景色比来时还美，所以诗人的心情越来越愉快。"
+            ],
+            challenge: [
+                "这句话可以理解成：回来的路上树荫还是那么浓密，一点也不比来时少。",
+                "示例：梅子黄了的时候，我坐着小船走山路。路边绿树成阴，耳边不断传来黄鹂的叫声，回程时心情也一直很好。"
+            ]
+        },
+        "《燕子》": {
+            extension: [
+                "课文先写燕子的外形，再写燕子在春光中飞行，最后写它停歇在电线上，顺序很清楚。",
+                "可以积累“乌黑的羽毛、轻快有力的翅膀、剪刀似的尾巴、光彩夺目的图画”等短语。"
+            ],
+            challenge: [
+                "朗读时第1自然段要读出对燕子外形的喜爱，第2自然段要读得轻快些，表现春天里燕子飞来的活泼。",
+                "示例：小麻雀披着灰褐色的羽毛，小眼睛圆圆的。它一会儿跳到窗台上，一会儿飞到树枝间，动作特别灵活。"
+            ]
+        },
+        "《荷花》": {
+            extension: [
+                "描写荷花姿态的句子有“有的才展开两三片花瓣儿，有的花瓣儿全展开了，有的还是花骨朵儿”，读起来很有画面感。",
+                "“挨挨挤挤”写出了荷叶很多很密，“翩翩起舞”写出了轻快优美，“饱胀”写出了花骨朵儿鼓鼓的样子。"
+            ],
+            challenge: [
+                "因为荷花太美了，作者看得入了迷，仿佛自己也站在荷花池里，成了一朵荷花，这样写更能表现对荷花的喜爱。",
+                "示例：桃花已经开了不少。桃花有的才露出一点红，有的已经展开笑脸，有的还是鼓鼓的小花苞。"
+            ]
+        },
+        "《昆虫备忘录》": {
+            extension: [
+                "示例：我喜欢独角仙。它个头大，头上有角，样子威风，力气也不小，像一个昆虫小勇士。",
+                "比如写瓢虫的那部分很有趣，因为作者把不同星点的瓢虫写得像在认人一样，读起来特别生动。"
+            ],
+            challenge: [
+                "示例：蜜蜂个子不大，身上黄黑相间。它会采蜜，还会传播花粉，是勤劳又有本领的小昆虫。",
+                "写瓢虫时抓住了外形特点，写独角仙时突出威风和力气，写蚂蚱时更多写动作和样子，各有侧重。"
+            ]
+        },
+        "《守株待兔》": {
+            extension: [
+                "可以这样理解：种田人偶然捡到撞死在树桩上的兔子后，就放下农活，天天守着树桩等兔子，结果再也没有得到兔子，田地却荒了。",
+                "因为他把一次偶然发生的事当成了天天都会发生的事，想不劳而获，所以被宋国人笑话。"
+            ],
+            challenge: [
+                "示例：一个农夫干活时，碰到一只兔子撞死在树桩上。他捡了兔子后就不再种田，天天守着树桩等兔子，最后田地荒了，也没有再等到兔子。",
+                "示例：只想等现成机会、不肯努力学习或做事，就是“守株待兔”。"
+            ]
+        },
+        "《会摇尾巴的狼》": {
+            extension: [
+                "老山羊识破狼，是因为狼嘴上说自己善良可怜，可话里处处露出想吃羊的凶相，前后很矛盾。",
+                "狼先装可怜，再装友好，还想用摇尾巴来骗取信任，可它越装越露出破绽。"
+            ],
+            challenge: [
+                "复述时可以先说狼设法接近老山羊，再说它怎样花言巧语诱骗，最后说老山羊怎样识破并反驳它。",
+                "示例：我会说，真正善良不是靠摇尾巴装出来的，狼的本性不会因为几句好话就改变。"
+            ]
+        },
+        "《鹿角和鹿腿》": {
+            extension: [
+                "鹿开始很欣赏自己美丽的角，却抱怨腿细不好看；遇到危险后，它才明白腿救了自己，角反而差点害了自己。",
+                "鹿角虽然漂亮，但容易被树枝挂住；鹿腿虽然不好看，却跑得快、能救命，所以它们各有价值。"
+            ],
+            challenge: [
+                "示例：我本来很喜欢自己漂亮的角，瞧不起细长的腿。后来狮子追来时，我靠腿逃命，却差点因为角被树枝挂住，才知道不能只看外表。",
+                "示例：雨鞋看起来不漂亮，但下雨天特别有用，这说明不能只看外表。"
+            ]
+        },
+        "《池子与河流》": {
+            extension: [
+                "池子觉得安安静静、舒舒服服最好，不想流动；河流认为应该不停前进，用奔流实现自己的价值。",
+                "因为河流一直向前流动，不断给人们带来用处，所以它“光荣无比”。"
+            ],
+            challenge: [
+                "池子因为贪图安逸，最后慢慢干涸；河流因为一直流动，始终充满活力，还能奔向远方。",
+                "可以概括为：人不能贪图安逸，只有不断努力、发挥作用，生命才更有价值。"
+            ]
+        },
+        "《海底世界》": {
+            extension: [
+                "课文可以按“海底宁静的景象、海底动物发出的声音、动物活动、植物差异、矿产丰富”来整理。",
+                "如“你可知道，大海深处是怎样的吗？”先提出问题，再往下介绍，这样更能吸引读者继续读。"
+            ],
+            challenge: [
+                "示例：海底世界真神奇。那里有会发光的鱼、有慢慢摆动的海草、还有丰富的矿产，是一个安静又热闹的海底乐园。",
+                "示例：天上的云真有趣，有的像小船，有的像棉花糖，有的像奔跑的小马。"
+            ]
+        },
+        "《石蜂》": {
+            extension: [
+                "石蜂最让人惊讶的是它会认真挑地方、筑巢、存放食物，还会为后代准备好生活条件。",
+                "法布尔是通过长期、耐心、反复地观察昆虫，连很细小的动作和习性都记录下来。"
+            ],
+            challenge: [
+                "可以按“寻找地方、挖洞筑巢、搬运食物、产卵封口”的顺序来讲石蜂筑巢的过程。",
+                "示例：蜗牛背着小房子慢慢爬，它喜欢潮湿的地方，遇到危险时会把身体缩回壳里。"
+            ]
+        },
+        "《小虾》": {
+            extension: [
+                "可以从课文里找到小虾吃食时很敏捷、休息时比较安静、打斗时很凶猛的句子，感受它们不同状态的样子。",
+                "因为小虾有时安静，有时机灵，有时又爱打斗，样子变化很多，所以作者觉得它们“真有趣”。"
+            ],
+            challenge: [
+                "示例：小虾身子透明，样子小巧。它活动时很灵活，吃东西时动作快，打斗时又显得很有劲。",
+                "示例：小金鱼全身红红的，尾巴像一把小扇子。它一会儿吐泡泡，一会儿摆着尾巴游来游去，很可爱。"
+            ]
+        },
+        "《元日》": {
+            extension: [
+                "诗中体现春节习俗的词句有“爆竹声中一岁除”“春风送暖入屠苏”“总把新桃换旧符”。",
+                "传统活动有放鞭炮、贴春联、拜年、吃团圆饭、穿新衣等。"
+            ],
+            challenge: [
+                "示例：新年的早晨到处响着爆竹声，人们喝着屠苏酒，在春风里高高兴兴地把旧桃符换成新桃符。",
+                "相同的是都很热闹，都要辞旧迎新；不同的是现在很多地方不再放鞭炮了，但贴春联、拜年这些习俗还保留着。"
+            ]
+        },
+        "《清明》": {
+            extension: [
+                "“雨纷纷”写出了细雨连绵的天气，“欲断魂”写出了路上行人伤感低落的心情，整首诗气氛有些凄清。",
+                "因为清明本来就是祭扫追思的节日，诗人路上心情低落，所以想找酒家歇歇脚、缓一缓情绪。"
+            ],
+            challenge: [
+                "示例：清明时节，细雨不停地下着，路上的行人神情忧伤。诗人向牧童打听酒家，牧童指向远处杏花深处的小村子。",
+                "朗读时语速可以稍慢一些，把“纷纷”“欲断魂”读得轻一些，读出低回、伤感的味道。"
+            ]
+        },
+        "《九月九日忆山东兄弟》": {
+            extension: [
+                "最能表达思乡之情的是“独在异乡为异客，每逢佳节倍思亲”。",
+                "重阳节的习俗有登高、插茱萸、赏菊、饮菊花酒等。"
+            ],
+            challenge: [
+                "诗人想到远方的兄弟们正在登高、插茱萸，唯独少了自己，用这样的想象表达出浓浓的思亲之情。",
+                "这句话可以写成：大家都插上了茱萸，只是少了我一个人。"
+            ]
+        },
+        "《纸的发明》": {
+            extension: [
+                "书写材料的变化大致是：甲骨、竹木简和丝帛等材料不够方便，后来蔡伦改进造纸术，纸张逐渐变得轻便、好用、便于推广。",
+                "因为蔡伦纸取材更广、成本更低、书写和保存都更方便，所以能慢慢流传下来。"
+            ],
+            challenge: [
+                "可以这样比较：竹木简太重，携带不方便；丝帛太贵，不易普及；蔡伦纸轻便、便宜、好写，所以更适合广泛使用。",
+                "中国古代四大发明一般指造纸术、印刷术、火药、指南针，可以和同学交流它们对世界的影响。"
+            ]
+        },
+        "《赵州桥》": {
+            extension: [
+                "写“雄伟”的句子主要介绍桥长、桥宽；写“坚固”的句子主要介绍大桥没有桥墩和小桥洞设计；写“美观”的句子主要介绍栏板上的精美图案。",
+                "小桥洞的妙处在于既能减轻桥身重量，又便于排水泄洪，还让整座桥更稳固。"
+            ],
+            challenge: [
+                "示意图可以画出大拱桥身、两边的小桥洞和栏板，再介绍它既坚固又美观的特点。",
+                "文中用到了桥长、桥宽等具体数字，这样写能让读者更清楚地感受到赵州桥的雄伟。"
+            ]
+        },
+        "《一幅名扬中外的画》": {
+            extension: [
+                "课文主要从画的历史价值、画面内容、街市人物和热闹场景等方面来介绍《清明上河图》。",
+                "参考时可以重点看热闹的街道、来往的行人、桥上的情景，感受古都汴梁的繁华。",
+            ],
+            challenge: [
+                "概括时可以先总说这是一幅名扬中外的古画，再分写画里有哪些热闹场景，最后总结这幅画很有价值。",
+                "示例：桥头边有的人在招呼生意，有的人正赶着毛驴过桥，还有的人停下来看热闹，整条街显得十分繁华。"
+            ]
+        },
+        "《胡萝卜先生的长胡子》": {
+            extension: [
+                "长胡子还可以帮助晾衣服的人当绳子，帮助放风筝的小朋友接长风筝线，也可以给小动物当跳绳。",
+                "最有趣的是长胡子总在不经意间帮助别人，胡萝卜先生自己还不知道，故事既神奇又温暖。"
+            ],
+            challenge: [
+                "示例：长胡子又飘到了河边，一位阿姨正愁没有绳子捆篮子，就剪下一段胡子当绳子，问题一下子解决了。",
+                "因为胡萝卜先生的胡子越长越长，所以总能在别人需要的时候派上用场。"
+            ]
+        },
+        "《我变成了一棵树》": {
+            extension: [
+                "比如树上长满各种形状的鸟窝、自己真的变成树、妈妈在树下乘凉吃东西，这些地方都很有想象力。",
+                "妈妈一边找“我”，一边关心“我”饿不饿，还把好吃的带来，说明妈妈一直惦记着“我”。"
+            ],
+            challenge: [
+                "示例：如果我会变，我想变成一朵云。白天我可以在天上飘来飘去，傍晚还能给天空披上彩霞。",
+                "示例：鸟窝还可以像小船一样弯弯的，也可以像蘑菇一样圆圆的。"
+            ]
+        },
+        "《童年的水墨画》": {
+            extension: [
+                "“溪边”可以抓“人影给溪水染绿了”，“江上”可以抓戏水击浪的画面，“林中”可以抓采蘑菇和欢笑声，这些句子都很有画面感。",
+                "三幅画面分别写了溪边钓鱼、江上戏水、林中采蘑菇，表现了童年生活自由、快乐、充满趣味。"
+            ],
+            challenge: [
+                "示例：可以起成“溪边垂钓”“江上戏水”“林中采菇”这样的标题。",
+                "示例：操场上，下课铃一响，同学们像小鸟一样冲了出来。有的跳绳，有的踢球，笑声飘满了校园。"
+            ]
+        },
+        "《肥皂泡》": {
+            extension: [
+                "可以圈出“轻清透明、玲珑娇软、若是扇得好，一个大球会分裂成两三个小球”等词句，体会肥皂泡的美。",
+                "因为吹肥皂泡简单好玩，泡泡在阳光下颜色变化多，又能带来想象，所以冰心小时候特别喜欢。"
+            ],
+            challenge: [
+                "顺序可以整理为：先制作肥皂水，再用竹笔套管吹泡泡，最后欣赏泡泡轻轻飞起来。",
+                "示例：我最喜欢玩纸飞机。先把纸折好，再轻轻一掷，看着它在空中滑出去，心里特别开心。"
+            ]
+        },
+        "《灰雀》": {
+            extension: [
+                "从对话里能感到列宁很关心灰雀，也很尊重小男孩；小男孩开始紧张心虚，后来愿意改正错误。",
+                "因为列宁已经从小男孩的表现里猜到事情真相了，他没有责备，而是给了男孩主动改正的机会。"
+            ],
+            challenge: [
+                "示例：我把灰雀带走后心里很不安。听了列宁的话，我知道自己做错了，第二天就把灰雀放回去了。",
+                "可以找“低下头”“看看列宁”“说话吞吞吐吐”等描写，这些都表现出男孩先心虚、后悔改。"
+            ]
+        },
+        "《我不能失信》": {
+            extension: [
+                "因为宋庆龄已经答应了小珍来家里玩，她觉得答应别人的事就一定要做到，所以决定留在家里。",
+                "关键语句可以抓住她坚持“既然答应了别人，就应该守信用”这一层意思。"
+            ],
+            challenge: [
+                "守信用会让别人更信任你，也能让自己做事更有原则，和朋友相处也会更真诚。",
+                "讲给低年级同学时，可以重点说“答应了别人就要做到”，把这个道理讲明白。"
+            ]
+        },
+        "《火烧云》": {
+            extension: [
+                "颜色上可以找“红彤彤、金灿灿、葡萄灰、半紫半黄”；形状上可以找“马、狗、狮子”等变化，画面很美。",
+                "可以积累这些表示颜色的词，再注意课文里还写了颜色变化快、样子变化多。"
+            ],
+            challenge: [
+                "课文先写颜色变化很多、很快，再写形状一会儿像马、一会儿像狗、一会儿像狮子，条理非常清楚。",
+                "示例：晚霞一会儿像一条红鱼，一会儿像一团棉花，一会儿又像展开翅膀的大鸟，变化得真快。"
+            ]
+        },
+        "《暴风雨来临之前》": {
+            extension: [
+                "可以按“天色变暗、风越来越大、动物和植物出现异常反应”这样的顺序找词句，体会暴风雨来临前的变化。",
+                "示例：暴雨前天空会变黑，风会变急，有时树叶会翻过来，小动物也会急着躲藏。"
+            ],
+            challenge: [
+                "复述时可以先说天气闷热、天空变化，再说风云翻滚、周围景物反应，最后点出暴风雨马上就要到了。",
+                "《火烧云》主要按颜色和形状变化来写景，《暴风雨来临之前》更多按时间推进来写天气变化。"
+            ]
+        },
+        "《我们奇妙的世界》": {
+            extension: [
+                "写天空奇妙的有日出、云彩、雨后景象等，写大地奇妙的有植物、果实、昆虫等，处处都让人感到世界很神奇。",
+                "因为作者眼里的天空、大地、万物都在变化、生长、发光，所以他说“一切看上去都是有生命的”。"
+            ],
+            challenge: [
+                "课文可以分成先写天空的奇妙，再写大地的奇妙，最后总说世界真奇妙。",
+                "示例：我觉得清晨的校园很奇妙。阳光照在窗户上闪闪发亮，树叶轻轻摇动，连草尖上的露珠都像会说话一样。"
+            ]
+        },
+        "《慢性子裁缝和急性子顾客》": {
+            extension: [
+                "可以找顾客总是催“快点做好”，裁缝却总说“不着急、来得及”这类对话，最能看出一个急、一个慢。",
+                "因为人物性格反差特别大，对话又一来一回很有节奏，所以读起来觉得特别有趣。"
+            ],
+            challenge: [
+                "复述时可以按“第一天做棉袄、后来改夹袄、再改短袖、最后又变主意”这样的时间顺序来讲。",
+                "朗读顾客时语速可以快一点、着急一点；朗读裁缝时语气可以慢一些、稳一些。"
+            ]
+        },
+        "《漏》": {
+            extension: [
+                "因为老虎和贼都不知道“漏”其实是屋漏雨，还以为是非常可怕的东西，所以一个比一个害怕。",
+                "最有趣又紧张的地方，是老虎驮着贼、贼骑着老虎，双方都以为自己碰上了“漏”。"
+            ],
+            challenge: [
+                "情节图可以围绕“老爷爷老奶奶说漏雨了，老虎和贼误会‘漏’，一路惊吓逃跑”来整理人物关系。",
+                "讲故事时要把“听见漏、误会漏、害怕逃跑、最后真相大白”几个环节说清楚。"
+            ]
+        },
+        "《枣核》": {
+            extension: [
+                "枣核帮助乡亲时用了聪明机灵的办法，比如动脑筋、想办法周旋，不是蛮干，而是靠智慧解决问题。",
+                "最能表现枣核机智勇敢的情节，是他面对强势人物也不慌张，敢想办法、敢行动。"
+            ],
+            challenge: [
+                "示例：如果继续编故事，枣核还会想办法帮乡亲找回被抢走的东西，或者智斗新的恶人，继续为大家出主意。",
+                "复述时先说枣核是个怎样的孩子，再说他怎样帮助乡亲，最后说事情结果和大家对他的称赞。"
+            ]
+        }
+    };
+
+    function getLessonMeta(lesson) {
+        return { ...lesson, ...(lessonMetaMap[lesson.title] || {}) };
+    }
+
+    function attachReferenceAnswers(items, answers) {
+        return (items || []).map((item, idx) => {
+            const normalized = typeof item === 'string' ? { text: item } : item;
+            return {
+                text: normalized.text,
+                answer: normalized.answer || (answers && answers[idx]) || ''
+            };
+        });
+    }
+
+    function getLessonSupport(title) {
+        const support = lessonSupportMap[title] || defaultLessonSupport;
+        const answers = lessonSupportAnswerMap[title] || defaultLessonSupportAnswers;
+        return {
+            extension: attachReferenceAnswers(support.extension, answers.extension),
+            challenge: attachReferenceAnswers(support.challenge, answers.challenge)
+        };
+    }
+
+    function renderSupportItems(items, toneClass) {
+        return (items || []).map(item => `
+            <li>
+                <div>${item.text}</div>
+                <details class="mt-2 bg-white/80 rounded-xl overflow-hidden border border-white/70">
+                    <summary class="cursor-pointer select-none text-xs font-semibold ${toneClass} px-3 py-2">点击查看参考答案</summary>
+                    <div class="px-3 pb-3 text-xs leading-6 text-gray-600">${item.answer}</div>
+                </details>
+            </li>
+        `).join('');
+    }
+
+    // ===================== 全局状态 =====================
+    let currentUnit = 1;
+    let currentQuizIndex = 0;
+    let score = 0;
+    let streak = 0;
+    let selectedMatch = null;
+    let matchScore = 0;
+    let soundEnabled = true;
+
+    // ===================== 导航函数 =====================
+    function openUnit(unitId) {
+        currentUnit = unitId;
+        const data = unitData[unitId];
+        document.getElementById('unit-title').textContent = data.title;
+        document.getElementById('unit-desc').textContent = data.desc;
+
+        renderLessons(data.lessons);
+        renderFlashcards(data.flashcards);
+        initQuiz(data.quiz);
+        initMatch(data.match);
+
+        document.getElementById('home-section').classList.remove('active');
+        document.getElementById('home-section').style.display = 'none';
+        document.getElementById('unit-section').classList.add('active');
+        document.getElementById('unit-section').style.display = 'block';
+    }
+
+    function goHome() {
+        document.getElementById('unit-section').classList.remove('active');
+        document.getElementById('unit-section').style.display = 'none';
+        document.getElementById('home-section').style.display = 'block';
+        document.getElementById('home-section').classList.add('active');
+    }
+
+    function renderLessons(lessons) {
+        const container = document.getElementById('lessons-container');
+        container.innerHTML = '';
+        lessons.forEach((lesson, idx) => {
+            const meta = getLessonMeta(lesson);
+            const support = getLessonSupport(lesson.title);
+            const pageNos = lessonPageMap[lesson.title] || [];
+            const pagesHtml = pageNos.length ? `
+                <div class="space-y-4">
+                    ${pageNos.map((pageNo, pageIdx) => `
+                        <figure class="bg-white rounded-2xl p-2 border border-indigo-100">
+                            <img src="${getTextbookPagePath(pageNo)}" alt="${lesson.title} 教材第${pageNo}页" class="lesson-page" loading="lazy">
+                            <figcaption class="text-xs text-gray-400 mt-2 text-center">教材第${pageNo}页</figcaption>
+                        </figure>
+                    `).join('')}
+                    <p class="text-xs text-gray-400">以上为教材原页，手机上可双指放大查看细节。</p>
+                </div>
+            ` : `<p class="text-gray-600 leading-relaxed whitespace-pre-wrap">${lesson.content}</p>`;
+
+            const div = document.createElement('div');
+            div.className = 'border-2 border-indigo-100 rounded-xl overflow-hidden';
+            div.innerHTML = `
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 cursor-pointer flex items-center justify-between" onclick="toggleLesson(${idx})">
+                    <div>
+                        <h4 class="font-bold text-lg">${lesson.title}</h4>
+                        ${meta.author ? `<p class="text-sm opacity-90">${meta.author}</p>` : ''}
+                    </div>
+                    <span class="text-2xl transform transition-transform" id="lesson-arrow-${idx}">▼</span>
+                </div>
+                <div class="hidden p-4 bg-gray-50" id="lesson-content-${idx}">
+                    <div class="mb-4">
+                        <h5 class="font-bold text-gray-700 mb-2">教材原页：</h5>
+                        ${pagesHtml}
+                    </div>
+                    ${meta.note ? `<p class="mb-4 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">${meta.note}</p>` : ''}
+                    <div class="mb-4">
+                        <h5 class="font-bold text-gray-700 mb-2">课文解析：</h5>
+                        <p class="text-gray-600 leading-relaxed">${meta.explanation}</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+                            <h5 class="font-bold text-emerald-800 mb-2">拓展积累</h5>
+                            <p class="text-xs text-emerald-700/80 mb-3">结合当前教材原页整理，点开下方参考答案可对照思路。</p>
+                            <ul class="text-sm text-emerald-900 space-y-2 list-disc pl-5">
+                                ${renderSupportItems(support.extension, 'text-emerald-700')}
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                            <h5 class="font-bold text-amber-800 mb-2">提优挑战</h5>
+                            <p class="text-xs text-amber-700/80 mb-3">题目更贴合本页课文内容，点击参考答案可查看示例表达。</p>
+                            <ul class="text-sm text-amber-900 space-y-2 list-disc pl-5">
+                                ${renderSupportItems(support.challenge, 'text-amber-700')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function toggleLesson(idx) {
+        const content = document.getElementById(`lesson-content-${idx}`);
+        const arrow = document.getElementById(`lesson-arrow-${idx}`);
+        if (content.classList.contains('hidden')) {
+            content.classList.remove('hidden');
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            content.classList.add('hidden');
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    // ===================== 翻转卡片 =====================
+    function renderFlashcards(cards) {
+        const container = document.getElementById('flashcards');
+        container.innerHTML = '';
+        cards.forEach((card, idx) => {
+            const div = document.createElement('div');
+            div.className = 'card-flip h-32 cursor-pointer';
+            div.innerHTML = `
+                <div class="card-inner relative w-full h-full" onclick="this.parentElement.classList.toggle('card-flipped')">
+                    <div class="card-front absolute w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg p-4 shadow-md">
+                        ${card.front}
+                    </div>
+                    <div class="card-back absolute w-full h-full bg-gradient-to-br from-green-400 to-teal-500 rounded-xl flex items-center justify-center text-white text-sm p-4 shadow-md">
+                        ${card.back}
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // ===================== 答题闯关 =====================
+    function initQuiz(quizData) {
+        currentQuizIndex = 0;
+        streak = 0;
+        document.getElementById('streak').textContent = streak;
+        document.getElementById('quiz-progress').textContent = `1/${quizData.length}`;
+        showQuestion(quizData);
+    }
+
+    function showQuestion(quizData) {
+        const q = quizData[currentQuizIndex];
+        document.getElementById('quiz-question').textContent = q.q;
+        const optionsDiv = document.getElementById('quiz-options');
+        optionsDiv.innerHTML = '';
+        document.getElementById('quiz-feedback').classList.add('hidden');
+        document.getElementById('next-btn').classList.add('hidden');
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'bg-white border-2 border-indigo-100 hover:border-indigo-400 rounded-xl p-4 text-left font-medium transition-all hover:shadow-md';
+            btn.textContent = `${String.fromCharCode(65 + idx)}. ${opt}`;
+            btn.onclick = () => checkAnswer(idx, q.a, btn, quizData);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, correct, btn, quizData) {
+        const allBtns = document.getElementById('quiz-options').children;
+        for (let b of allBtns) b.disabled = true;
+
+        const feedback = document.getElementById('quiz-feedback');
+        feedback.classList.remove('hidden');
+
+        if (selected === correct) {
+            btn.classList.remove('border-indigo-100', 'hover:border-indigo-400');
+            btn.classList.add('bg-green-100', 'border-green-500');
+            feedback.textContent = '🎉 答对了！真棒！';
+            feedback.className = 'mt-4 text-center font-bold text-green-600';
+            score += 10 + streak * 2;
+            streak++;
+            createConfetti();
+        } else {
+            btn.classList.remove('border-indigo-100', 'hover:border-indigo-400');
+            btn.classList.add('bg-red-100', 'border-red-500', 'shake');
+            allBtns[correct].classList.add('bg-green-100', 'border-green-500');
+            feedback.textContent = '💪 再想想，正确答案已标出~';
+            feedback.className = 'mt-4 text-center font-bold text-red-500';
+            streak = 0;
+        }
+
+        document.getElementById('score').textContent = score;
+        document.getElementById('streak').textContent = streak;
+        document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+        const quizData = unitData[currentUnit].quiz;
+        currentQuizIndex++;
+        if (currentQuizIndex >= quizData.length) {
+            document.getElementById('quiz-progress').textContent = `${quizData.length}/${quizData.length}`;
+            document.getElementById('quiz-question').textContent = '🎊 恭喜！本单元题目全部完成！';
+            document.getElementById('quiz-options').innerHTML = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            showCelebration(50);
+            return;
+        }
+        document.getElementById('quiz-progress').textContent = `${currentQuizIndex + 1}/${quizData.length}`;
+        showQuestion(quizData);
+    }
+
+    // ===================== 词语连连看 =====================
+    function initMatch(matchData) {
+        const container = document.getElementById('match-game');
+        container.innerHTML = '';
+        matchScore = 0;
+
+        const leftItems = matchData.map((m, i) => ({ text: m.left, idx: i, side: 'left' }));
+        const rightItems = matchData.map((m, i) => ({ text: m.right, idx: i, side: 'right' }));
+
+        // 打乱
+        leftItems.sort(() => Math.random() - 0.5);
+        rightItems.sort(() => Math.random() - 0.5);
+
+        const leftCol = document.createElement('div');
+        leftCol.className = 'flex flex-col gap-3';
+        const rightCol = document.createElement('div');
+        rightCol.className = 'flex flex-col gap-3';
+
+        leftItems.forEach(item => {
+            const btn = createMatchBtn(item, matchData);
+            leftCol.appendChild(btn);
+        });
+        rightItems.forEach(item => {
+            const btn = createMatchBtn(item, matchData);
+            rightCol.appendChild(btn);
+        });
+
+        container.appendChild(leftCol);
+        container.appendChild(rightCol);
+    }
+
+    function createMatchBtn(item, matchData) {
+        const btn = document.createElement('button');
+        btn.className = 'bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 font-medium text-center hover:bg-indigo-100 transition-all';
+        btn.textContent = item.text;
+        btn.dataset.idx = item.idx;
+        btn.dataset.side = item.side;
+        btn.onclick = () => handleMatchClick(btn, matchData);
+        return btn;
+    }
+
+    function handleMatchClick(btn, matchData) {
+        if (btn.classList.contains('matched')) return;
+
+        if (!selectedMatch) {
+            selectedMatch = btn;
+            btn.classList.add('bg-yellow-100', 'border-yellow-400');
+            return;
+        }
+
+        if (selectedMatch === btn) {
+            btn.classList.remove('bg-yellow-100', 'border-yellow-400');
+            selectedMatch = null;
+            return;
+        }
+
+        // Check if same side
+        if (selectedMatch.dataset.side === btn.dataset.side) {
+            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
+            selectedMatch = btn;
+            btn.classList.add('bg-yellow-100', 'border-yellow-400');
+            return;
+        }
+
+        const firstItem = selectedMatch;
+        const secondItem = btn;
+        
+        // 查找匹配对
+        let matched = false;
+        for (let i = 0; i < matchData.length; i++) {
+            const match = matchData[i];
+            if (match.related && 
+                ((firstItem.textContent === match.left && secondItem.textContent === match.right) ||
+                 (firstItem.textContent === match.right && secondItem.textContent === match.left))) {
+                matched = true;
+                break;
+            }
+        }
+
+        if (matched) {
+            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
+            selectedMatch.classList.add('bg-green-100', 'border-green-500', 'matched');
+            btn.classList.add('bg-green-100', 'border-green-500', 'matched');
+            score += 15;
+            document.getElementById('score').textContent = score;
+            matchScore++;
+            if (matchScore >= matchData.filter(m => m.related).length) {
+                setTimeout(() => showCelebration(30), 300);
+            }
+        } else {
+            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
+            selectedMatch.classList.add('bg-red-100', 'border-red-500', 'shake');
+            btn.classList.add('bg-red-100', 'border-red-500', 'shake');
+            setTimeout(() => {
+                selectedMatch.classList.remove('bg-red-100', 'border-red-500', 'shake');
+                btn.classList.remove('bg-red-100', 'border-red-500', 'shake');
+            }, 500);
+        }
+
+        selectedMatch = null;
+    }
+
+    // ===================== 庆祝效果 =====================
+    function createConfetti() {
+        const colors = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#a78bfa', '#f472b6'];
+        for (let i = 0; i < 20; i++) {
+            const conf = document.createElement('div');
+            conf.className = 'confetti';
+            conf.style.left = Math.random() * 100 + 'vw';
+            conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+            conf.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(conf);
+            setTimeout(() => conf.remove(), 3000);
+        }
+    }
+
+    function showCelebration(bonus) {
+        document.getElementById('bonus-points').textContent = bonus;
+        document.getElementById('celebration').classList.remove('hidden');
+        document.getElementById('celebration').classList.add('flex');
+        score += bonus;
+        document.getElementById('score').textContent = score;
+        createConfetti();
+    }
+
+    function closeCelebration() {
+        document.getElementById('celebration').classList.add('hidden');
+        document.getElementById('celebration').classList.remove('flex');
+    }
+
+    // ===================== 音效控制 =====================
+    function initSound() {
+        const soundToggle = document.getElementById('sound-toggle');
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            if (soundEnabled) {
+                soundToggle.innerHTML = '<i class="fa fa-volume-up"></i>';
+            } else {
+                soundToggle.innerHTML = '<i class="fa fa-volume-off"></i>';
+            }
+        });
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', initSound);
+    </script>
+</body>
+</html>
