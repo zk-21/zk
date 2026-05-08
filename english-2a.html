@@ -617,6 +617,36 @@ function switchUnit(idx) {
   document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
 }
 
+let speechEnabled = true;
+let currentUtterance = null;
+
+function speak(text) {
+  if (!speechEnabled || !text) return;
+  
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    
+    const utter = new SpeechSynthesisUtterance(text);
+    const lang = /[\u4e00-\u9fa5]/.test(text) ? 'zh-CN' : 'en-US';
+    utter.lang = lang;
+    utter.rate = 0.8;
+    utter.pitch = 1;
+    utter.volume = 1;
+    
+    const voices = window.speechSynthesis.getVoices();
+    if (lang === 'en-US') {
+      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
+      if (englishVoice) utter.voice = englishVoice;
+    } else {
+      const chineseVoice = voices.find(v => v.lang.includes('zh'));
+      if (chineseVoice) utter.voice = chineseVoice;
+    }
+    
+    currentUtterance = utter;
+    window.speechSynthesis.speak(utter);
+  }
+}
+
 function toggleSection(header) {
   header.classList.toggle('open');
   header.nextElementSibling.classList.toggle('open');
@@ -624,14 +654,20 @@ function toggleSection(header) {
 
 function revealWord(card) {
   card.classList.toggle('revealed');
+  const word = card.dataset.w;
+  if (word) speak(word);
 }
 
 function revealSentence(card) {
   card.classList.toggle('revealed');
+  const sentence = card.dataset.s;
+  if (sentence) speak(sentence);
 }
 
 function revealDialogue(line) {
   line.classList.toggle('revealed');
+  const text = line.dataset.t;
+  if (text) speak(text);
 }
 
 function showQuizQuestion(unitId) {
