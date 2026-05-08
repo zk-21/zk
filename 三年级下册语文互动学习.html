@@ -255,13 +255,13 @@
             </div>
         </div>
 
-        <!-- 词语连连看 -->
+        <!-- 课后词语 -->
         <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
             <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span>🔗</span> 词语连连看
-                <span class="text-xs font-normal text-gray-400">把意思相近或相关的词语连起来吧！</span>
+                <span>�</span> 课后词语
+                <span class="text-xs font-normal text-gray-400">本单元重点词语，点击可以朗读~</span>
             </h3>
-            <div id="match-game" class="grid grid-cols-2 gap-4 max-w-2xl mx-auto"></div>
+            <div id="word-list" class="flex flex-wrap gap-2"></div>
         </div>
     </div>
 
@@ -347,13 +347,13 @@
                 { q: "《三衢道中》描写的是什么季节？", options: ["春天", "夏天", "秋天", "冬天"], a: 1 },
                 { q: "下列哪个词语不是描写春天的？", options: ["烂漫无比", "春暖花开", "生机勃勃", "果实累累"], a: 3 }
             ],
-            match: [
-                { left: "乌黑", right: "洁白", related: false },
-                { left: "活泼", right: "伶俐", related: true },
-                { left: "蜻蜓", right: "昆虫", related: true },
-                { left: "荷花", right: "清香", related: true },
-                { left: "聚拢", right: "分散", related: false },
-                { left: "偶尔", right: "经常", related: false }
+            words: [
+                { word: "乌黑" }, { word: "活泼" }, { word: "伶俐" }, { word: "蜻蜓" },
+                { word: "昆虫" }, { word: "荷花" }, { word: "清香" }, { word: "聚拢" },
+                { word: "偶尔" }, { word: "花瓣" }, { word: "莲蓬" }, { word: "饱胀" },
+                { word: "破裂" }, { word: "姿势" }, { word: "仿佛" }, { word: "吹拂" },
+                { word: "形成" }, { word: "春光" }, { word: "剪刀" }, { word: "稻田" },
+                { word: "湖面" }, { word: "小圆晕" }, { word: "荡漾" }, { word: "旷亮" }
             ]
         },
         2: {
@@ -403,13 +403,13 @@
                 { q: "《鹿角和鹿腿》中，鹿最终是靠什么逃脱狮子的追捕？", options: ["美丽的鹿角", "有力的鹿腿", "聪明的头脑", "运气"], a: 1 },
                 { q: "下列哪个成语不是来自寓言故事？", options: ["守株待兔", "亡羊补牢", "画蛇添足", "背水一战"], a: 3 }
             ],
-            match: [
-                { left: "守株待兔", right: "侥幸心理", related: true },
-                { left: "狼", right: "花言巧语", related: true },
-                { left: "鹿角", right: "美丽", related: true },
-                { left: "河流", right: "勤奋", related: true },
-                { left: "池子", right: "懒惰", related: true },
-                { left: "老山羊", right: "聪明", related: true }
+            words: [
+                { word: "守株待兔" }, { word: "侥幸" }, { word: "谦虚" }, { word: "骄傲" },
+                { word: "傲慢" }, { word: "轻蔑" }, { word: "相提并论" }, { word: "和睦" },
+                { word: "相处" }, { word: "鹿角" }, { word: "匀称" }, { word: "精美" },
+                { word: "别致" }, { word: "珊瑚" }, { word: "抱怨" }, { word: "逼近" },
+                { word: "欣赏" }, { word: "精美" }, { word: "别致" }, { word: "犹豫" },
+                { word: "撒开" }, { word: "凶猛" }, { word: "挣脱" }, { word: "狮口逃生" }
             ]
         },
         3: {
@@ -453,13 +453,13 @@
                 { q: "海底世界有什么特点？", options: ["只有动物", "只有植物", "奇异景象和丰富物产", "只有石头"], a: 2 },
                 { q: "《滁州西涧》的作者是谁？", options: ["李白", "杜甫", "韦应物", "白居易"], a: 2 }
             ],
-            match: [
-                { left: "海底", right: "物产丰富", related: true },
-                { left: "石蜂", right: "筑巢", related: true },
-                { left: "小虾", right: "搏斗", related: true },
-                { left: "观察", right: "实验", related: true },
-                { left: "海底世界", right: "奇异景象", related: true },
-                { left: "石蜂", right: "法布尔", related: true }
+            words: [
+                { word: "呈现" }, { word: "变幻" }, { word: "蜡烛" }, { word: "诱人" },
+                { word: "圆润" }, { word: "乘凉" }, { word: "光芒" }, { word: "刀剑" },
+                { word: "普通" }, { word: "模型" }, { word: "海底" }, { word: "宁静" },
+                { word: "闪烁" }, { word: "肌肉" }, { word: "伸缩" }, { word: "攻击" },
+                { word: "波涛" }, { word: "澎湃" }, { word: "窃窃私语" }, { word: "梭子" },
+                { word: "乌贼" }, { word: "章鱼" }, { word: "贝类" }, { word: "海藻" }
             ]
         },
         4: {
@@ -523,13 +523,13 @@
                 { q: "《清明上河图》的作者是谁？", options: ["张择端", "顾恺之", "吴道子", "齐白石"], a: 0 },
                 { q: "下列哪个不是中华传统节日？", options: ["春节", "清明节", "圣诞节", "中秋节"], a: 2 }
             ],
-            match: [
-                { left: "元日", right: "春节", related: true },
-                { left: "清明", right: "杜牧", related: true },
-                { left: "九月九日", right: "重阳节", related: true },
-                { left: "赵州桥", right: "李春", related: true },
-                { left: "清明上河图", right: "张择端", related: true },
-                { left: "传统文化", right: "宝贵财富", related: true }
+            words: [
+                { word: "创举" }, { word: "坚固" }, { word: "美观" }, { word: "石匠" },
+                { word: "设计" }, { word: "智慧" }, { word: "历史" }, { word: "遗产" },
+                { word: "佳节" }, { word: "异乡" }, { word: "倍思亲" }, { word: "登高" },
+                { word: "茱萸" }, { word: "造纸术" }, { word: "社会" }, { word: "经验" },
+                { word: "爆竹" }, { word: "屠苏" }, { word: "桃符" }, { word: "酒家" },
+                { word: "牧童" }, { word: "拱桥" }, { word: "横跨" }, { word: "桥洞" }
             ]
         },
         5: {
@@ -567,13 +567,13 @@
                 { q: "下列哪个是第五单元的例文？", options: ["《小真的长头发》", "《一支铅笔的梦想》", "《漏》", "《方帽子店》"], a: 1 },
                 { q: "想象作文应该怎样写？", options: ["写真实的事", "想象大胆又合理", "抄袭别人的", "写得很短"], a: 1 }
             ],
-            match: [
-                { left: "胡萝卜先生", right: "长胡子", related: true },
-                { left: "我", right: "树", related: true },
-                { left: "想象", right: "创造", related: true },
-                { left: "奇妙", right: "普通", related: false },
-                { left: "习作", right: "想象", related: true },
-                { left: "例文", right: "参考", related: true }
+            words: [
+                { word: "想象" }, { word: "奇妙" }, { word: "创造" }, { word: "冒险" },
+                { word: "旅行" }, { word: "胡萝卜" }, { word: "发愁" }, { word: "浓密" },
+                { word: "果酱" }, { word: "继续" }, { word: "飘动" }, { word: "牢固" },
+                { word: "风筝" }, { word: "尿布" }, { word: "晾衣绳" }, { word: "楼梯" },
+                { word: "痒痒" }, { word: "形状" }, { word: "鸟窝" }, { word: "菱形" },
+                { word: "丁零当啷" }, { word: "咕噜噜" }, { word: "香肠" }, { word: "糖醋排骨" }
             ]
         },
         6: {
@@ -623,13 +623,13 @@
                 { q: "第六单元的阅读要素是什么？", options: ["理解词语意思", "借助关键语句概括大意", "运用多种方法理解难懂的句子", "学习默读"], a: 2 },
                 { q: "下列哪个故事告诉我们要诚实守信？", options: ["《童年的水墨画》", "《肥皂泡》", "《我不能失信》", "《灰雀》"], a: 2 }
             ],
-            match: [
-                { left: "溪边", right: "钓鱼", related: true },
-                { left: "冰心", right: "肥皂泡", related: true },
-                { left: "宋庆龄", right: "守信", related: true },
-                { left: "列宁", right: "灰雀", related: true },
-                { left: "难懂的句子", right: "联系上下文", related: true },
-                { left: "童年", right: "快乐", related: true }
+            words: [
+                { word: "墨画" }, { word: "碎了" }, { word: "拨动" }, { word: "浪花" },
+                { word: "葫芦" }, { word: "清清爽爽" }, { word: "松针" }, { word: "蘑菇" },
+                { word: "斗笠" }, { word: "肥皂泡" }, { word: "玲珑" }, { word: "娇软" },
+                { word: "脆薄" }, { word: "颤巍巍" }, { word: "光影" }, { word: "零乱" },
+                { word: "垂柳" }, { word: "梳妆" }, { word: "钓竿" }, { word: "红蜻蜓" },
+                { word: "戏耍" }, { word: "银牙" }, { word: "雨珠" }, { word: "欢叫" }
             ]
         },
         7: {
@@ -673,13 +673,13 @@
                 { q: "第七单元的阅读要素是什么？", options: ["理解词语意思", "借助关键语句概括大意", "了解课文是从哪几个方面把事物写清楚的", "学习默读"], a: 2 },
                 { q: "第七单元的习作是什么？", options: ["我的植物朋友", "看图画，写一写", "奇妙的想象", "国宝大熊猫"], a: 3 }
             ],
-            match: [
-                { left: "火烧云", right: "颜色多", related: true },
-                { left: "暴风雨", right: "强风大雨", related: true },
-                { left: "我们奇妙的世界", right: "天空和大地", related: true },
-                { left: "描写事物", right: "不同方面", related: true },
-                { left: "习作", right: "国宝大熊猫", related: true },
-                { left: "火烧云", right: "萧红", related: true }
+            words: [
+                { word: "红彤彤" }, { word: "金灿灿" }, { word: "葡萄灰" }, { word: "梨黄" },
+                { word: "茄子紫" }, { word: "威武" }, { word: "镇静" }, { word: "凶猛" },
+                { word: "模糊" }, { word: "奇妙" }, { word: "光芒" }, { word: "呈现" },
+                { word: "变幻" }, { word: "诱人" }, { word: "圆润" }, { word: "感叹" },
+                { word: "火烧云" }, { word: "霞光" }, { word: "笑盈盈" }, { word: "大狮子" },
+                { word: "庙门" }, { word: "威武" }, { word: "一转眼" }, { word: "斜射" }
             ]
         },
         8: {
@@ -723,13 +723,13 @@
                 { q: "第八单元的口语交际是什么？", options: ["春游去哪里", "劝告", "应该怎样安排座位", "趣味故事会"], a: 3 },
                 { q: "第八单元的习作是什么？", options: ["我的植物朋友", "奇妙的想象", "身边那些有特点的人", "这样想象真有趣"], a: 3 }
             ],
-            match: [
-                { left: "慢性子裁缝", right: "急性子顾客", related: true },
-                { left: "漏", right: "做贼心虚", related: true },
-                { left: "枣核", right: "智慧", related: true },
-                { left: "复述故事", right: "抓住重点", related: true },
-                { left: "老虎", right: "愚蠢", related: true },
-                { left: "贼", right: "贪婪", related: true }
+            words: [
+                { word: "裁缝" }, { word: "顾客" }, { word: "慢性子" }, { word: "急性子" },
+                { word: "漏" }, { word: "贼" }, { word: "枣核" }, { word: "智慧" },
+                { word: "复述" }, { word: "厉害" }, { word: "莫非" }, { word: "颠倒" },
+                { word: "旋风" }, { word: "莫非" }, { word: "粘胶" }, { word: "牲口" },
+                { word: "棉袄" }, { word: "夹袄" }, { word: "短袖" }, { word: "布料" },
+                { word: "屋檐" }, { word: "莫非" }, { word: "葫芦" }, { word: "绑住" }
             ]
         }
     };
@@ -1284,8 +1284,7 @@
     let currentQuizIndex = 0;
     let score = 0;
     let streak = 0;
-    let selectedMatch = null;
-    let matchScore = 0;
+    let selectedWord = null;
     let soundEnabled = true;
 
     // ===================== 导航函数 =====================
@@ -1298,7 +1297,7 @@
         renderLessons(data.lessons);
         renderFlashcards(data.flashcards);
         initQuiz(data.quiz);
-        initMatch(data.match);
+        initWordList(data.words);
 
         document.getElementById('home-section').classList.remove('active');
         document.getElementById('home-section').style.display = 'none';
@@ -1478,106 +1477,45 @@
         showQuestion(quizData);
     }
 
-    // ===================== 词语连连看 =====================
-    function initMatch(matchData) {
-        const container = document.getElementById('match-game');
+    // ===================== 课后词语 =====================
+    function initWordList(wordData) {
+        const container = document.getElementById('word-list');
         container.innerHTML = '';
-        matchScore = 0;
 
-        const leftItems = matchData.map((m, i) => ({ text: m.left, idx: i, side: 'left' }));
-        const rightItems = matchData.map((m, i) => ({ text: m.right, idx: i, side: 'right' }));
-
-        // 打乱
-        leftItems.sort(() => Math.random() - 0.5);
-        rightItems.sort(() => Math.random() - 0.5);
-
-        const leftCol = document.createElement('div');
-        leftCol.className = 'flex flex-col gap-3';
-        const rightCol = document.createElement('div');
-        rightCol.className = 'flex flex-col gap-3';
-
-        leftItems.forEach(item => {
-            const btn = createMatchBtn(item, matchData);
-            leftCol.appendChild(btn);
-        });
-        rightItems.forEach(item => {
-            const btn = createMatchBtn(item, matchData);
-            rightCol.appendChild(btn);
-        });
-
-        container.appendChild(leftCol);
-        container.appendChild(rightCol);
-    }
-
-    function createMatchBtn(item, matchData) {
-        const btn = document.createElement('button');
-        btn.className = 'bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 font-medium text-center hover:bg-indigo-100 transition-all';
-        btn.textContent = item.text;
-        btn.dataset.idx = item.idx;
-        btn.dataset.side = item.side;
-        btn.onclick = () => handleMatchClick(btn, matchData);
-        return btn;
-    }
-
-    function handleMatchClick(btn, matchData) {
-        if (btn.classList.contains('matched')) return;
-
-        if (!selectedMatch) {
-            selectedMatch = btn;
-            btn.classList.add('bg-yellow-100', 'border-yellow-400');
-            return;
-        }
-
-        if (selectedMatch === btn) {
-            btn.classList.remove('bg-yellow-100', 'border-yellow-400');
-            selectedMatch = null;
-            return;
-        }
-
-        // Check if same side
-        if (selectedMatch.dataset.side === btn.dataset.side) {
-            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
-            selectedMatch = btn;
-            btn.classList.add('bg-yellow-100', 'border-yellow-400');
-            return;
-        }
-
-        const firstItem = selectedMatch;
-        const secondItem = btn;
+        const words = wordData || [];
+        const allWords = [];
         
-        // 查找匹配对
-        let matched = false;
-        for (let i = 0; i < matchData.length; i++) {
-            const match = matchData[i];
-            if (match.related && 
-                ((firstItem.textContent === match.left && secondItem.textContent === match.right) ||
-                 (firstItem.textContent === match.right && secondItem.textContent === match.left))) {
-                matched = true;
-                break;
-            }
+        words.forEach(word => {
+            if (word.word) allWords.push(word);
+            else if (word.left) allWords.push({ word: word.left });
+            else if (word.text) allWords.push({ word: word.text });
+        });
+
+        if (allWords.length === 0) {
+            container.innerHTML = '<p class="text-gray-400 text-center py-4">本单元暂无课后词语</p>';
+            return;
         }
 
-        if (matched) {
-            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
-            selectedMatch.classList.add('bg-green-100', 'border-green-500', 'matched');
-            btn.classList.add('bg-green-100', 'border-green-500', 'matched');
-            score += 15;
-            document.getElementById('score').textContent = score;
-            matchScore++;
-            if (matchScore >= matchData.filter(m => m.related).length) {
-                setTimeout(() => showCelebration(30), 300);
-            }
-        } else {
-            selectedMatch.classList.remove('bg-yellow-100', 'border-yellow-400');
-            selectedMatch.classList.add('bg-red-100', 'border-red-500', 'shake');
-            btn.classList.add('bg-red-100', 'border-red-500', 'shake');
-            setTimeout(() => {
-                selectedMatch.classList.remove('bg-red-100', 'border-red-500', 'shake');
-                btn.classList.remove('bg-red-100', 'border-red-500', 'shake');
-            }, 500);
-        }
+        allWords.forEach((item, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'bg-gradient-to-r from-indigo-100 to-purple-100 border-2 border-indigo-200 rounded-xl px-4 py-2 font-medium text-gray-700 hover:from-indigo-200 hover:to-purple-200 hover:border-indigo-400 transition-all shadow-sm hover:shadow-md';
+            btn.textContent = item.word;
+            btn.dataset.index = index;
+            btn.onclick = () => speakWord(item.word);
+            container.appendChild(btn);
+        });
+    }
 
-        selectedMatch = null;
+    function speakWord(word) {
+        if ('speechSynthesis' in window && soundEnabled) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.8;
+            window.speechSynthesis.speak(utterance);
+        }
+        score += 2;
+        document.getElementById('score').textContent = score;
     }
 
     // ===================== 庆祝效果 =====================
