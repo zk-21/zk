@@ -773,13 +773,13 @@ function revealWord(card) {
 
 function revealSentence(card) {
   card.classList.toggle('revealed');
-  const sentence = card.dataset.s;
+  const sentence = card.dataset.en || card.dataset.s;
   if (sentence) speak(sentence);
 }
 
 function revealDialogue(line) {
   line.classList.toggle('revealed');
-  const text = line.dataset.t;
+  const text = line.dataset.en || line.dataset.t;
   if (text) speak(text);
 }
 
