@@ -9,6 +9,28 @@
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Noto Sans SC', sans-serif; }
+        .language-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: #c2185b;
+        }
+        .lang-btn {
+            flex: 0 0 auto;
+            min-height: 34px;
+            padding: 7px 18px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 18px;
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            background: rgba(255,255,255,0.15);
+            transition: all 0.3s;
+        }
+        .lang-btn:hover { background: rgba(255,255,255,0.25); }
+        .lang-btn.active { color: #c2185b; background: #fff; border-color: #fff; }
         .bounce { animation: bounce 1s infinite; }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
@@ -68,6 +90,11 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-sky-100 via-pink-50 to-yellow-100 min-h-screen">
+    <!-- 语言切换 -->
+    <div class="language-switcher">
+        <a href="三年级下册语文互动学习.html" class="lang-btn active">📖 语文</a>
+        <a href="english-learning.html" class="lang-btn">🔤 英语</a>
+    </div>
     <!-- 顶部导航 -->
     <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">

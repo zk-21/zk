@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>四年级上册英语 · 译林版互动学习</title>
+  <link rel="stylesheet" href="grade4-learning.css">
+  <style>
+    .language-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: #43a047;
+    }
+    .lang-btn {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 18px;
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      background: rgba(255,255,255,0.15);
+      transition: all 0.3s;
+    }
+    .lang-btn:hover { background: rgba(255,255,255,0.25); }
+    .lang-btn.active { color: #43a047; background: #fff; border-color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="language-switcher">
+    <a href="三年级下册语文互动学习.html" class="lang-btn">📖 语文</a>
+    <a href="四年级上册英语互动学习.html" class="lang-btn active">🔤 英语</a>
+  </div>
+  <nav class="course-switcher" aria-label="教材页面切换">
+    <a href="english-1a.html">一年级上册</a>
+    <a href="english-1b.html">一年级下册</a>
+    <a href="english-2a.html">二年级上册</a>
+    <a href="english-2b.html">二年级下册</a>
+    <a href="三年级上册英语互动学习.html">三年级上册</a>
+    <a href="english-learning.html">三年级下册</a>
+    <a class="active" href="四年级上册英语互动学习.html">四年级上册</a>
+    <a href="四年级下册英语互动学习.html">四年级下册</a>
+    <a href="english-5a.html">五年级上册</a>
+    <a href="english-5b.html">五年级下册</a>
+    <a href="english-grammar.html">英语语法</a>
+  </nav>
+
+  <header class="hero">
+    <h1 id="courseTitle">四年级上册英语 · 译林版互动学习</h1>
+    <p id="courseSubTitle">按新版主题整理 · 原创练习内容</p>
+    <div class="voice-controls">
+      <button class="voice-btn active" id="voiceToggle" type="button">🔊 自动发音</button>
+      <button class="voice-btn" id="repeatToggle" type="button">🔄 跟读模式</button>
+      <span class="voice-label">语速: <span id="speedVal">0.7</span>x</span>
+      <input class="speed-slider" id="speedSlider" type="range" min="0.4" max="1.1" step="0.1" value="0.7">
+      <span class="voice-label" id="voiceStatus"></span>
+    </div>
+  </header>
+
+  <nav class="nav-bar" id="navBar" aria-label="单元导航"></nav>
+  <main class="wrap" id="app"></main>
+  <footer class="footer">每天复习一个单元，先听、再读、最后做小测验。</footer>
+
+  <script src="grade4a-data.js"></script>
+  <script src="grade4-learning.js"></script>
+</body>
+</html>

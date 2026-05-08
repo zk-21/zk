@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五年级上册英语 · 趣味学习乐园</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+    min-height: 100vh;
+    padding-bottom: 60px;
+    color: #2f3542;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #00838f;
+  }
+  .lang-btn {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 18px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.25); }
+  .lang-btn.active { color: #00838f; background: #fff; border-color: #fff; }
+  .course-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    background: #172033;
+  }
+  .course-switcher a {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 13px;
+    border: 1px solid rgba(255,255,255,0.24);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.82);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+  }
+  .course-switcher a.active {
+    color: #172033;
+    background: #90a4ae;
+  }
+  .header {
+    background: linear-gradient(90deg, #546e7a, #78909c);
+    color: white;
+    text-align: center;
+    padding: 20px 16px 16px;
+  }
+  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header p { font-size: 13px; opacity: 0.9; }
+  .nav-bar {
+    display: flex;
+    overflow-x: auto;
+    background: white;
+    padding: 10px 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-btn {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f0f0f0;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-btn.active {
+    background: linear-gradient(90deg, #546e7a, #78909c);
+    color: white;
+  }
+  .container { padding: 16px; }
+  .unit-section { display: none; }
+  .unit-section.active { display: block; }
+  .unit-title {
+    background: linear-gradient(90deg, #546e7a, #78909c);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .section-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #fafafa;
+    cursor: pointer;
+    font-weight: 600;
+    color: #333;
+  }
+  .section-header .icon { margin-right: 8px; }
+  .section-header .arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+  }
+  .section-header.open .arrow { transform: rotate(180deg); }
+  .section-body {
+    padding: 16px;
+    display: none;
+  }
+  .section-body.open { display: block; }
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .word-card {
+    background: linear-gradient(135deg, #eceff1, #cfd8dc);
+    border: 2px solid #90a4ae;
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .word-card:hover { transform: translateY(-4px); }
+  .word-card .speak-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    opacity: 0.5;
+  }
+  .word-card .emoji { font-size: 28px; margin-bottom: 6px; }
+  .word-card .english { font-size: 17px; font-weight: 700; color: #333; }
+  .word-card .phonetic { font-size: 12px; color: #666; margin-top: 2px; font-style: italic; }
+  .word-card .chinese {
+    font-size: 13px; color: #555;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 4px;
+  }
+  .word-card.revealed .chinese { opacity: 1; }
+  .word-card .hint { font-size: 11px; color: #bbb; margin-top: 6px; }
+  .sentence-list { display: flex; flex-direction: column; gap: 10px; }
+  .sentence-card {
+    background: linear-gradient(135deg, #f5f5f5, #eceff1);
+    border: 2px solid #cfd8dc;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .sentence-card .speak-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    opacity: 0.5;
+  }
+  .sentence-card .en { font-size: 16px; font-weight: 600; color: #333; line-height: 1.5; }
+  .sentence-card .cn {
+    font-size: 13px; color: #666;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 8px;
+  }
+  .sentence-card.revealed .cn { opacity: 1; }
+  .dialogue-box {
+    background: linear-gradient(135deg, #eceff1, #cfd8dc);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .dialogue-box .line {
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    max-width: 85%;
+    position: relative;
+    cursor: pointer;
+  }
+  .dialogue-box .line.speaker-a { background: #fff; margin-right: auto; }
+  .dialogue-box .line.speaker-b { background: #e8eaf6; margin-left: auto; }
+  .dialogue-box .line .speaker-label { font-size: 12px; color: #666; margin-bottom: 4px; font-weight: 600; }
+  .dialogue-box .line .en-text { font-size: 16px; font-weight: 600; color: #333; }
+  .dialogue-box .line .cn-text {
+    font-size: 13px; color: #666;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 4px;
+  }
+  .dialogue-box .line.revealed .cn-text { opacity: 1; }
+  .grammar-section {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .grammar-title { font-size: 16px; font-weight: 700; color: #2e7d32; margin-bottom: 8px; }
+  .grammar-rule { font-size: 14px; color: #333; margin-bottom: 4px; }
+  .grammar-example { font-size: 13px; color: #666; font-style: italic; }
+  .quiz-container { padding: 16px; }
+  .quiz-question { text-align: center; margin-bottom: 20px; }
+  .quiz-question .q-text { font-size: 18px; font-weight: 700; color: #333; }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .quiz-option {
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .quiz-option:hover { border-color: #546e7a; }
+  .quiz-option.correct { background: #e8f5e9; border-color: #4caf50; }
+  .quiz-option.wrong { background: #ffebee; border-color: #f44336; }
+  .quiz-progress { text-align: center; font-size: 13px; color: #999; margin-bottom: 16px; }
+  .quiz-score {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #eceff1, #cfd8dc);
+    border-radius: 12px;
+    display: none;
+  }
+  .quiz-score.show { display: block; }
+  .score-emoji { font-size: 64px; }
+  .score-text { font-size: 20px; font-weight: 700; margin-top: 8px; }
+  .score-detail { font-size: 14px; color: #666; margin-top: 8px; }
+  .quiz-score button {
+    margin-top: 16px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #546e7a, #78909c);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .footer {
+    text-align: center;
+    padding: 16px;
+    color: #999;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<div class="language-switcher">
+  <a href="三年级下册语文互动学习.html" class="lang-btn">📖 语文</a>
+  <a href="english-5a.html" class="lang-btn active">🔤 英语</a>
+</div>
+<div class="course-switcher">
+  <a href="english-1a.html">一年级上册</a>
+  <a href="english-1b.html">一年级下册</a>
+  <a href="english-2a.html">二年级上册</a>
+  <a href="english-2b.html">二年级下册</a>
+  <a href="三年级上册英语互动学习.html">三年级上册</a>
+  <a href="english-learning.html">三年级下册</a>
+  <a href="四年级上册英语互动学习.html">四年级上册</a>
+  <a href="四年级下册英语互动学习.html">四年级下册</a>
+  <a href="english-5a.html" class="active">五年级上册</a>
+  <a href="english-5b.html">五年级下册</a>
+  <a href="english-grammar.html">英语语法</a>
+</div>
+
+<div class="header">
+  <h1>🎒 五年级上册英语</h1>
+  <p>趣味学习乐园 · 快乐学英语</p>
+</div>
+
+<div class="nav-bar" id="navBar"></div>
+<div class="container" id="container"></div>
+<div class="footer">💪 每天学一点，进步一大步！</div>
+
+<script>
+const unitsData = [
+  {
+    id: 'unit1',
+    title: 'Unit 1',
+    subtitle: 'My New School 我的新学校',
+    color: '#546e7a',
+    words: [
+      { en: 'junior high school', cn: '初中', emoji: '🏫', ipa: '/ˈdʒuːniər haɪ skuːl/', tip: 'Junior high school' },
+      { en: 'senior high school', cn: '高中', emoji: '🏛️', ipa: '/ˈsiːniər haɪ skuːl/', tip: 'Senior high school' },
+      { en: 'campus', cn: '校园', emoji: '🏡', ipa: '/ˈkæmpəs/', tip: 'Campus' },
+      { en: 'principal', cn: '校长', emoji: '👨‍🏫', ipa: '/ˈprɪnsəpl/', tip: 'Principal' },
+      { en: 'teacher', cn: '老师', emoji: '👩‍🏫', ipa: '/ˈtiːtʃər/', tip: 'Teacher' },
+      { en: 'classmate', cn: '同学', emoji: '👫', ipa: '/ˈklæsmeɪt/', tip: 'Classmate' },
+      { en: 'student', cn: '学生', emoji: '👨‍🎓', ipa: '/ˈstuːdnt/', tip: 'Student' },
+      { en: 'grade', cn: '年级', emoji: '📚', ipa: '/ɡreɪd/', tip: 'Grade' },
+      { en: 'class', cn: '班级', emoji: '🏢', ipa: '/klæs/', tip: 'Class' },
+      { en: 'subject', cn: '科目', emoji: '📖', ipa: '/ˈsʌbdʒekt/', tip: 'Subject' },
+    ],
+    sentences: [
+      { en: 'I am a junior high school student.', cn: '我是一名初中生。' },
+      { en: 'This is our school campus.', cn: '这是我们的校园。' },
+      { en: 'My class has 45 students.', cn: '我的班级有45名学生。' },
+      { en: 'We have many subjects.', cn: '我们有很多科目。' },
+      { en: 'I like my new school.', cn: '我喜欢我的新学校。' },
+    ],
+    grammar: [
+      { rule: '一般现在时', cn: '表示经常性、习惯性的动作或状态', example: 'I go to school every day.' },
+      { rule: '主谓一致', cn: '主语和谓语动词在数上保持一致', example: 'He likes music. They like sports.' },
+      { rule: '名词所有格', cn: '表示所属关系', example: "Tom's book, the teacher's desk" },
+    ],
+    dialogue: [
+      { speaker: '👧 Lily', text: 'Welcome to our school!', cn: '欢迎来到我们学校！' },
+      { speaker: '👦 Tom', text: 'Thank you! It is a beautiful school.', cn: '谢谢！这是一所漂亮的学校。' },
+      { speaker: '👧 Lily', text: 'This is our classroom. We have 45 students.', cn: '这是我们的教室。我们有45名学生。' },
+      { speaker: '👦 Tom', text: 'That is a big class!', cn: '那是个大班级！' },
+      { speaker: '👧 Lily', text: 'Yes! We are all good friends.', cn: '是的！我们都是好朋友。' },
+    ],
+    quiz: [
+      { emoji: '🏫', q: 'junior high school 是什么意思？', answer: '初中', options: ['小学', '初中', '高中', '大学'] },
+      { emoji: '📚', q: 'subject 是什么意思？', answer: '科目', options: ['班级', '年级', '科目', '校园'] },
+      { q: '"I go to school every day." 使用的是什么时态？', answer: '一般现在时', options: ['一般现在时', '一般过去时', '现在进行时', '一般将来时'] },
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2',
+    subtitle: 'Daily Life 日常生活',
+    color: '#455a64',
+    words: [
+      { en: 'daily life', cn: '日常生活', emoji: '📅', ipa: '/ˈdeɪli laɪf/', tip: 'Daily life' },
+      { en: 'schedule', cn: '日程表', emoji: '📋', ipa: '/ˈskedʒuːl/', tip: 'Schedule' },
+      { en: 'morning', cn: '早上', emoji: '🌅', ipa: '/ˈmɔːrnɪŋ/', tip: 'Morning' },
+      { en: 'afternoon', cn: '下午', emoji: '☀️', ipa: '/ˌæftərˈnuːn/', tip: 'Afternoon' },
+      { en: 'evening', cn: '晚上', emoji: '🌙', ipa: '/ˈiːvnɪŋ/', tip: 'Evening' },
+      { en: 'night', cn: '夜晚', emoji: '🌃', ipa: '/naɪt/', tip: 'Night' },
+      { en: 'usually', cn: '通常', emoji: '⏰', ipa: '/ˈjuːʒuəli/', tip: 'Usually' },
+      { en: 'always', cn: '总是', emoji: '🔄', ipa: '/ˈɔːlweɪz/', tip: 'Always' },
+      { en: 'sometimes', cn: '有时', emoji: '⏳', ipa: '/ˈsʌmtaɪmz/', tip: 'Sometimes' },
+      { en: 'never', cn: '从不', emoji: '🚫', ipa: '/ˈnevər/', tip: 'Never' },
+    ],
+    sentences: [
+      { en: 'I usually get up at 6:30.', cn: '我通常6:30起床。' },
+      { en: 'She always eats breakfast at 7:00.', cn: '她总是7点吃早餐。' },
+      { en: 'Sometimes we go to the park.', cn: '有时我们去公园。' },
+      { en: 'He never goes to bed late.', cn: '他从不晚睡。' },
+      { en: 'My daily life is very busy.', cn: '我的日常生活很忙碌。' },
+    ],
+    grammar: [
+      { rule: '频度副词', cn: '表示动作发生的频率', example: 'always, usually, sometimes, never' },
+      { rule: '一般现在时疑问句', cn: '用do/does提问', example: 'Do you like coffee? Does he go to school?' },
+      { rule: '时间介词', cn: '表示时间的介词', example: 'at 7:00, in the morning, on Monday' },
+    ],
+    dialogue: [
+      { speaker: '👦 Jack', text: 'What time do you usually get up?', cn: '你通常几点起床？' },
+      { speaker: '👧 Lucy', text: 'I usually get up at 6:30.', cn: '我通常6:30起床。' },
+      { speaker: '👦 Jack', text: 'Do you always eat breakfast?', cn: '你总是吃早餐吗？' },
+      { speaker: '👧 Lucy', text: 'Yes, I always eat breakfast at 7:00.', cn: '是的，我总是7点吃早餐。' },
+      { speaker: '👦 Jack', text: 'What do you do in the evening?', cn: '你晚上做什么？' },
+      { speaker: '👧 Lucy', text: 'I sometimes read books.', cn: '我有时看书。' },
+    ],
+    quiz: [
+      { emoji: '⏰', q: 'usually 是什么意思？', answer: '通常', options: ['总是', '通常', '有时', '从不'] },
+      { emoji: '🔄', q: 'always 是什么意思？', answer: '总是', options: ['从不', '有时', '通常', '总是'] },
+      { q: '"Do you like coffee?" 使用了哪个助动词？', answer: 'do', options: ['is', 'are', 'do', 'does'] },
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3',
+    subtitle: 'Hobbies and Interests 爱好与兴趣',
+    color: '#37474f',
+    words: [
+      { en: 'hobby', cn: '爱好', emoji: '🎨', ipa: '/ˈhɑːbi/', tip: 'Hobby' },
+      { en: 'interest', cn: '兴趣', emoji: '⭐', ipa: '/ˈɪntrəst/', tip: 'Interest' },
+      { en: 'collect', cn: '收集', emoji: '📦', ipa: '/kəˈlekt/', tip: 'Collect' },
+      { en: 'stamp', cn: '邮票', emoji: '📮', ipa: '/stæmp/', tip: 'Stamp' },
+      { en: 'coin', cn: '硬币', emoji: '🪙', ipa: '/kɔɪn/', tip: 'Coin' },
+      { en: 'photography', cn: '摄影', emoji: '📷', ipa: '/fəˈtɒɡrəfi/', tip: 'Photography' },
+      { en: 'painting', cn: '绘画', emoji: '🎨', ipa: '/ˈpeɪntɪŋ/', tip: 'Painting' },
+      { en: 'playing the piano', cn: '弹钢琴', emoji: '🎹', ipa: '/ˈpleɪɪŋ ðə piˈænəʊ/', tip: 'Playing the piano' },
+      { en: 'reading', cn: '阅读', emoji: '📚', ipa: '/ˈriːdɪŋ/', tip: 'Reading' },
+      { en: 'sports', cn: '运动', emoji: '⚽', ipa: '/spɔːrts/', tip: 'Sports' },
+    ],
+    sentences: [
+      { en: 'My hobby is collecting stamps.', cn: '我的爱好是收集邮票。' },
+      { en: 'She is interested in photography.', cn: '她对摄影感兴趣。' },
+      { en: 'He likes playing the piano.', cn: '他喜欢弹钢琴。' },
+      { en: 'We share the same interest.', cn: '我们有相同的兴趣。' },
+      { en: 'Hobbies make life interesting.', cn: '爱好让生活更有趣。' },
+    ],
+    grammar: [
+      { rule: '动名词', cn: '动词加-ing形式，可作主语或宾语', example: 'Reading is fun. I like reading.' },
+      { rule: 'be interested in', cn: '对...感兴趣', example: 'She is interested in music.' },
+      { rule: 'like + doing', cn: '喜欢做某事', example: 'I like playing basketball.' },
+    ],
+    dialogue: [
+      { speaker: '👧 Amy', text: 'What is your hobby?', cn: '你的爱好是什么？' },
+      { speaker: '👦 Sam', text: 'My hobby is collecting stamps. What about you?', cn: '我的爱好是收集邮票。你呢？' },
+      { speaker: '👧 Amy', text: 'I like painting. I paint every weekend.', cn: '我喜欢绘画。我每个周末都画画。' },
+      { speaker: '👦 Sam', text: 'That is great! Do you like sports?', cn: '太棒了！你喜欢运动吗？' },
+      { speaker: '👧 Amy', text: 'Yes, I like swimming.', cn: '是的，我喜欢游泳。' },
+    ],
+    quiz: [
+      { emoji: '🎨', q: 'painting 是什么意思？', answer: '绘画', options: ['摄影', '绘画', '阅读', '运动'] },
+      { emoji: '📮', q: 'stamp 是什么意思？', answer: '邮票', options: ['硬币', '邮票', '照片', '书本'] },
+      { q: '"I like playing basketball." 中 playing 是什么形式？', answer: '动名词', options: ['动词原形', '动名词', '过去式', '不定式'] },
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4',
+    subtitle: 'Health and Fitness 健康与健身',
+    color: '#263238',
+    words: [
+      { en: 'health', cn: '健康', emoji: '💪', ipa: '/helθ/', tip: 'Health' },
+      { en: 'fitness', cn: '健身', emoji: '🏋️', ipa: '/ˈfɪtnəs/', tip: 'Fitness' },
+      { en: 'exercise', cn: '锻炼', emoji: '🏃', ipa: '/ˈeksəsaɪz/', tip: 'Exercise' },
+      { en: 'jogging', cn: '慢跑', emoji: '🏃', ipa: '/ˈdʒɒɡɪŋ/', tip: 'Jogging' },
+      { en: 'swimming', cn: '游泳', emoji: '🏊', ipa: '/ˈswɪmɪŋ/', tip: 'Swimming' },
+      { en: 'yoga', cn: '瑜伽', emoji: '🧘', ipa: '/ˈjoʊɡə/', tip: 'Yoga' },
+      { en: 'diet', cn: '饮食', emoji: '🍎', ipa: '/ˈdaɪət/', tip: 'Diet' },
+      { en: 'nutrition', cn: '营养', emoji: '🥗', ipa: '/nuːˈtrɪʃn/', tip: 'Nutrition' },
+      { en: 'vitamin', cn: '维生素', emoji: '💊', ipa: '/ˈvaɪtəmɪn/', tip: 'Vitamin' },
+      { en: 'sleep', cn: '睡眠', emoji: '😴', ipa: '/sliːp/', tip: 'Sleep' },
+    ],
+    sentences: [
+      { en: 'Good health is very important.', cn: '健康非常重要。' },
+      { en: 'I exercise every morning.', cn: '我每天早上锻炼。' },
+      { en: 'Swimming is good for your body.', cn: '游泳对身体好。' },
+      { en: 'We should eat a balanced diet.', cn: '我们应该均衡饮食。' },
+      { en: 'Getting enough sleep is essential.', cn: '充足的睡眠很重要。' },
+    ],
+    grammar: [
+      { rule: '情态动词 should', cn: '表示建议或义务', example: 'You should exercise more.' },
+      { rule: '动名词作主语', cn: '动词-ing形式在句首作主语', example: 'Swimming is good exercise.' },
+      { rule: '比较级', cn: '表示两者比较', example: 'Yoga is easier than running.' },
+    ],
+    dialogue: [
+      { speaker: '👩‍⚕️ Doctor', text: 'You need to exercise more.', cn: '你需要多锻炼。' },
+      { speaker: '👦 Tom', text: 'What kind of exercise should I do?', cn: '我应该做什么运动？' },
+      { speaker: '👩‍⚕️ Doctor', text: 'You can try jogging or swimming.', cn: '你可以试试慢跑或游泳。' },
+      { speaker: '👦 Tom', text: 'I like swimming.', cn: '我喜欢游泳。' },
+      { speaker: '👩‍⚕️ Doctor', text: 'Good! Swimming is excellent exercise.', cn: '很好！游泳是很好的运动。' },
+    ],
+    quiz: [
+      { emoji: '💪', q: 'health 是什么意思？', answer: '健康', options: ['健身', '健康', '锻炼', '饮食'] },
+      { emoji: '🏋️', q: 'fitness 是什么意思？', answer: '健身', options: ['游泳', '健身', '瑜伽', '睡眠'] },
+      { q: '"You should exercise more." 中 should 表示什么？', answer: '建议', options: ['能力', '建议', '可能', '必须'] },
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5',
+    subtitle: 'Travel and Vacation 旅行与假期',
+    color: '#1a237e',
+    words: [
+      { en: 'travel', cn: '旅行', emoji: '✈️', ipa: '/ˈtrævl/', tip: 'Travel' },
+      { en: 'vacation', cn: '假期', emoji: '🌴', ipa: '/veɪˈkeɪʃn/', tip: 'Vacation' },
+      { en: 'destination', cn: '目的地', emoji: '📍', ipa: '/ˌdestɪˈneɪʃn/', tip: 'Destination' },
+      { en: 'attraction', cn: '景点', emoji: '🏛️', ipa: '/əˈtrækʃn/', tip: 'Attraction' },
+      { en: 'sightseeing', cn: '观光', emoji: '🗺️', ipa: '/ˈsaɪtsiːɪŋ/', tip: 'Sightseeing' },
+      { en: 'tourist', cn: '游客', emoji: '🧳', ipa: '/ˈtʊrɪst/', tip: 'Tourist' },
+      { en: 'guide', cn: '导游', emoji: '🧭', ipa: '/ɡaɪd/', tip: 'Guide' },
+      { en: 'book', cn: '预订', emoji: '📖', ipa: '/bʊk/', tip: 'Book' },
+      { en: 'reservation', cn: '预订', emoji: '🎫', ipa: '/ˌrezərˈveɪʃn/', tip: 'Reservation' },
+      { en: 'souvenir', cn: '纪念品', emoji: '🎁', ipa: '/ˌsuːvəˈnɪr/', tip: 'Souvenir' },
+    ],
+    sentences: [
+      { en: 'We are going on vacation next month.', cn: '我们下个月要去度假。' },
+      { en: 'What is your favorite travel destination?', cn: '你最喜欢的旅行目的地是什么？' },
+      { en: 'We did a lot of sightseeing.', cn: '我们观光了很多地方。' },
+      { en: 'I need to book a hotel room.', cn: '我需要预订一个酒店房间。' },
+      { en: 'I bought some souvenirs for my friends.', cn: '我给朋友们买了一些纪念品。' },
+    ],
+    grammar: [
+      { rule: '一般将来时', cn: '表示将要发生的动作', example: 'We will go to Beijing next week.' },
+      { rule: 'be going to', cn: '表示计划或打算', example: 'I am going to travel to Japan.' },
+      { rule: '现在进行时表将来', cn: '表示安排好的将来动作', example: 'We are leaving tomorrow.' },
+    ],
+    dialogue: [
+      { speaker: '👧 Lily', text: 'Where are you going on vacation?', cn: '你假期要去哪里？' },
+      { speaker: '👦 Tom', text: 'I am going to visit my grandparents.', cn: '我要去看望我的祖父母。' },
+      { speaker: '👧 Lily', text: 'That sounds nice! How will you get there?', cn: '听起来不错！你怎么去那里？' },
+      { speaker: '👦 Tom', text: 'We will take a train.', cn: '我们将坐火车去。' },
+      { speaker: '👧 Lily', text: 'Have a good trip!', cn: '旅途愉快！' },
+    ],
+    quiz: [
+      { emoji: '✈️', q: 'travel 是什么意思？', answer: '旅行', options: ['假期', '旅行', '观光', '目的地'] },
+      { emoji: '🌴', q: 'vacation 是什么意思？', answer: '假期', options: ['旅行', '假期', '景点', '游客'] },
+      { q: '"We will go to Beijing." 使用的是什么时态？', answer: '一般将来时', options: ['一般现在时', '一般过去时', '一般将来时', '现在进行时'] },
+    ]
+  },
+  {
+    id: 'unit6',
+    title: 'Unit 6',
+    subtitle: 'Technology and Internet 科技与互联网',
+    color: '#311b92',
+    words: [
+      { en: 'technology', cn: '科技', emoji: '💻', ipa: '/tekˈnɒlədʒi/', tip: 'Technology' },
+      { en: 'internet', cn: '互联网', emoji: '🌐', ipa: '/ˈɪntərnet/', tip: 'Internet' },
+      { en: 'computer', cn: '电脑', emoji: '🖥️', ipa: '/kəmˈpjuːtər/', tip: 'Computer' },
+      { en: 'smartphone', cn: '智能手机', emoji: '📱', ipa: '/ˈsmɑːrtfoʊn/', tip: 'Smartphone' },
+      { en: 'website', cn: '网站', emoji: '🌐', ipa: '/ˈwebsaɪt/', tip: 'Website' },
+      { en: 'app', cn: '应用程序', emoji: '📲', ipa: '/æp/', tip: 'App' },
+      { en: 'social media', cn: '社交媒体', emoji: '📱', ipa: '/ˈsoʊʃəl miːdiə/', tip: 'Social media' },
+      { en: 'online', cn: '在线', emoji: '🔌', ipa: '/ˌɒnˈlaɪn/', tip: 'Online' },
+      { en: 'download', cn: '下载', emoji: '📥', ipa: '/ˌdaʊnˈloʊd/', tip: 'Download' },
+      { en: 'upload', cn: '上传', emoji: '📤', ipa: '/ˈʌploʊd/', tip: 'Upload' },
+    ],
+    sentences: [
+      { en: 'Technology changes our lives.', cn: '科技改变我们的生活。' },
+      { en: 'I use the internet every day.', cn: '我每天都使用互联网。' },
+      { en: 'This app is very useful.', cn: '这个应用程序非常有用。' },
+      { en: 'I downloaded a new game.', cn: '我下载了一个新游戏。' },
+      { en: 'Be careful when using social media.', cn: '使用社交媒体时要小心。' },
+    ],
+    grammar: [
+      { rule: '被动语态', cn: '表示动作的承受者', example: 'The app was downloaded by millions.' },
+      { rule: '情态动词 can', cn: '表示能力或可能性', example: 'You can download it for free.' },
+      { rule: '祈使句', cn: '表示请求或命令', example: 'Be careful! Download the app now.' },
+    ],
+    dialogue: [
+      { speaker: '👦 Jack', text: 'Have you downloaded the new app?', cn: '你下载那个新应用了吗？' },
+      { speaker: '👧 Lucy', text: 'Yes! It is very useful for learning English.', cn: '是的！它对学习英语非常有用。' },
+      { speaker: '👦 Jack', text: 'Can you show me how to use it?', cn: '你能教我怎么用吗？' },
+      { speaker: '👧 Lucy', text: 'Sure! First, you need to create an account.', cn: '当然！首先，你需要创建一个账户。' },
+      { speaker: '👦 Jack', text: 'Okay, let\'s do it together.', cn: '好的，让我们一起做。' },
+    ],
+    quiz: [
+      { emoji: '💻', q: 'technology 是什么意思？', answer: '科技', options: ['互联网', '科技', '电脑', '手机'] },
+      { emoji: '📱', q: 'smartphone 是什么意思？', answer: '智能手机', options: ['电脑', '网站', '智能手机', '应用'] },
+      { q: '"The app was downloaded." 使用的是什么语态？', answer: '被动语态', options: ['主动语态', '被动语态', '进行时', '将来时'] },
+    ]
+  },
+];
+
+const navBar = document.getElementById('navBar');
+const container = document.getElementById('container');
+let quizState = {};
+
+unitsData.forEach((unit, idx) => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-btn' + (idx === 0 ? ' active' : '');
+  btn.textContent = unit.title;
+  btn.addEventListener('click', () => switchUnit(idx));
+  navBar.appendChild(btn);
+
+  const section = document.createElement('div');
+  section.className = 'unit-section' + (idx === 0 ? ' active' : '');
+  section.id = unit.id;
+
+  let html = `<div class="unit-title" style="background:linear-gradient(90deg, ${unit.color}, ${unit.color}dd)">${unit.title} ${unit.subtitle}</div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="icon">📦</span> 核心词汇
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="word-grid">`;
+
+  unit.words.forEach(w => {
+    html += `<div class="word-card" onclick="revealWord(this)" data-w="${w.en}">
+      <span class="speak-icon">🔊</span>
+      <div class="emoji">${w.emoji}</div>
+      <div class="english">${w.en}</div>
+      <div class="phonetic">${w.ipa || ''}</div>
+      <div class="chinese">${w.cn}</div>
+      <div class="hint">👆 点击</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">💬</span> 重点句型
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="sentence-list">`;
+
+  unit.sentences.forEach(s => {
+    html += `<div class="sentence-card" onclick="revealSentence(this)" data-en="${s.en}">
+      <span class="speak-icon">🔊</span>
+      <div class="en">${s.en}</div>
+      <div class="cn">${s.cn}</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  if (unit.grammar && unit.grammar.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="icon">📝</span> 语法要点
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">`;
+
+    unit.grammar.forEach(g => {
+      html += `<div class="grammar-section">
+        <div class="grammar-title">${g.rule}</div>
+        <div class="grammar-rule">${g.cn}</div>
+        <div class="grammar-example">${g.example}</div>
+      </div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎭</span> 课文对话
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="dialogue-box">`;
+
+  unit.dialogue.forEach((d, di) => {
+    html += `<div class="line ${di % 2 === 0 ? 'speaker-a' : 'speaker-b'}" onclick="revealDialogue(this)" data-en="${d.text}">
+      <div class="speaker-label">${d.speaker}</div>
+      <div class="en-text">${d.text}</div>
+      <div class="cn-text">${d.cn}</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🧠</span> 小测验
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="quiz-container" id="quiz-${unit.id}">
+        <div class="quiz-progress" id="qp-${unit.id}">第 1 / ${unit.quiz.length} 题</div>
+        <div id="qarea-${unit.id}"></div>
+        <div class="quiz-score" id="score-${unit.id}">
+          <div class="score-emoji">🎉</div>
+          <div class="score-text">测验完成！</div>
+          <div class="score-detail" id="sd-${unit.id}"></div>
+          <button onclick="restartQuiz('${unit.id}')">再做一次</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  section.innerHTML = html;
+  container.appendChild(section);
+
+  quizState[unit.id] = { current: 0, score: 0 };
+  showQuizQuestion(unit.id);
+});
+
+function switchUnit(idx) {
+  document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function revealWord(card) {
+  card.classList.toggle('revealed');
+}
+
+function revealSentence(card) {
+  card.classList.toggle('revealed');
+}
+
+function revealDialogue(line) {
+  line.classList.toggle('revealed');
+}
+
+function showQuizQuestion(unitId) {
+  const unit = unitsData.find(u => u.id === unitId);
+  const state = quizState[unitId];
+  const q = unit.quiz[state.current];
+  
+  if (!q) {
+    document.getElementById('qarea-' + unitId).style.display = 'none';
+    document.getElementById('score-' + unitId).classList.add('show');
+    document.getElementById('sd-' + unitId).textContent = `答对 ${state.score} / ${unit.quiz.length} 题`;
+    return;
+  }
+
+  document.getElementById('qp-' + unitId).textContent = `第 ${state.current + 1} / ${unit.quiz.length} 题`;
+  document.getElementById('score-' + unitId).classList.remove('show');
+  
+  let html = `<div class="quiz-question">`;
+  if (q.emoji) html += `<div class="big-emoji">${q.emoji}</div>`;
+  html += `<div class="q-text">${q.q}</div></div>`;
+  
+  html += `<div class="quiz-options">`;
+  q.options.forEach(opt => {
+    html += `<div class="quiz-option" onclick="checkAnswer('${unitId}', '${opt}')">${opt}</div>`;
+  });
+  html += `</div>`;
+  
+  document.getElementById('qarea-' + unitId).innerHTML = html;
+  document.getElementById('qarea-' + unitId).style.display = 'block';
+}
+
+function checkAnswer(unitId, answer) {
+  const unit = unitsData.find(u => u.id === unitId);
+  const state = quizState[unitId];
+  const q = unit.quiz[state.current];
+  
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    if (opt.textContent === q.answer) {
+      opt.classList.add('correct');
+      if (answer === q.answer) state.score++;
+    } else if (opt.textContent === answer && answer !== q.answer) {
+      opt.classList.add('wrong');
+    }
+  });
+  
+  setTimeout(() => {
+    state.current++;
+    showQuizQuestion(unitId);
+  }, 1500);
+}
+
+function restartQuiz(unitId) {
+  quizState[unitId] = { current: 0, score: 0 };
+  showQuizQuestion(unitId);
+}
+</script>
+</body>
+</html>

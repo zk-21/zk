@@ -12,6 +12,62 @@
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
     padding-bottom: 60px;
+    color: #2f3542;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #0d47a1;
+  }
+  .lang-btn {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 18px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s;
+  }
+  .lang-btn:hover {
+    background: rgba(255,255,255,0.25);
+  }
+  .lang-btn.active {
+    color: #0d47a1;
+    background: #fff;
+    border-color: #fff;
+  }
+
+  .course-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    background: #172033;
+  }
+  .course-switcher a {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 13px;
+    border: 1px solid rgba(255,255,255,0.24);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.82);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+  }
+  .course-switcher a.active {
+    color: #172033;
+    background: #fff;
   }
 
   .header {
@@ -37,6 +93,7 @@
     flex-wrap: wrap;
   }
   .voice-btn {
+    min-height: 36px;
     padding: 6px 16px;
     border: 2px solid rgba(255,255,255,0.6);
     border-radius: 20px;
@@ -49,6 +106,21 @@
     backdrop-filter: blur(4px);
   }
   .voice-btn:hover { background: rgba(255,255,255,0.35); }
+  .voice-btn:focus-visible,
+  .course-switcher a:focus-visible,
+  .nav-btn:focus-visible,
+  .section-header:focus-visible,
+  .word-card:focus-visible,
+  .sentence-card:focus-visible,
+  .grammar-card:focus-visible,
+  .grammar-detail-card:focus-visible,
+  .dialogue-box .line:focus-visible,
+  .quiz-option:focus-visible,
+  .quiz-next:focus-visible,
+  .quiz-score button:focus-visible {
+    outline: 3px solid rgba(77,150,255,0.45);
+    outline-offset: 2px;
+  }
   .voice-btn.active { background: rgba(255,255,255,0.9); color: #333; border-color: #fff; }
   .speed-label { font-size: 12px; opacity: 0.85; }
   .speed-slider {
@@ -79,6 +151,7 @@
 
   .nav-btn {
     flex-shrink: 0;
+    min-height: 40px;
     padding: 8px 16px;
     border: 2px solid transparent;
     border-radius: 20px;
@@ -106,7 +179,7 @@
     text-align: center;
     padding: 20px;
     margin-bottom: 16px;
-    border-radius: 16px;
+    border-radius: 14px;
     color: #fff;
     font-size: 22px;
     font-weight: 700;
@@ -115,7 +188,7 @@
 
   .section-card {
     background: #fff;
-    border-radius: 16px;
+    border-radius: 12px;
     margin-bottom: 16px;
     box-shadow: 0 2px 16px rgba(0,0,0,0.06);
     overflow: hidden;
@@ -147,11 +220,11 @@
 
   .section-body {
     padding: 0;
-    max-height: 0;
+    height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.3s ease;
+    transition: height 0.3s ease, padding 0.25s ease;
   }
-  .section-body.open { padding: 16px; max-height: 2000px; }
+  .section-body.open { padding: 16px; height: auto; overflow: visible; }
 
   /* Word cards grid */
   .word-grid {
@@ -162,7 +235,7 @@
 
   .word-card {
     background: linear-gradient(135deg, #f8f9ff, #eef1ff);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 14px 12px;
     text-align: center;
     cursor: pointer;
@@ -175,7 +248,7 @@
     align-items: center;
     justify-content: center;
   }
-  .word-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .word-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
   .word-card.speaking { border-color: #4d96ff; box-shadow: 0 0 0 3px rgba(77,150,255,0.3); animation: pulse 0.8s ease infinite; }
 
   @keyframes pulse {
@@ -221,7 +294,7 @@
 
   .sentence-card {
     background: linear-gradient(135deg, #f0fff4, #e6ffed);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 16px;
     cursor: pointer;
     transition: all 0.3s;
@@ -252,17 +325,109 @@
   .sentence-card.revealed .cn { opacity: 1; }
   .sentence-card .hint-text { font-size: 11px; color: #bbb; margin-top: 6px; }
 
+  /* Grammar section */
+  .grammar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 8px;
+  }
+  .grammar-card {
+    flex: 1 1 calc(50% - 12px);
+    min-width: 200px;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 2px solid #81c784;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .grammar-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .grammar-card.speaking { border-color: #4d96ff; box-shadow: 0 0 0 3px rgba(77,150,255,0.3); animation: pulse 0.8s ease infinite; }
+  .grammar-card .speak-icon {
+    display: inline-block;
+    margin-right: 8px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .grammar-card:hover .speak-icon { opacity: 0.8; }
+  .grammar-card .rule-text { font-size: 16px; font-weight: 600; color: #2e7d32; }
+  .grammar-card .hint-text { font-size: 11px; color: #bbb; margin-top: 6px; }
+
+  /* Grammar detail section */
+  .grammar-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+  }
+  .grammar-detail-card {
+    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+    border: 2px solid #9c27b0;
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .grammar-detail-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+  .grammar-detail-card.speaking { border-color: #4d96ff; box-shadow: 0 0 0 3px rgba(77,150,255,0.3); animation: pulse 0.8s ease infinite; }
+  .grammar-detail-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .grammar-detail-header .speak-icon {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .grammar-detail-card:hover .speak-icon { opacity: 1; }
+  .grammar-detail-header .rule-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #6a1b9a;
+  }
+  .grammar-detail-header .rule-cn {
+    font-size: 14px;
+    color: #8e24aa;
+    background: rgba(255,255,255,0.6);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+  .grammar-detail-card .rule-example {
+    font-size: 14px;
+    color: #555;
+    background: rgba(255,255,255,0.5);
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+  .grammar-detail-card .rule-note,
+  .grammar-detail-card .rule-position,
+  .grammar-detail-card .rule-example-sentence {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .grammar-detail-card .rule-note { background: rgba(255,243,224,0.8); }
+  .grammar-detail-card .rule-position { background: rgba(227,242,253,0.8); }
+  .grammar-detail-card .rule-example-sentence { background: rgba(232,245,233,0.8); }
+  .grammar-detail-card .hint-text { font-size: 11px; color: #bbb; margin-top: 8px; }
+
   /* Dialogue section */
   .dialogue-box {
     background: linear-gradient(135deg, #fff5f5, #ffe8e8);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 20px;
     position: relative;
   }
   .dialogue-box .line {
     margin-bottom: 12px;
     padding: 10px 14px;
-    border-radius: 12px;
+    border-radius: 10px;
     max-width: 85%;
     position: relative;
     cursor: pointer;
@@ -314,7 +479,8 @@
   }
   .quiz-option {
     padding: 14px;
-    border-radius: 12px;
+    min-height: 52px;
+    border-radius: 10px;
     border: 2px solid #e0e0e0;
     background: #fff;
     font-size: 16px;
@@ -333,7 +499,8 @@
     margin: 16px auto 0;
     padding: 10px 32px;
     border: none;
-    border-radius: 20px;
+    min-height: 44px;
+    border-radius: 22px;
     background: linear-gradient(90deg, #4d96ff, #6bcb77);
     color: #fff;
     font-size: 15px;
@@ -362,7 +529,8 @@
     margin-top: 16px;
     padding: 10px 32px;
     border: none;
-    border-radius: 20px;
+    min-height: 44px;
+    border-radius: 22px;
     background: linear-gradient(90deg, #ff6b6b, #ffa500);
     color: #fff;
     font-size: 15px;
@@ -379,14 +547,84 @@
   }
 
   /* Responsive */
+  @media (hover: none) {
+    .nav-btn:hover,
+    .word-card:hover,
+    .sentence-card:hover,
+    .grammar-card:hover,
+    .grammar-detail-card:hover,
+    .dialogue-box .line:hover,
+    .quiz-option:hover,
+    .quiz-next:hover {
+      transform: none;
+    }
+  }
+
   @media (max-width: 480px) {
-    .header { font-size: 20px; padding: 18px 12px 14px; }
-    .word-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+    body { padding-bottom: 32px; }
+    .header { font-size: 20px; padding: 16px 12px 12px; letter-spacing: 1px; }
+    .header span { font-size: 13px; line-height: 1.45; }
+    .course-switcher { justify-content: flex-start; padding: 8px; }
+    .course-switcher a { min-height: 32px; padding: 6px 11px; font-size: 12px; }
+    .voice-controls { gap: 8px; margin-top: 10px; }
+    .voice-btn { flex: 1 1 132px; max-width: 180px; padding: 7px 10px; font-size: 13px; }
+    .speed-slider { width: 112px; }
+    .nav-bar { padding: 10px 8px; gap: 6px; }
+    .nav-btn { min-height: 38px; padding: 7px 12px; font-size: 13px; }
+    .container { padding: 12px 10px; }
+    .unit-title { padding: 16px 12px; font-size: 19px; }
+    .unit-title small { font-size: 12px; line-height: 1.45; }
+    .section-header { padding: 13px 14px; font-size: 16px; }
+    .section-body.open { padding: 12px; }
+    .word-grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 10px; }
+    .word-card { min-height: 112px; padding: 12px 10px; }
+    .word-card .english { font-size: 16px; overflow-wrap: anywhere; }
+    .sentence-card { padding: 14px 34px 14px 12px; }
+    .sentence-card .en { font-size: 16px; }
+    .grammar-list { padding: 0; }
+    .grammar-card { flex-basis: 100%; min-width: 0; }
+    .grammar-detail-list { padding: 0; }
+    .grammar-detail-header .rule-name { font-size: 16px; }
+    .dialogue-box { padding: 12px; }
+    .dialogue-box .line { max-width: 96%; padding: 10px 28px 10px 12px; }
+    .dialogue-box .line .en-text { font-size: 15px; line-height: 1.45; }
+    .quiz-question .big-emoji { font-size: 52px; }
+    .quiz-question .q-text { font-size: 18px; line-height: 1.4; }
     .quiz-options { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 </style>
 </head>
 <body>
+
+<div class="language-switcher">
+  <a href="三年级下册语文互动学习.html" class="lang-btn">📖 语文</a>
+  <a href="english-learning.html" class="lang-btn active">🔤 英语</a>
+</div>
+
+<nav class="course-switcher" aria-label="教材页面切换">
+  <a href="english-1a.html">一年级上册</a>
+  <a href="english-1b.html">一年级下册</a>
+  <a href="english-2a.html">二年级上册</a>
+  <a href="english-2b.html">二年级下册</a>
+  <a href="三年级上册英语互动学习.html">三年级上册</a>
+  <a class="active" href="english-learning.html">三年级下册</a>
+  <a href="四年级上册英语互动学习.html">四年级上册</a>
+  <a href="四年级下册英语互动学习.html">四年级下册</a>
+  <a href="english-5a.html">五年级上册</a>
+  <a href="english-5b.html">五年级下册</a>
+  <a href="english-grammar.html">英语语法</a>
+</nav>
 
 <div class="header">
   📚 三年级下册英语 · 趣味记忆
@@ -487,7 +725,8 @@ const unitsData = [
       { q: '"What\'s that?" 意思是？', answer: '那是什么？', options: ['这是什么？', '那是什么？', '那是谁？', '这是谁？'] },
       { emoji: '🎒', q: 'schoolbag 是什么意思？', answer: '书包', options: ['铅笔盒', '书包', '钢笔', '橡皮'] },
       { q: '"Good idea!" 意思是？', answer: '好主意！', options: ['对不起！', '谢谢你！', '好主意！', '没关系！'] },
-    ]
+    ],
+    grammar: ['What\'s this/that?', 'This is ... / That is ...', 'It\'s ...', 'Put ... in ...', 'Guess!']
   },
   {
     id: 'unit2',
@@ -565,7 +804,8 @@ const unitsData = [
       { q: '"Let\'s sweep the floor." 意思是？', answer: '让我们打扫地板吧。', options: ['让我们擦黑板。', '让我们关窗户。', '让我们打扫地板。', '让我们整理桌子。'] },
       { q: '"Keep the classroom clean." 意思是？', answer: '保持教室干净。', options: ['保持教室安静。', '保持教室干净。', '保持教室整洁。', '关好教室的门。'] },
       { q: '"Me too!" 意思是？', answer: '我也是！', options: ['我也是！', '我也喜欢！', '我也想要！', '我也同意！'] },
-    ]
+    ],
+    grammar: ['Let\'s ...', 'Please ...', 'The ... is ...', 'Keep ... clean', 'Me too!', 'All right.']
   },
   {
     id: 'unit3',
@@ -638,7 +878,8 @@ const unitsData = [
       { q: '"Be quiet." 意思是？', answer: '保持安静。', options: ['请坐下。', '保持安静。', '不要说话。', '站起来。'] },
       { q: '"Would you like a sweet?" 意思是？', answer: '你想要一颗糖果吗？', options: ['你喜欢糖果吗？', '你想要一颗糖果吗？', '给我一颗糖果。', '糖果很好吃。'] },
       { q: '"That\'s all right." 意思是？', answer: '不要紧。', options: ['对不起。', '谢谢你。', '不要紧。', '没关系，再见。'] },
-    ]
+    ],
+    grammar: ['Don\'t ...', 'Be ...', 'Sit down, please.', 'Follow the rules.', 'Would you like ...?', 'That\'s all right.']
   },
   {
     id: 'unit4',
@@ -723,7 +964,8 @@ const unitsData = [
       { q: '"Where is the duck?" 意思是？', answer: '鸭子在哪里？', options: ['鸭子是什么？', '鸭子在哪里？', '鸭子在干什么？', '鸭子有几只？'] },
       { q: '"behind" 是什么意思？', answer: '在…后面', options: ['在…前面', '在…上面', '在…后面', '在…下面'] },
       { emoji: '🦋', q: 'butterfly 是什么意思？', answer: '蝴蝶', options: ['蜻蜓', '蝴蝶', '蜜蜂', '小鸟'] },
-    ]
+    ],
+    grammar: ['Where is ...?', 'It\'s on/in/under/behind ...', 'How + adjective!', 'I can\'t ...', 'Let\'s ...', 'I want to ...']
   },
   {
     id: 'unit5',
@@ -805,7 +1047,8 @@ const unitsData = [
       { q: '"share" 是什么意思？', answer: '分享', options: ['买', '吃', '分享', '做'] },
       { q: '"What about you?" 意思是？', answer: '你呢？', options: ['你是谁？', '你在干什么？', '你呢？', '你好吗？'] },
       { q: '"Let\'s make a fruit salad together." 意思是？', answer: '让我们一起做水果沙拉吧。', options: ['让我们一起吃水果吧。', '让我们一起做水果沙拉吧。', '让我们一起买水果吧。', '让我们一起分享吧。'] },
-    ]
+    ],
+    grammar: ['I have ...', 'Do you have ...?', 'Yes, I do. / No, I don\'t.', 'I like ...', 'They are ...', 'What about you?', 'Here you are.', 'Fruit is good for us.']
   },
   {
     id: 'unit6',
@@ -886,7 +1129,8 @@ const unitsData = [
       { q: '"What are these?" 意思是？', answer: '这些是什么？', options: ['那是什么？', '这些是什么？', '这些是谁？', '你喜欢这些吗？'] },
       { q: '"What are those?" 意思是？', answer: '那些是什么？', options: ['这些是什么？', '那些是什么？', '那是什么？', '那些是谁？'] },
       { q: '"cute" 是什么意思？', answer: '可爱的', options: ['大的', '小的', '可爱的', '胖的'] },
-    ]
+    ],
+    grammar: ['What are these/those?', 'They\'re ...', 'Are these/those ...?', 'Yes, they are. / No, they aren\'t.', 'Is this ...?', 'Yes, it is. / No, it isn\'t.', 'What do they like?', 'Welcome to ...']
   },
   {
     id: 'unit7',
@@ -965,7 +1209,8 @@ const unitsData = [
       { q: '"Let\'s go to the zoo." 意思是？', answer: '让我们去动物园吧。', options: ['让我们去农场吧。', '让我们去学校吧。', '让我们去动物园吧。', '让我们去公园吧。'] },
       { q: '"Don\'t feed the animals." 意思是？', answer: '不要喂动物。', options: ['不要看动物。', '不要喂动物。', '不要碰动物。', '不要摸动物。'] },
       { q: '"high five" 是什么意思？', answer: '击掌', options: ['握手', '拥抱', '击掌', '挥手'] },
-    ]
+    ],
+    grammar: ['Let\'s go to ...', 'I want to ...', 'Look at ...', 'It\'s so ...', 'Don\'t ...', 'I like ...', 'They like to ...', 'High five!']
   },
   {
     id: 'unit8',
@@ -1045,9 +1290,163 @@ const unitsData = [
       { q: '"What colour is it?" 意思是？', answer: '它是什么颜色的？', options: ['它是什么？', '它是什么颜色的？', '它好看吗？', '你喜欢什么颜色？'] },
       { q: '"sure" 是什么意思？', answer: '当然', options: ['对不起', '当然', '好的', '谢谢你'] },
       { q: '"How come?" 意思是？', answer: '怎么回事？', options: ['你好吗？', '怎么了？', '怎么回事？', '在哪里？'] },
-    ]
+    ],
+    grammar: ['What colour is ...?', 'It\'s + colour.', 'I like + colour.', 'What colour do you like?', 'Let\'s buy ...', 'Sure!', 'How come?', 'It was ... before.']
   }
 ];
+
+// ====== 语法知识库 ======
+const grammarData = {
+  categories: [
+    {
+      name: '名词',
+      icon: '📚',
+      rules: [
+        { rule: '名词分类', cn: '专有名词与普通名词', example: '专有名词：China, Tom；普通名词：book, pen', note: '专有名词首字母大写' },
+        { rule: '可数名词', cn: '可以计数的名词', example: 'a pen, two books, three desks', note: '有单复数形式' },
+        { rule: '不可数名词', cn: '不能计数的名词', example: 'water, milk, bread, rice', note: '没有复数形式' },
+        { rule: 'a / an', cn: '不定冠词', example: 'a pen, an eraser, an apple', note: 'a用于辅音音素开头，an用于元音音素开头' },
+        { rule: 'the', cn: '定冠词', example: 'the book, the classroom', note: '特指某人或某物' },
+      ]
+    },
+    {
+      name: '名词单复数',
+      icon: '🔢',
+      rules: [
+        { rule: '直接加-s', cn: '一般名词', example: 'pen → pens, book → books, desk → desks' },
+        { rule: '加-es', cn: '以s/x/sh/ch结尾', example: 'bus → buses, box → boxes, watch → watches' },
+        { rule: '变-y为-i加-es', cn: '以辅音字母+y结尾', example: 'baby → babies, party → parties, butterfly → butterflies' },
+        { rule: '直接加-s', cn: '以元音字母+y结尾', example: 'boy → boys, toy → toys, day → days' },
+        { rule: '特殊变化', cn: '不规则复数', example: 'sheep → sheep, fish → fish, child → children, mouse → mice' },
+        { rule: '变-f/fe为-ves', cn: '以f/fe结尾', example: 'knife → knives, leaf → leaves' },
+      ]
+    },
+    {
+      name: '代词',
+      icon: '👤',
+      rules: [
+        { rule: '人称代词主格', cn: '作主语', example: 'I, you, he, she, it, we, they', exampleSentence: 'I am a student. He likes apples.' },
+        { rule: '人称代词宾格', cn: '作宾语', example: 'me, you, him, her, it, us, them', exampleSentence: 'Give it to me. She helps them.' },
+        { rule: '物主代词', cn: '表示所属关系', example: 'my, your, his, her, its, our, their', exampleSentence: 'This is my pen. Their classroom is clean.' },
+        { rule: '指示代词', cn: '指示人或事物', example: 'this, that, these, those', exampleSentence: 'This is a book. Those are pens.' },
+      ]
+    },
+    {
+      name: '动词',
+      icon: '🏃',
+      rules: [
+        { rule: '动词分类', cn: '实义动词与系动词', example: '实义动词：run, eat, play；系动词：be, look, feel' },
+        { rule: '动词原形', cn: '动词的基本形式', example: 'put, guess, say, clean, draw', note: '用于一般现在时和情态动词后' },
+        { rule: '动词-ing', cn: '现在分词/动名词', example: 'running, talking, eating, drawing', note: '用于进行时态或作名词' },
+        { rule: '动词不定式', cn: 'to + 动词原形', example: 'want to see, like to play, learn to read', note: '表示目的或愿望' },
+        { rule: '动词第三人称单数', cn: '主语是he/she/it时', example: 'He likes carrots. It eats grass. She plays.', note: '一般加-s，特殊加-es' },
+      ]
+    },
+    {
+      name: '动词时态',
+      icon: '⏰',
+      rules: [
+        { rule: '一般现在时', cn: '经常性动作或状态', example: 'I like apples. You have a mango.', note: '主语三单时动词变化' },
+        { rule: '现在进行时', cn: '正在进行的动作', example: 'She is reading. They are playing.', note: 'be + 动词-ing' },
+        { rule: '一般过去时', cn: '过去的状态或动作', example: 'It was blue. I was happy.', note: 'be动词变为was/were' },
+        { rule: '一般将来时', cn: '将要发生的动作', example: 'I will go. We are going to play.', note: 'will + 动词原形 或 be going to' },
+      ]
+    },
+    {
+      name: '情态动词',
+      icon: '🎯',
+      rules: [
+        { rule: 'can', cn: '能，可以', example: 'I can draw. I can\'t find it.', note: '表示能力或可能性' },
+        { rule: 'would', cn: '愿意，想要', example: 'Would you like a sweet?', note: '表示委婉请求' },
+        { rule: 'will', cn: '将要，会', example: 'I will help you. It will be fine.', note: '表示将来' },
+        { rule: 'do/does', cn: '助动词', example: 'Do you have a banana? Does he like apples?', note: '用于疑问句和否定句' },
+        { rule: 'be动词', cn: '系动词', example: 'is, are, was, were', exampleSentence: 'He is happy. They were here.' },
+      ]
+    },
+    {
+      name: '形容词和副词',
+      icon: '🌈',
+      rules: [
+        { rule: '形容词', cn: '修饰名词', example: 'a long ruler, a cute rabbit, beautiful flowers', position: '放在名词前或系动词后' },
+        { rule: '副词', cn: '修饰动词', example: 'run fast, read carefully, speak loudly', position: '放在动词后' },
+        { rule: '形容词比较级', cn: '两者比较', example: 'bigger, smaller, longer, happier', note: '一般加-er，多音节词加more' },
+        { rule: '形容词最高级', cn: '三者以上比较', example: 'biggest, smallest, longest, happiest', note: '一般加-est，多音节词加most' },
+        { rule: 'How + 形容词!', cn: '感叹句', example: 'How beautiful! How big! How cute!' },
+        { rule: 'It\'s so + 形容词', cn: '强调程度', example: 'It\'s so big! It\'s so cute!' },
+      ]
+    },
+    {
+      name: '介词',
+      icon: '📍',
+      rules: [
+        { rule: '表示位置', cn: '地点介词', example: 'on the desk, in the classroom, under the tree, behind you' },
+        { rule: '表示时间', cn: '时间介词', example: 'in the morning, on Monday, at 3 o\'clock' },
+        { rule: '表示方向', cn: '方向介词', example: 'go to school, come from China, look at the picture' },
+        { rule: 'Put ... in ...', cn: '把……放进……里', example: 'Put your pen in the pencil case.' },
+        { rule: 'Look at ...', cn: '看……', example: 'Look at the elephant! Look at the rules.' },
+      ]
+    },
+    {
+      name: '句式结构',
+      icon: '🏗️',
+      rules: [
+        { rule: '陈述句', cn: '陈述事实', example: 'This is my pen. I like apples.', note: '主语+谓语+宾语' },
+        { rule: '一般疑问句', cn: '提出问题', example: 'Is this a cow? Do you have a banana?', note: '用Yes/No回答' },
+        { rule: '特殊疑问句', cn: '询问具体信息', example: 'What is this? Where is the duck?', note: '用特殊疑问词开头' },
+        { rule: 'What\'s this/that?', cn: '询问单数物品', example: 'What\'s that? - That\'s a pencil case.' },
+        { rule: 'What are these/those?', cn: '询问复数物品', example: 'What are these? - They\'re pigs.' },
+        { rule: 'This is ... / That is ...', cn: '介绍单数物品', example: 'This is my pen. That is your ruler.' },
+        { rule: 'They\'re ...', cn: '介绍复数物品', example: 'They\'re sheep. They\'re carrots.' },
+        { rule: 'Is this ...?', cn: '确认单数物品', example: 'Is this a cow? Yes, it is.' },
+        { rule: 'Are these/those ...?', cn: '确认复数物品', example: 'Are those chickens? No, they aren\'t.' },
+        { rule: 'Do you have ...?', cn: '询问是否拥有', example: 'Do you have a banana? Yes, I do.' },
+        { rule: 'Where is ...?', cn: '询问位置', example: 'Where is the duck? It\'s behind the tree.' },
+        { rule: 'What colour is ...?', cn: '询问颜色', example: 'What colour is that? It\'s blue.' },
+        { rule: 'What do they like?', cn: '询问喜好', example: 'What do they like? They like carrots.' },
+      ]
+    },
+    {
+      name: '祈使句',
+      icon: '📢',
+      rules: [
+        { rule: 'Let\'s ...', cn: '建议一起做', example: 'Let\'s clean the classroom. Let\'s go to the zoo!' },
+        { rule: 'Let me ...', cn: '请求允许', example: 'Let me help you. Let me see.' },
+        { rule: 'Please ...', cn: '礼貌请求', example: 'Please close the window. Please sit down.' },
+        { rule: 'Be ...', cn: '要求保持状态', example: 'Be quiet. Be careful. Be clean.' },
+        { rule: 'Don\'t ...', cn: '禁止做某事', example: 'Don\'t run. Don\'t feed the animals. Don\'t talk.' },
+        { rule: '动词原形开头', cn: '直接命令', example: 'Close the door. Keep clean. Sweep the floor.' },
+      ]
+    },
+    {
+      name: '主谓一致',
+      icon: '⚖️',
+      rules: [
+        { rule: 'This is ... / These are ...', cn: '单数/复数一致', example: 'This is a pig. These are pigs.' },
+        { rule: 'That is ... / Those are ...', cn: '单数/复数一致', example: 'That is a pen. Those are pens.' },
+        { rule: 'It is ... / They are ...', cn: '单数/复数一致', example: 'It is big. They are small.' },
+        { rule: 'He/She/It + 动词s', cn: '第三人称单数', example: 'He likes carrots. She plays games.' },
+        { rule: 'I/You/We/They + 动词原形', cn: '非第三人称单数', example: 'I like apples. We play together.' },
+      ]
+    },
+    {
+      name: '常见表达',
+      icon: '💬',
+      rules: [
+        { rule: 'Me too!', cn: '我也是！', example: 'I can clean the blackboard. Me too!' },
+        { rule: 'All right.', cn: '好的。', example: 'Let\'s sweep the floor. All right.' },
+        { rule: 'Sure!', cn: '当然！', example: 'Can we buy balloons? Sure!' },
+        { rule: 'Guess!', cn: '猜一猜！', example: 'Guess! What\'s this?' },
+        { rule: 'Here you are.', cn: '给你。', example: 'Can I have a banana? Here you are.' },
+        { rule: 'That\'s all right.', cn: '不要紧/没关系。', example: 'I\'m sorry. That\'s all right.' },
+        { rule: 'How come?', cn: '怎么回事？', example: 'How come? It was blue before!' },
+        { rule: 'High five!', cn: '击掌！', example: 'High five!' },
+        { rule: 'Welcome to ...', cn: '欢迎来到……', example: 'Welcome to my farm! Welcome to the zoo!' },
+        { rule: 'What about you?', cn: '你呢？', example: 'I like grapes. What about you?' },
+        { rule: 'Fruit is good for us.', cn: '水果对我们有好处。', example: 'Eat more fruit. Fruit is good for us.' },
+      ]
+    }
+  ]
+};
 
 function normalizeVocabKey(text) {
   return (text || '').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -1263,6 +1662,7 @@ let speechSupported = true; // 标记浏览器是否支持语音合成
 const localAudioBasePath = 'audio/en';
 const localAudioPlayer = new Audio();
 const missingAudioCache = new Set();
+let playbackToken = 0;
 
 // 检测浏览器是否支持语音合成
 function checkSpeechSupport() {
@@ -1354,6 +1754,7 @@ function getSpeechRate(text, preferredRate) {
 }
 
 function stopCurrentPlayback() {
+  playbackToken++;
   localAudioPlayer.pause();
   localAudioPlayer.currentTime = 0;
   localAudioPlayer.onended = null;
@@ -1539,7 +1940,14 @@ function speakSequence(items, callback) {
     return;
   }
 
+  stopCurrentPlayback();
+  const token = playbackToken;
+
   const playNext = index => {
+    if (token !== playbackToken) {
+      return;
+    }
+
     if (index >= queue.length) {
       if (callback) callback();
       return;
@@ -1549,8 +1957,11 @@ function speakSequence(items, callback) {
     speak(item.text, {
       rate: item.rate,
       pitch: item.pitch,
-      cancel: index === 0,
+      cancel: false,
     }, () => {
+      if (token !== playbackToken) {
+        return;
+      }
       const pauseAfterMs = item.pauseAfterMs || 0;
       if (pauseAfterMs > 0) {
         setTimeout(() => playNext(index + 1), pauseAfterMs);
@@ -1576,6 +1987,10 @@ function toggleVoice() {
   const btn = document.getElementById('voiceToggle');
   btn.classList.toggle('active', voiceEnabled);
   btn.textContent = voiceEnabled ? '🔊 自动发音' : '🔇 发音已关';
+  if (!voiceEnabled) {
+    stopCurrentPlayback();
+    clearSpeaking();
+  }
 }
 
 function toggleRepeat() {
@@ -1594,6 +2009,68 @@ function showSpeaking(el) {
   document.querySelectorAll('.speaking').forEach(e => e.classList.remove('speaking'));
   if (el) el.classList.add('speaking');
 }
+
+function clearSpeaking(el) {
+  if (el) {
+    el.classList.remove('speaking');
+    return;
+  }
+  document.querySelectorAll('.speaking').forEach(e => e.classList.remove('speaking'));
+}
+
+function setSectionOpen(header, shouldOpen) {
+  const body = header.nextElementSibling;
+  if (!body) return;
+
+  header.classList.toggle('open', shouldOpen);
+
+  if (shouldOpen) {
+    body.classList.add('open');
+    body.style.height = '0px';
+    requestAnimationFrame(() => {
+      body.style.height = `${body.scrollHeight}px`;
+    });
+    body.addEventListener('transitionend', function onOpenEnd(event) {
+      if (event.propertyName !== 'height') return;
+      body.removeEventListener('transitionend', onOpenEnd);
+      if (body.classList.contains('open')) {
+        body.style.height = 'auto';
+      }
+    });
+    return;
+  }
+
+  body.style.height = `${body.scrollHeight}px`;
+  requestAnimationFrame(() => {
+    body.classList.remove('open');
+    body.style.height = '0px';
+  });
+}
+
+function enhanceInteractiveElements(root = document) {
+  root.querySelectorAll('[onclick]:not(button), .quiz-option').forEach(el => {
+    if (!el.hasAttribute('tabindex')) {
+      el.setAttribute('tabindex', '0');
+    }
+    if (!el.hasAttribute('role')) {
+      el.setAttribute('role', 'button');
+    }
+  });
+}
+
+document.addEventListener('keydown', event => {
+  if ((event.key !== 'Enter' && event.key !== ' ') || event.defaultPrevented) {
+    return;
+  }
+
+  const target = event.target.closest('[role="button"]');
+  if (!target || target.tagName === 'BUTTON') {
+    return;
+  }
+
+  event.preventDefault();
+  target.click();
+});
 
 // ====== 构建页面 ======
 const navBar = document.getElementById('navBar');
@@ -1761,6 +2238,29 @@ unitsData.forEach((unit, idx) => {
     html += `</div></div></div>`;
   }
 
+  // Grammar section
+  if (unit.grammar && unit.grammar.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="icon">📝</span> 语法规则
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <p style="font-size:13px;color:#999;margin-bottom:12px;">💡 点击句型听发音</p>
+        <div class="grammar-list">`;
+
+    unit.grammar.forEach((g, gi) => {
+      const displayRule = typeof g === 'string' ? g : g.rule || g;
+      html += `<div class="grammar-card" onclick="revealGrammar(this)" data-en="${displayRule}">
+        <span class="speak-icon">🔊</span>
+        <div class="rule-text">${displayRule}</div>
+        <div class="hint-text">👆 点击听发音</div>
+      </div>`;
+    });
+
+    html += `</div></div></div>`;
+  }
+
   // Quiz section
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
@@ -1789,6 +2289,100 @@ unitsData.forEach((unit, idx) => {
   showQuizQuestion(unit.id);
 });
 
+// Create Grammar Guide section
+const grammarSection = document.createElement('div');
+grammarSection.className = 'unit-section';
+grammarSection.id = 'grammar-page';
+
+let grammarHtml = `
+  <div class="unit-title" style="background:linear-gradient(90deg, #9c27b0, #ba68c8)">
+    📚 英语语法大全
+    <small>系统学习英语语法知识</small>
+  </div>
+`;
+
+// Render grammar categories
+grammarData.categories.forEach((cat, catIdx) => {
+  grammarHtml += `<div class="section-card">
+    <div class="section-header ${catIdx === 0 ? 'open' : ''}" onclick="toggleSection(this)">
+      <span class="icon">${cat.icon}</span> ${cat.name}
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body ${catIdx === 0 ? 'open' : ''}">
+      <div class="grammar-detail-list">`;
+  
+  cat.rules.forEach((rule, ruleIdx) => {
+    const hasNote = rule.note ? `<div class="rule-note">💡 ${rule.note}</div>` : '';
+    const hasPosition = rule.position ? `<div class="rule-position">📍 ${rule.position}</div>` : '';
+    const hasExampleSentence = rule.exampleSentence ? `<div class="rule-example-sentence">📝 ${rule.exampleSentence}</div>` : '';
+    
+    grammarHtml += `<div class="grammar-detail-card" onclick="revealGrammarDetail(this)" data-rule="${rule.rule}" data-cn="${rule.cn}">
+      <div class="grammar-detail-header">
+        <span class="speak-icon">🔊</span>
+        <span class="rule-name">${rule.rule}</span>
+        <span class="rule-cn">${rule.cn}</span>
+      </div>
+      <div class="rule-example">${rule.example}</div>
+      ${hasNote}
+      ${hasPosition}
+      ${hasExampleSentence}
+      <div class="hint-text">👆 点击听发音</div>
+    </div>`;
+  });
+  
+  grammarHtml += `</div></div></div>`;
+});
+
+grammarSection.innerHTML = grammarHtml;
+container.appendChild(grammarSection);
+enhanceInteractiveElements(document);
+
+function showGrammarPage() {
+  // Hide all unit sections
+  document.querySelectorAll('.unit-section').forEach(s => {
+    s.classList.remove('active');
+  });
+  // Show grammar page
+  document.getElementById('grammar-page').classList.add('active');
+  
+  // Update nav buttons
+  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', false);
+    if (false) {
+      b.style.background = '#9c27b0';
+      b.style.color = '#fff';
+    } else {
+      b.style.background = '';
+      b.style.color = '';
+    }
+  });
+  stopCurrentPlayback();
+  clearSpeaking();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function revealGrammarDetail(card) {
+  const rule = card.dataset.rule;
+  const cn = card.dataset.cn;
+  showSpeaking(card);
+  
+  // 先播放英文，再播放中文
+  const playback = [
+    { text: rule, rate: getSlowSentenceRate(), pauseAfterMs: 800 },
+    { text: cn, rate: 0.8, pauseAfterMs: repeatMode ? 500 : 0 }
+  ];
+  
+  if (repeatMode && rule) {
+    playback.push({ text: rule, rate: Math.max(0.35, getSlowSentenceRate() - 0.1) });
+  }
+  
+  speakSequence(playback, () => {
+    clearSpeaking(card);
+  });
+  
+  card.classList.toggle('revealed');
+}
+
 function switchUnit(idx) {
   document.querySelectorAll('.nav-btn').forEach((b, i) => {
     b.classList.toggle('active', i === idx);
@@ -1803,12 +2397,17 @@ function switchUnit(idx) {
   document.querySelectorAll('.unit-section').forEach((s, i) => {
     s.classList.toggle('active', i === idx);
   });
+  stopCurrentPlayback();
+  clearSpeaking();
+  navBar.scrollTo({
+    left: Math.max(0, document.querySelectorAll('.nav-btn')[idx].offsetLeft - 12),
+    behavior: 'smooth'
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function toggleSection(header) {
-  header.classList.toggle('open');
-  const body = header.nextElementSibling;
-  body.classList.toggle('open');
+  setSectionOpen(header, !header.classList.contains('open'));
 }
 
 function revealWord(card) {
@@ -1819,7 +2418,7 @@ function revealWord(card) {
     playback.push({ text: word, rate: Math.max(0.4, getSlowWordRate() - 0.1) });
   }
   speakSequence(playback, () => {
-    card.classList.remove('speaking');
+    clearSpeaking(card);
   });
   card.classList.toggle('revealed');
   card.classList.toggle('flipped');
@@ -1833,7 +2432,25 @@ function revealSentence(card) {
     playback.push({ text: en, rate: Math.max(0.35, getSlowSentenceRate() - 0.1) });
   }
   speakSequence(playback, () => {
-    card.classList.remove('speaking');
+    clearSpeaking(card);
+  });
+  card.classList.toggle('revealed');
+  if (card.classList.contains('revealed')) {
+    card.querySelector('.hint-text').textContent = '👆 点击重听';
+  } else {
+    card.querySelector('.hint-text').textContent = '👆 点击听发音';
+  }
+}
+
+function revealGrammar(card) {
+  const en = card.dataset.en;
+  showSpeaking(card);
+  const playback = [{ text: en, rate: getSlowSentenceRate(), pauseAfterMs: repeatMode ? 650 : 0 }];
+  if (repeatMode && en) {
+    playback.push({ text: en, rate: Math.max(0.35, getSlowSentenceRate() - 0.1) });
+  }
+  speakSequence(playback, () => {
+    clearSpeaking(card);
   });
   card.classList.toggle('revealed');
   if (card.classList.contains('revealed')) {
@@ -1851,7 +2468,7 @@ function revealDialogue(line) {
     playback.push({ text: en, rate: Math.max(0.35, getSlowSentenceRate() - 0.1) });
   }
   speakSequence(playback, () => {
-    line.classList.remove('speaking');
+    clearSpeaking(line);
   });
   line.classList.toggle('revealed');
 }
@@ -1897,6 +2514,7 @@ function showQuizQuestion(unitId) {
   html += `<button class="quiz-next" id="next-${unitId}" onclick="nextQuestion('${unitId}')">下一题 ➜</button>`;
 
   document.getElementById(`qarea-${unitId}`).innerHTML = html;
+  enhanceInteractiveElements(document.getElementById(`qarea-${unitId}`));
   document.getElementById(`qarea-${unitId}`).style.display = 'block';
 }
 

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一年级下册英语 · 趣味学习乐园</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    min-height: 100vh;
+    padding-bottom: 60px;
+    color: #2f3542;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #2e7d32;
+  }
+  .lang-btn {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 18px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    background: rgba(255,255,255,0.15);
+    transition: all 0.3s;
+  }
+  .lang-btn:hover { background: rgba(255,255,255,0.25); }
+  .lang-btn.active { color: #2e7d32; background: #fff; border-color: #fff; }
+  .course-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    background: #172033;
+  }
+  .course-switcher a {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 7px 13px;
+    border: 1px solid rgba(255,255,255,0.24);
+    border-radius: 18px;
+    color: rgba(255,255,255,0.82);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    background: rgba(255,255,255,0.08);
+  }
+  .course-switcher a.active {
+    color: #172033;
+    background: #66bb6a;
+  }
+  .header {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color: white;
+    text-align: center;
+    padding: 20px 16px 16px;
+  }
+  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header p { font-size: 13px; opacity: 0.9; }
+  .nav-bar {
+    display: flex;
+    overflow-x: auto;
+    background: white;
+    padding: 10px 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-btn {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f0f0f0;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-btn.active {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color: white;
+  }
+  .container { padding: 16px; }
+  .unit-section { display: none; }
+  .unit-section.active { display: block; }
+  .unit-title {
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .section-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #fafafa;
+    cursor: pointer;
+    font-weight: 600;
+    color: #333;
+  }
+  .section-header .icon { margin-right: 8px; }
+  .section-header .arrow {
+    font-size: 12px;
+    transition: transform 0.3s;
+  }
+  .section-header.open .arrow { transform: rotate(180deg); }
+  .section-body {
+    padding: 16px;
+    display: none;
+  }
+  .section-body.open { display: block; }
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .word-card {
+    background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+    border: 2px solid #a5d6a7;
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .word-card:hover { transform: translateY(-4px); }
+  .word-card .speak-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    opacity: 0.5;
+  }
+  .word-card .emoji { font-size: 32px; margin-bottom: 6px; }
+  .word-card .english { font-size: 18px; font-weight: 700; color: #333; }
+  .word-card .chinese {
+    font-size: 13px; color: #666;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 4px;
+  }
+  .word-card.revealed .chinese { opacity: 1; }
+  .word-card .hint { font-size: 11px; color: #bbb; margin-top: 6px; }
+  .sentence-list { display: flex; flex-direction: column; gap: 10px; }
+  .sentence-card {
+    background: linear-gradient(135deg, #f0fff4, #e6fffa);
+    border: 2px solid #b2f5ea;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .sentence-card .speak-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    opacity: 0.5;
+  }
+  .sentence-card .en { font-size: 16px; font-weight: 600; color: #333; }
+  .sentence-card .cn {
+    font-size: 13px; color: #666;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 6px;
+  }
+  .sentence-card.revealed .cn { opacity: 1; }
+  .dialogue-box {
+    background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .dialogue-box .line {
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    max-width: 85%;
+    position: relative;
+    cursor: pointer;
+  }
+  .dialogue-box .line.speaker-a { background: #fff; margin-right: auto; }
+  .dialogue-box .line.speaker-b { background: #e8f5e9; margin-left: auto; }
+  .dialogue-box .line .speaker-label { font-size: 11px; color: #999; margin-bottom: 4px; }
+  .dialogue-box .line .en-text { font-size: 16px; font-weight: 600; color: #333; }
+  .dialogue-box .line .cn-text {
+    font-size: 13px; color: #999;
+    opacity: 0; transition: opacity 0.3s;
+    margin-top: 4px;
+  }
+  .dialogue-box .line.revealed .cn-text { opacity: 1; }
+  .quiz-container { padding: 16px; }
+  .quiz-question { text-align: center; margin-bottom: 20px; }
+  .quiz-question .q-text { font-size: 18px; font-weight: 700; color: #333; }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .quiz-option {
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+  .quiz-option:hover { border-color: #4caf50; }
+  .quiz-option.correct { background: #e8f5e9; border-color: #4caf50; }
+  .quiz-option.wrong { background: #ffebee; border-color: #f44336; }
+  .quiz-progress { text-align: center; font-size: 13px; color: #999; margin-bottom: 16px; }
+  .quiz-score {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #f1f8e9, #dcedc8);
+    border-radius: 12px;
+    display: none;
+  }
+  .quiz-score.show { display: block; }
+  .score-emoji { font-size: 64px; }
+  .score-text { font-size: 20px; font-weight: 700; margin-top: 8px; }
+  .score-detail { font-size: 14px; color: #666; margin-top: 8px; }
+  .quiz-score button {
+    margin-top: 16px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #4caf50, #66bb6a);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .footer {
+    text-align: center;
+    padding: 16px;
+    color: #999;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<div class="language-switcher">
+  <a href="三年级下册语文互动学习.html" class="lang-btn">📖 语文</a>
+  <a href="english-1b.html" class="lang-btn active">🔤 英语</a>
+</div>
+<div class="course-switcher">
+  <a href="english-1a.html">一年级上册</a>
+  <a href="english-1b.html" class="active">一年级下册</a>
+  <a href="english-2a.html">二年级上册</a>
+  <a href="english-2b.html">二年级下册</a>
+  <a href="三年级上册英语互动学习.html">三年级上册</a>
+  <a href="english-learning.html">三年级下册</a>
+  <a href="四年级上册英语互动学习.html">四年级上册</a>
+  <a href="四年级下册英语互动学习.html">四年级下册</a>
+  <a href="english-5a.html">五年级上册</a>
+  <a href="english-5b.html">五年级下册</a>
+  <a href="english-grammar.html">英语语法</a>
+</div>
+
+<div class="header">
+  <h1>🎒 一年级下册英语</h1>
+  <p>趣味学习乐园 · 快乐学英语</p>
+</div>
+
+<div class="nav-bar" id="navBar"></div>
+<div class="container" id="container"></div>
+<div class="footer">💪 每天学一点，进步一大步！</div>
+
+<script>
+const unitsData = [
+  {
+    id: 'unit1',
+    title: 'Unit 1',
+    subtitle: 'My Body 我的身体',
+    color: '#4caf50',
+    words: [
+      { en: 'head', cn: '头', emoji: '👤', tip: 'Head' },
+      { en: 'face', cn: '脸', emoji: '😊', tip: 'Face' },
+      { en: 'eye', cn: '眼睛', emoji: '👀', tip: 'Eye' },
+      { en: 'nose', cn: '鼻子', emoji: '👃', tip: 'Nose' },
+      { en: 'mouth', cn: '嘴巴', emoji: '👄', tip: 'Mouth' },
+      { en: 'ear', cn: '耳朵', emoji: '👂', tip: 'Ear' },
+      { en: 'hand', cn: '手', emoji: '✋', tip: 'Hand' },
+      { en: 'arm', cn: '手臂', emoji: '💪', tip: 'Arm' },
+      { en: 'leg', cn: '腿', emoji: '🦵', tip: 'Leg' },
+      { en: 'foot', cn: '脚', emoji: '👣', tip: 'Foot' },
+    ],
+    sentences: [
+      { en: 'This is my head.', cn: '这是我的头。' },
+      { en: 'I have two eyes.', cn: '我有两只眼睛。' },
+      { en: 'Touch your nose.', cn: '摸你的鼻子。' },
+      { en: 'Clap your hands.', cn: '拍拍你的手。' },
+      { en: 'Stamp your foot.', cn: '跺跺你的脚。' },
+    ],
+    dialogue: [
+      { speaker: '👩‍🏫 Teacher', text: 'Touch your head.', cn: '摸你的头。' },
+      { speaker: '👧 Lucy', text: 'This is my head.', cn: '这是我的头。' },
+      { speaker: '👩‍🏫 Teacher', text: 'Touch your nose.', cn: '摸你的鼻子。' },
+      { speaker: '👧 Lucy', text: 'This is my nose!', cn: '这是我的鼻子！' },
+    ],
+    quiz: [
+      { emoji: '👀', q: 'eye 是什么意思？', answer: '眼睛', options: ['眼睛', '鼻子', '嘴巴', '耳朵'] },
+      { emoji: '✋', q: 'hand 是什么意思？', answer: '手', options: ['脚', '手', '头', '腿'] },
+      { q: '"Touch your nose." 意思是？', answer: '摸你的鼻子。', options: ['摸你的鼻子。', '你的鼻子。', '摸摸鼻子。', '鼻子在哪里？'] },
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2',
+    subtitle: 'Food 食物',
+    color: '#8bc34a',
+    words: [
+      { en: 'rice', cn: '米饭', emoji: '🍚', tip: 'Rice' },
+      { en: 'noodles', cn: '面条', emoji: '🍜', tip: 'Noodles' },
+      { en: 'bread', cn: '面包', emoji: '🍞', tip: 'Bread' },
+      { en: 'milk', cn: '牛奶', emoji: '🥛', tip: 'Milk' },
+      { en: 'egg', cn: '鸡蛋', emoji: '🥚', tip: 'Egg' },
+      { en: 'apple', cn: '苹果', emoji: '🍎', tip: 'Apple' },
+      { en: 'banana', cn: '香蕉', emoji: '🍌', tip: 'Banana' },
+      { en: 'orange', cn: '橙子', emoji: '🍊', tip: 'Orange' },
+      { en: 'water', cn: '水', emoji: '💧', tip: 'Water' },
+      { en: 'juice', cn: '果汁', emoji: '🧃', tip: 'Juice' },
+    ],
+    sentences: [
+      { en: 'I like rice.', cn: '我喜欢米饭。' },
+      { en: 'I have milk.', cn: '我有牛奶。' },
+      { en: 'I want an apple.', cn: '我想要一个苹果。' },
+      { en: 'Drink water.', cn: '喝水。' },
+      { en: 'Eat bread.', cn: '吃面包。' },
+    ],
+    dialogue: [
+      { speaker: '👧 Amy', text: 'I like apples.', cn: '我喜欢苹果。' },
+      { speaker: '👦 Sam', text: 'I like bananas.', cn: '我喜欢香蕉。' },
+      { speaker: '👧 Amy', text: 'Do you like milk?', cn: '你喜欢牛奶吗？' },
+      { speaker: '👦 Sam', text: 'Yes!', cn: '是的！' },
+    ],
+    quiz: [
+      { emoji: '🍚', q: 'rice 是什么意思？', answer: '米饭', options: ['面条', '米饭', '面包', '牛奶'] },
+      { emoji: '🍎', q: 'apple 是什么水果？', answer: '苹果', options: ['香蕉', '橙子', '苹果', '西瓜'] },
+      { q: '"I like apples." 意思是？', answer: '我喜欢苹果。', options: ['我喜欢苹果。', '我有苹果。', '苹果很好吃。', '给我苹果。'] },
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3',
+    subtitle: 'Clothes 衣服',
+    color: '#cddc39',
+    words: [
+      { en: 'shirt', cn: '衬衫', emoji: '👕', tip: 'Shirt' },
+      { en: 'T-shirt', cn: 'T恤', emoji: '👕', tip: 'T-shirt' },
+      { en: 'skirt', cn: '裙子', emoji: '👗', tip: 'Skirt' },
+      { en: 'dress', cn: '连衣裙', emoji: '👗', tip: 'Dress' },
+      { en: 'pants', cn: '裤子', emoji: '👖', tip: 'Pants' },
+      { en: 'shoes', cn: '鞋子', emoji: '👟', tip: 'Shoes' },
+      { en: 'socks', cn: '袜子', emoji: '🧦', tip: 'Socks' },
+      { en: 'hat', cn: '帽子', emoji: '🧢', tip: 'Hat' },
+      { en: 'coat', cn: '外套', emoji: '🧥', tip: 'Coat' },
+      { en: 'sweater', cn: '毛衣', emoji: '🧶', tip: 'Sweater' },
+    ],
+    sentences: [
+      { en: 'This is my shirt.', cn: '这是我的衬衫。' },
+      { en: 'I wear a dress.', cn: '我穿连衣裙。' },
+      { en: 'Put on your shoes.', cn: '穿上你的鞋子。' },
+      { en: 'Take off your hat.', cn: '摘下你的帽子。' },
+      { en: 'I like this skirt.', cn: '我喜欢这条裙子。' },
+    ],
+    dialogue: [
+      { speaker: '👧 Lily', text: 'Look at my new dress!', cn: '看我的新连衣裙！' },
+      { speaker: '👦 Tom', text: 'It is beautiful!', cn: '真漂亮！' },
+      { speaker: '👧 Lily', text: 'Thank you!', cn: '谢谢！' },
+      { speaker: '👦 Tom', text: 'I have a new shirt.', cn: '我有一件新衬衫。' },
+    ],
+    quiz: [
+      { emoji: '👕', q: 'shirt 是什么意思？', answer: '衬衫', options: ['裤子', '衬衫', '裙子', '鞋子'] },
+      { emoji: '👖', q: 'pants 是什么意思？', answer: '裤子', options: ['帽子', '袜子', '裤子', '外套'] },
+      { q: '"Put on your shoes." 意思是？', answer: '穿上你的鞋子。', options: ['穿上鞋子。', '穿上你的鞋子。', '脱下鞋子。', '看看鞋子。'] },
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4',
+    subtitle: 'Toys 玩具',
+    color: '#ffc107',
+    words: [
+      { en: 'ball', cn: '球', emoji: '⚽', tip: 'Ball' },
+      { en: 'car', cn: '汽车', emoji: '🚗', tip: 'Car' },
+      { en: 'doll', cn: '娃娃', emoji: '🧸', tip: 'Doll' },
+      { en: 'teddy bear', cn: '泰迪熊', emoji: '🧸', tip: 'Teddy bear' },
+      { en: 'train', cn: '火车', emoji: '🚂', tip: 'Train' },
+      { en: 'plane', cn: '飞机', emoji: '✈️', tip: 'Plane' },
+      { en: 'bike', cn: '自行车', emoji: '🚲', tip: 'Bike' },
+      { en: 'kite', cn: '风筝', emoji: '🪁', tip: 'Kite' },
+      { en: 'toy', cn: '玩具', emoji: '🧩', tip: 'Toy' },
+      { en: 'play', cn: '玩', emoji: '🎮', tip: 'Play' },
+    ],
+    sentences: [
+      { en: 'I have a ball.', cn: '我有一个球。' },
+      { en: 'Let\'s play with toys.', cn: '让我们玩玩具吧。' },
+      { en: 'I like my car.', cn: '我喜欢我的汽车。' },
+      { en: 'Fly a kite.', cn: '放风筝。' },
+      { en: 'Ride a bike.', cn: '骑自行车。' },
+    ],
+    dialogue: [
+      { speaker: '👦 Jack', text: 'Let\'s play with the ball!', cn: '让我们玩球吧！' },
+      { speaker: '👧 Lucy', text: 'Great!', cn: '好极了！' },
+      { speaker: '👦 Jack', text: 'Catch!', cn: '接住！' },
+      { speaker: '👧 Lucy', text: 'I got it!', cn: '我接到了！' },
+    ],
+    quiz: [
+      { emoji: '⚽', q: 'ball 是什么意思？', answer: '球', options: ['汽车', '球', '飞机', '火车'] },
+      { emoji: '🚗', q: 'car 是什么意思？', answer: '汽车', options: ['自行车', '火车', '汽车', '飞机'] },
+      { q: '"Let\'s play." 意思是？', answer: '让我们玩吧。', options: ['让我们玩吧。', '我们玩了。', '玩什么？', '一起玩。'] },
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5',
+    subtitle: 'Weather 天气',
+    color: '#ff9800',
+    words: [
+      { en: 'sunny', cn: '晴天', emoji: '☀️', tip: 'Sunny' },
+      { en: 'rainy', cn: '下雨', emoji: '🌧️', tip: 'Rainy' },
+      { en: 'cloudy', cn: '多云', emoji: '☁️', tip: 'Cloudy' },
+      { en: 'windy', cn: '刮风', emoji: '💨', tip: 'Windy' },
+      { en: 'snowy', cn: '下雪', emoji: '❄️', tip: 'Snowy' },
+      { en: 'hot', cn: '热', emoji: '🔥', tip: 'Hot' },
+      { en: 'cold', cn: '冷', emoji: '🥶', tip: 'Cold' },
+      { en: 'warm', cn: '温暖', emoji: '🌡️', tip: 'Warm' },
+      { en: 'weather', cn: '天气', emoji: '🌤️', tip: 'Weather' },
+      { en: 'today', cn: '今天', emoji: '📅', tip: 'Today' },
+    ],
+    sentences: [
+      { en: 'It is sunny today.', cn: '今天是晴天。' },
+      { en: 'It is raining.', cn: '正在下雨。' },
+      { en: 'It is cold today.', cn: '今天很冷。' },
+      { en: 'The weather is nice.', cn: '天气很好。' },
+      { en: 'It is windy outside.', cn: '外面刮风。' },
+    ],
+    dialogue: [
+      { speaker: '👧 Amy', text: 'What is the weather today?', cn: '今天天气怎么样？' },
+      { speaker: '👦 Sam', text: 'It is sunny!', cn: '是晴天！' },
+      { speaker: '👧 Amy', text: 'Let\'s go outside!', cn: '让我们出去吧！' },
+      { speaker: '👦 Sam', text: 'Great!', cn: '好极了！' },
+    ],
+    quiz: [
+      { emoji: '☀️', q: 'sunny 是什么天气？', answer: '晴天', options: ['下雨', '晴天', '多云', '刮风'] },
+      { emoji: '❄️', q: 'snowy 是什么天气？', answer: '下雪', options: ['下雨', '刮风', '下雪', '晴天'] },
+      { q: '"It is cold today." 意思是？', answer: '今天很冷。', options: ['今天很热。', '今天很冷。', '今天很暖。', '今天很好。'] },
+    ]
+  },
+  {
+    id: 'unit6',
+    title: 'Unit 6',
+    subtitle: 'Actions 动作',
+    color: '#ff5722',
+    words: [
+      { en: 'run', cn: '跑', emoji: '🏃', tip: 'Run' },
+      { en: 'jump', cn: '跳', emoji: '🦵', tip: 'Jump' },
+      { en: 'walk', cn: '走', emoji: '🚶', tip: 'Walk' },
+      { en: 'swim', cn: '游泳', emoji: '🏊', tip: 'Swim' },
+      { en: 'dance', cn: '跳舞', emoji: '💃', tip: 'Dance' },
+      { en: 'sing', cn: '唱歌', emoji: '🎤', tip: 'Sing' },
+      { en: 'read', cn: '读', emoji: '📖', tip: 'Read' },
+      { en: 'write', cn: '写', emoji: '✍️', tip: 'Write' },
+      { en: 'draw', cn: '画', emoji: '🎨', tip: 'Draw' },
+      { en: 'play', cn: '玩', emoji: '🎮', tip: 'Play' },
+    ],
+    sentences: [
+      { en: 'I can run.', cn: '我会跑。' },
+      { en: 'Jump high!', cn: '跳得高！' },
+      { en: 'Let\'s dance!', cn: '让我们跳舞吧！' },
+      { en: 'I can sing.', cn: '我会唱歌。' },
+      { en: 'Draw a picture.', cn: '画一幅画。' },
+    ],
+    dialogue: [
+      { speaker: '👩‍🏫 Teacher', text: 'Can you run?', cn: '你会跑吗？' },
+      { speaker: '👦 Tom', text: 'Yes, I can!', cn: '是的，我会！' },
+      { speaker: '👩‍🏫 Teacher', text: 'Can you swim?', cn: '你会游泳吗？' },
+      { speaker: '👦 Tom', text: 'No, I can\'t.', cn: '不，我不会。' },
+    ],
+    quiz: [
+      { emoji: '🏃', q: 'run 是什么意思？', answer: '跑', options: ['跳', '跑', '走', '游泳'] },
+      { emoji: '🎤', q: 'sing 是什么意思？', answer: '唱歌', options: ['跳舞', '唱歌', '画画', '写字'] },
+      { q: '"I can run." 意思是？', answer: '我会跑。', options: ['我跑了。', '我会跑。', '我在跑。', '跑步吧。'] },
+    ]
+  },
+];
+
+const navBar = document.getElementById('navBar');
+const container = document.getElementById('container');
+let quizState = {};
+
+unitsData.forEach((unit, idx) => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-btn' + (idx === 0 ? ' active' : '');
+  btn.textContent = unit.title;
+  btn.addEventListener('click', () => switchUnit(idx));
+  navBar.appendChild(btn);
+
+  const section = document.createElement('div');
+  section.className = 'unit-section' + (idx === 0 ? ' active' : '');
+  section.id = unit.id;
+
+  let html = `<div class="unit-title" style="background:linear-gradient(90deg, ${unit.color}, ${unit.color}dd)">${unit.title} ${unit.subtitle}</div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header open" onclick="toggleSection(this)">
+      <span class="icon">📦</span> 核心词汇
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body open">
+      <div class="word-grid">`;
+
+  unit.words.forEach(w => {
+    html += `<div class="word-card" onclick="revealWord(this)" data-w="${w.en}">
+      <span class="speak-icon">🔊</span>
+      <div class="emoji">${w.emoji}</div>
+      <div class="english">${w.en}</div>
+      <div class="chinese">${w.cn}</div>
+      <div class="hint">👆 点击</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">💬</span> 重点句型
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="sentence-list">`;
+
+  unit.sentences.forEach(s => {
+    html += `<div class="sentence-card" onclick="revealSentence(this)" data-en="${s.en}">
+      <span class="speak-icon">🔊</span>
+      <div class="en">${s.en}</div>
+      <div class="cn">${s.cn}</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎭</span> 课文对话
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="dialogue-box">`;
+
+  unit.dialogue.forEach((d, di) => {
+    html += `<div class="line ${di % 2 === 0 ? 'speaker-a' : 'speaker-b'}" onclick="revealDialogue(this)" data-en="${d.text}">
+      <div class="speaker-label">${d.speaker}</div>
+      <div class="en-text">${d.text}</div>
+      <div class="cn-text">${d.cn}</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🧠</span> 小测验
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="quiz-container" id="quiz-${unit.id}">
+        <div class="quiz-progress" id="qp-${unit.id}">第 1 / ${unit.quiz.length} 题</div>
+        <div id="qarea-${unit.id}"></div>
+        <div class="quiz-score" id="score-${unit.id}">
+          <div class="score-emoji">🎉</div>
+          <div class="score-text">测验完成！</div>
+          <div class="score-detail" id="sd-${unit.id}"></div>
+          <button onclick="restartQuiz('${unit.id}')">再做一次</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  section.innerHTML = html;
+  container.appendChild(section);
+
+  quizState[unit.id] = { current: 0, score: 0 };
+  showQuizQuestion(unit.id);
+});
+
+function switchUnit(idx) {
+  document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+function revealWord(card) {
+  card.classList.toggle('revealed');
+}
+
+function revealSentence(card) {
+  card.classList.toggle('revealed');
+}
+
+function revealDialogue(line) {
+  line.classList.toggle('revealed');
+}
+
+function showQuizQuestion(unitId) {
+  const unit = unitsData.find(u => u.id === unitId);
+  const state = quizState[unitId];
+  const q = unit.quiz[state.current];
+  
+  if (!q) {
+    document.getElementById('qarea-' + unitId).style.display = 'none';
+    document.getElementById('score-' + unitId).classList.add('show');
+    document.getElementById('sd-' + unitId).textContent = `答对 ${state.score} / ${unit.quiz.length} 题`;
+    return;
+  }
+
+  document.getElementById('qp-' + unitId).textContent = `第 ${state.current + 1} / ${unit.quiz.length} 题`;
+  document.getElementById('score-' + unitId).classList.remove('show');
+  
+  let html = `<div class="quiz-question">`;
+  if (q.emoji) html += `<div class="big-emoji">${q.emoji}</div>`;
+  html += `<div class="q-text">${q.q}</div></div>`;
+  
+  html += `<div class="quiz-options">`;
+  q.options.forEach(opt => {
+    html += `<div class="quiz-option" onclick="checkAnswer('${unitId}', '${opt}')">${opt}</div>`;
+  });
+  html += `</div>`;
+  
+  document.getElementById('qarea-' + unitId).innerHTML = html;
+  document.getElementById('qarea-' + unitId).style.display = 'block';
+}
+
+function checkAnswer(unitId, answer) {
+  const unit = unitsData.find(u => u.id === unitId);
+  const state = quizState[unitId];
+  const q = unit.quiz[state.current];
+  
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    if (opt.textContent === q.answer) {
+      opt.classList.add('correct');
+      if (answer === q.answer) state.score++;
+    } else if (opt.textContent === answer && answer !== q.answer) {
+      opt.classList.add('wrong');
+    }
+  });
+  
+  setTimeout(() => {
+    state.current++;
+    showQuizQuestion(unitId);
+  }, 1500);
+}
+
+function restartQuiz(unitId) {
+  quizState[unitId] = { current: 0, score: 0 };
+  showQuizQuestion(unitId);
+}
+</script>
+</body>
+</html>
