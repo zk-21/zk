@@ -38,27 +38,62 @@
   .lang-btn.active { color: #e65100; background: #fff; border-color: #fff; }
   .course-switcher {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    padding: 10px 12px;
-    overflow-x: auto;
-    background: #172033;
+    gap: 6px;
+    padding: 12px 8px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   }
-  .course-switcher a {
-    flex: 0 0 auto;
-    min-height: 34px;
-    padding: 7px 13px;
-    border: 1px solid rgba(255,255,255,0.24);
-    border-radius: 18px;
-    color: rgba(255,255,255,0.82);
-    font-size: 13px;
-    font-weight: 800;
+  .grade-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+  }
+  .grade-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 6px;
+  }
+  .grade-btn {
+    min-height: 28px;
+    padding: 4px 12px;
+    border: none;
+    border-radius: 12px;
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    font-weight: 700;
     text-decoration: none;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.12);
+    transition: all 0.25s;
   }
-  .course-switcher a.active {
-    color: #172033;
-    background: #ffb347;
+  .grade-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-1px);
+  }
+  .grade-btn.active {
+    color: #1a1a2e;
+    background: linear-gradient(135deg, #ffd93d 0%, #ff9500 100%);
+    box-shadow: 0 2px 8px rgba(255, 153, 0, 0.4);
+  }
+  .grammar-btn {
+    min-height: 28px;
+    padding: 4px 14px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transition: all 0.25s;
+  }
+  .grammar-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
   }
   .header {
     background: linear-gradient(90deg, #ff6b6b, #ffa500);
@@ -270,17 +305,32 @@
   <a href="english-1a.html" class="lang-btn active">🔤 英语</a>
 </div>
 <div class="course-switcher">
-  <a href="english-1a.html" class="active">一年级上册</a>
-  <a href="english-1b.html">一年级下册</a>
-  <a href="english-2a.html">二年级上册</a>
-  <a href="english-2b.html">二年级下册</a>
-  <a href="三年级上册英语互动学习.html">三年级上册</a>
-  <a href="english-learning.html">三年级下册</a>
-  <a href="四年级上册英语互动学习.html">四年级上册</a>
-  <a href="四年级下册英语互动学习.html">四年级下册</a>
-  <a href="english-5a.html">五年级上册</a>
-  <a href="english-5b.html">五年级下册</a>
-  <a href="english-grammar.html">英语语法</a>
+  <div class="grade-group">
+    <span class="grade-label">一年级</span>
+    <a href="english-1a.html" class="grade-btn active">上册</a>
+    <a href="english-1b.html" class="grade-btn">下册</a>
+  </div>
+  <div class="grade-group">
+    <span class="grade-label">二年级</span>
+    <a href="english-2a.html" class="grade-btn">上册</a>
+    <a href="english-2b.html" class="grade-btn">下册</a>
+  </div>
+  <div class="grade-group">
+    <span class="grade-label">三年级</span>
+    <a href="三年级上册英语互动学习.html" class="grade-btn">上册</a>
+    <a href="english-learning.html" class="grade-btn">下册</a>
+  </div>
+  <div class="grade-group">
+    <span class="grade-label">四年级</span>
+    <a href="四年级上册英语互动学习.html" class="grade-btn">上册</a>
+    <a href="四年级下册英语互动学习.html" class="grade-btn">下册</a>
+  </div>
+  <div class="grade-group">
+    <span class="grade-label">五年级</span>
+    <a href="english-5a.html" class="grade-btn">上册</a>
+    <a href="english-5b.html" class="grade-btn">下册</a>
+  </div>
+  <a href="english-grammar.html" class="grammar-btn">📚 语法</a>
 </div>
 
 <div class="header">
@@ -613,6 +663,7 @@ function switchUnit(idx) {
 
 let speechEnabled = true;
 let currentUtterance = null;
+let useLocalAudio = false;
 
 function speak(text) {
   if (!speechEnabled || !text) return;

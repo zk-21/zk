@@ -36,17 +36,32 @@
     <a href="四年级下册英语互动学习.html" class="lang-btn active">🔤 英语</a>
   </div>
   <nav class="course-switcher" aria-label="教材页面切换">
-    <a href="english-1a.html">一年级上册</a>
-    <a href="english-1b.html">一年级下册</a>
-    <a href="english-2a.html">二年级上册</a>
-    <a href="english-2b.html">二年级下册</a>
-    <a href="三年级上册英语互动学习.html">三年级上册</a>
-    <a href="english-learning.html">三年级下册</a>
-    <a href="四年级上册英语互动学习.html">四年级上册</a>
-    <a class="active" href="四年级下册英语互动学习.html">四年级下册</a>
-    <a href="english-5a.html">五年级上册</a>
-    <a href="english-5b.html">五年级下册</a>
-    <a href="english-grammar.html">英语语法</a>
+    <div class="grade-group">
+      <span class="grade-label">一年级</span>
+      <a href="english-1a.html" class="grade-btn">上册</a>
+      <a href="english-1b.html" class="grade-btn">下册</a>
+    </div>
+    <div class="grade-group">
+      <span class="grade-label">二年级</span>
+      <a href="english-2a.html" class="grade-btn">上册</a>
+      <a href="english-2b.html" class="grade-btn">下册</a>
+    </div>
+    <div class="grade-group">
+      <span class="grade-label">三年级</span>
+      <a href="三年级上册英语互动学习.html" class="grade-btn">上册</a>
+      <a href="english-learning.html" class="grade-btn">下册</a>
+    </div>
+    <div class="grade-group">
+      <span class="grade-label">四年级</span>
+      <a href="四年级上册英语互动学习.html" class="grade-btn">上册</a>
+      <a href="四年级下册英语互动学习.html" class="grade-btn active">下册</a>
+    </div>
+    <div class="grade-group">
+      <span class="grade-label">五年级</span>
+      <a href="english-5a.html" class="grade-btn">上册</a>
+      <a href="english-5b.html" class="grade-btn">下册</a>
+    </div>
+    <a href="english-grammar.html" class="grammar-btn">📚 语法</a>
   </nav>
 
   <header class="hero">
@@ -65,6 +80,11 @@
   <main class="wrap" id="app"></main>
   <footer class="footer">每天复习一个单元，先听、再读、最后做小测验。</footer>
 
+  <script>
+    window.COURSE_AUDIO_BASE = 'audio/grade4b/en';
+    window.COURSE_TITLE = '四年级下册英语';
+    window.COURSE_SUBTITLE = '译林版互动学习';
+  </script>
   <script src="grade4b-data.js"></script>
   <script src="grade4-learning.js"></script>
 </body>

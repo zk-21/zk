@@ -9,6 +9,7 @@ const appState = {
   playbackToken: 0,
   audioPlayer: new Audio(),
   missingAudio: new Set(),
+  useLocalAudio: false, // 默认关闭本地音频，优先使用 TTS
 };
 
 const navBar = document.getElementById('navBar');
@@ -101,15 +102,18 @@ function clearSpeaking(target) {
 }
 
 function tryPlayLocalAudio(text, options, callback, fallback) {
+  if (!appState.useLocalAudio) return false;
   if (!isEnglishAudioText(text)) return false;
 
   const src = getLocalAudioPath(text);
   if (appState.missingAudio.has(src)) return false;
 
   let handled = false;
+  let timeoutId = null;
   const finish = action => {
     if (handled) return;
     handled = true;
+    if (timeoutId) clearTimeout(timeoutId);
     appState.audioPlayer.onended = null;
     appState.audioPlayer.onerror = null;
     action();
@@ -124,6 +128,13 @@ function tryPlayLocalAudio(text, options, callback, fallback) {
     appState.missingAudio.add(src);
     fallback();
   });
+
+  timeoutId = setTimeout(() => {
+    finish(() => {
+      appState.missingAudio.add(src);
+      fallback();
+    });
+  }, 2500);
 
   const playPromise = appState.audioPlayer.play();
   if (playPromise && typeof playPromise.catch === 'function') {
