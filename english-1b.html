@@ -666,6 +666,20 @@ function switchUnit(idx) {
 let speechEnabled = true;
 let currentUtterance = null;
 let useLocalAudio = false;
+let englishVoice = null;
+let chineseVoice = null;
+
+function loadSpeechVoices() {
+  if (!('speechSynthesis' in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US')) || voices.find(v => v.lang.includes('en')) || null;
+  chineseVoice = voices.find(v => v.lang.includes('zh')) || null;
+}
+
+if ('speechSynthesis' in window) {
+  loadSpeechVoices();
+  window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
+}
 
 function speak(text) {
   if (!speechEnabled || !text) return;
@@ -679,15 +693,7 @@ function speak(text) {
     utter.rate = 0.8;
     utter.pitch = 1;
     utter.volume = 1;
-    
-    const voices = window.speechSynthesis.getVoices();
-    if (lang === 'en-US') {
-      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
-      if (englishVoice) utter.voice = englishVoice;
-    } else {
-      const chineseVoice = voices.find(v => v.lang.includes('zh'));
-      if (chineseVoice) utter.voice = chineseVoice;
-    }
+    utter.voice = lang === 'en-US' ? englishVoice : chineseVoice;
     
     currentUtterance = utter;
     window.speechSynthesis.speak(utter);

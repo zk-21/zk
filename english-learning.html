@@ -2358,7 +2358,7 @@ function showGrammarPage() {
   });
   stopCurrentPlayback();
   clearSpeaking();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function revealGrammarDetail(card) {
@@ -2384,7 +2384,9 @@ function revealGrammarDetail(card) {
 }
 
 function switchUnit(idx) {
-  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+  const buttons = navBar.querySelectorAll('.nav-btn');
+  const sections = document.querySelectorAll('.unit-section');
+  buttons.forEach((b, i) => {
     b.classList.toggle('active', i === idx);
     if (i === idx) {
       b.style.background = unitsData[i].color;
@@ -2394,16 +2396,17 @@ function switchUnit(idx) {
       b.style.color = '';
     }
   });
-  document.querySelectorAll('.unit-section').forEach((s, i) => {
+  sections.forEach((s, i) => {
     s.classList.toggle('active', i === idx);
   });
   stopCurrentPlayback();
   clearSpeaking();
+  const activeBtn = buttons[idx];
   navBar.scrollTo({
-    left: Math.max(0, document.querySelectorAll('.nav-btn')[idx].offsetLeft - 12),
-    behavior: 'smooth'
+    left: Math.max(0, activeBtn ? activeBtn.offsetLeft - 12 : 0),
+    behavior: 'auto'
   });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
 function toggleSection(header) {
