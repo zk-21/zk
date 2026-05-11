@@ -1,0 +1,214 @@
+.assist-box {
+  margin: 14px 0;
+  padding: 14px;
+  border: 1px solid rgba(47, 128, 237, 0.18);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff, #f2fff8);
+}
+
+.assist-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.assist-head h3 {
+  margin: 0;
+  color: #1f3b64;
+  font-size: 18px;
+}
+
+.assist-head p,
+.assist-muted {
+  margin: 4px 0 0;
+  color: #667085;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.assist-badge {
+  flex: 0 0 auto;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: #1b6b44;
+  background: #dff7ea;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.assist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.assist-card {
+  padding: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.75);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.assist-card h4 {
+  margin: 0 0 9px;
+  color: #263142;
+  font-size: 15px;
+}
+
+.assist-card ol,
+.assist-list {
+  margin: 0;
+  padding-left: 20px;
+  color: #435166;
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.assist-level {
+  margin-bottom: 8px;
+}
+
+.assist-level-title {
+  margin-bottom: 5px;
+  color: #475467;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.assist-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.assist-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #1f3b64;
+  background: #edf5ff;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.assist-chip small {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.assist-lines,
+.assist-roleplay,
+.assist-listening,
+.assist-mistake-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assist-line,
+.assist-role-line,
+.assist-mistake {
+  padding: 8px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.assist-line span,
+.assist-role-line span {
+  display: block;
+  color: #263142;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.assist-line small,
+.assist-role-line small,
+.assist-mistake small {
+  display: block;
+  margin-top: 4px;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.assist-role-line b {
+  display: inline-block;
+  margin-bottom: 4px;
+  color: #0f766e;
+}
+
+.assist-speak,
+.assist-clear,
+.assist-listening button {
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.assist-speak {
+  margin-top: 6px;
+  padding: 5px 9px;
+  color: #fff;
+  background: #2f80ed;
+}
+
+.assist-listening button {
+  display: block;
+  width: 100%;
+  padding: 9px;
+  text-align: left;
+  color: #263142;
+  background: #eefaf4;
+}
+
+.assist-listening button b,
+.assist-listening button span {
+  display: block;
+}
+
+.assist-listening button span {
+  margin-top: 3px;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.assist-clear {
+  margin-top: 9px;
+  padding: 7px 10px;
+  color: #475467;
+  background: #eef2f7;
+}
+
+.assist-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.assist-path span {
+  position: relative;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #0f3d5f;
+  background: #e8f4ff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  .assist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .assist-head {
+    flex-direction: column;
+  }
+}

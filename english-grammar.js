@@ -1,6 +1,10 @@
 const nav = document.getElementById('grammarNav');
 const app = document.getElementById('grammarApp');
 const guide = window.COURSE_GRAMMAR_GUIDE || [];
+let practiceMode = false;
+let currentPracticeIndex = 0;
+let practiceScore = 0;
+let practiceTotal = 0;
 
 function htmlEscape(value) {
   return String(value ?? '')
@@ -8,6 +12,15 @@ function htmlEscape(value) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 }
 
 function getKidHelper(rule) {
@@ -115,30 +128,59 @@ function getKidHelper(rule) {
 }
 
 function renderPanel(group, index) {
-  const rules = (group.rules || []).map(rule => {
+  const rules = (group.rules || []).map((rule, ruleIndex) => {
     const helper = getKidHelper(rule);
     const tip = rule.tip || helper.tip;
     const parts = rule.parts || helper.parts;
     const practice = rule.practice || helper.practice;
+    const cardId = `card-${index}-${ruleIndex}`;
 
     return `
-      <article class="grammar-guide-card">
-        <div class="grammar-guide-title">${htmlEscape(rule.title)}</div>
-        ${tip ? `<div class="memory-tip">口诀：${htmlEscape(tip)}</div>` : ''}
-        <div class="grammar-guide-pattern">${htmlEscape(rule.pattern || '')}</div>
-        <div class="grammar-guide-cn">${htmlEscape(rule.cn || '')}</div>
-        <div class="grammar-guide-example">${htmlEscape(rule.example || '')}</div>
-        ${parts ? `<div class="sentence-parts">${parts.map(part => `
-        <span class="part-chip">
-          <b>${htmlEscape(part.text)}</b>
-          <small>${htmlEscape(part.role)}</small>
-        </span>
-      `).join('')}</div>` : ''}
-        ${practice ? `<div class="mini-practice">
-        <div class="practice-q">小练习：${htmlEscape(practice.q)}</div>
-        <div class="practice-a">答案：${htmlEscape(practice.a)}</div>
-      </div>` : ''}
-        ${rule.note ? `<div class="grammar-guide-note">${htmlEscape(rule.note)}</div>` : ''}
+      <article class="grammar-guide-card" id="${cardId}">
+        <div class="grammar-guide-title">
+          <span class="rule-number">${index + 1}.${ruleIndex + 1}</span>
+          ${htmlEscape(rule.title)}
+        </div>
+        ${tip ? `<div class="memory-tip">
+          <span class="tip-icon">🎵</span>
+          <span>${htmlEscape(tip)}</span>
+        </div>` : ''}
+        <div class="grammar-guide-pattern">
+          <span class="pattern-label">结构：</span>
+          ${htmlEscape(rule.pattern || '')}
+        </div>
+        <div class="grammar-guide-cn">
+          <span class="cn-label">说明：</span>
+          ${htmlEscape(rule.cn || '')}
+        </div>
+        <div class="grammar-guide-example">
+          <span class="example-label">例句：</span>
+          ${htmlEscape(rule.example || '')}
+        </div>
+        ${parts ? `<div class="sentence-parts">
+          <span class="parts-label">句子成分分析：</span>
+          ${parts.map(part => `
+            <span class="part-chip" title="${htmlEscape(part.role)}">
+              <b>${htmlEscape(part.text)}</b>
+              <small>${htmlEscape(part.role)}</small>
+            </span>
+          `).join('')}
+        </div>` : ''}
+        ${practice ? `<div class="mini-practice" id="practice-${cardId}">
+          <div class="practice-q">
+            <span class="practice-icon">❓</span>
+            ${htmlEscape(practice.q)}
+          </div>
+          <button class="practice-reveal-btn" onclick="revealAnswer('${cardId}')">显示答案</button>
+          <div class="practice-a hidden" id="answer-${cardId}">
+            <span class="answer-icon">✅</span>
+            答案：${htmlEscape(practice.a)}
+          </div>
+        </div>` : ''}
+        ${rule.note ? `<div class="grammar-guide-note">
+          <span class="note-icon">💡</span>
+          ${htmlEscape(rule.note)}
+        </div>` : ''}
       </article>
     `;
   }).join('');
@@ -148,6 +190,7 @@ function renderPanel(group, index) {
       <button class="panel-head ${index === 0 ? 'open' : ''}" type="button">
         <span>${group.icon || '📝'}</span>
         <span>${htmlEscape(group.title)}</span>
+        <span class="rule-count">${group.rules?.length || 0}条规则</span>
         <span class="arrow">▼</span>
       </button>
       <div class="panel-body ${index === 0 ? 'open' : ''}">
@@ -156,6 +199,114 @@ function renderPanel(group, index) {
       </div>
     </section>
   `;
+}
+
+function revealAnswer(cardId) {
+  const answerEl = document.getElementById(`answer-${cardId}`);
+  const btn = document.querySelector(`#practice-${cardId} .practice-reveal-btn`);
+  if (answerEl) {
+    answerEl.classList.remove('hidden');
+  }
+  if (btn) {
+    btn.style.display = 'none';
+  }
+}
+
+function startRandomPractice() {
+  const allPractice = [];
+  guide.forEach((group, gIndex) => {
+    (group.rules || []).forEach((rule, rIndex) => {
+      if (rule.practice) {
+        allPractice.push({
+          question: rule.practice.q,
+          answer: rule.practice.a,
+          title: rule.title,
+          groupTitle: group.title,
+          id: `${gIndex}-${rIndex}`
+        });
+      }
+    });
+  });
+
+  if (allPractice.length === 0) {
+    alert('暂无练习题目');
+    return;
+  }
+
+  const shuffled = shuffleArray(allPractice);
+  practiceMode = true;
+  currentPracticeIndex = 0;
+  practiceScore = 0;
+  practiceTotal = shuffled.length;
+
+  showPracticeQuestion(shuffled);
+}
+
+function showPracticeQuestion(practiceList) {
+  if (currentPracticeIndex >= practiceList.length) {
+    showPracticeResult();
+    return;
+  }
+
+  const current = practiceList[currentPracticeIndex];
+  const userAnswer = prompt(`第 ${currentPracticeIndex + 1}/${practiceTotal} 题\n\n${current.question}\n\n(所属: ${current.groupTitle} - ${current.title})`);
+  
+  if (userAnswer === null) {
+    practiceMode = false;
+    return;
+  }
+
+  const isCorrect = userAnswer.trim().toLowerCase() === current.answer.trim().toLowerCase();
+  
+  if (isCorrect) {
+    practiceScore++;
+    alert(`✅ 回答正确！\n答案：${current.answer}`);
+  } else {
+    alert(`❌ 回答错误！\n正确答案：${current.answer}`);
+  }
+
+  currentPracticeIndex++;
+  showPracticeQuestion(practiceList);
+}
+
+function showPracticeResult() {
+  const percentage = Math.round((practiceScore / practiceTotal) * 100);
+  let emoji = '💪';
+  let message = '继续加油！';
+  
+  if (percentage >= 90) {
+    emoji = '🏆';
+    message = '太棒了！你是语法小专家！';
+  } else if (percentage >= 70) {
+    emoji = '👍';
+    message = '做得不错！继续努力！';
+  } else if (percentage >= 50) {
+    emoji = '😊';
+    message = '还可以，多练习会更好！';
+  }
+
+  alert(`${emoji} 练习完成！\n\n得分：${practiceScore}/${practiceTotal} (${percentage}%)\n${message}`);
+  practiceMode = false;
+}
+
+function generateStudyPlan() {
+  const plan = [
+    { day: '第1天', content: '学习词类：名词、代词、动词、形容词、副词', tips: '重点记住名词变复数规则' },
+    { day: '第2天', content: '学习冠词、介词、连词、感叹词', tips: '记住 a/an 的用法区别' },
+    { day: '第3天', content: '学习一般现在时', tips: '重点练习第三人称单数变化' },
+    { day: '第4天', content: '学习现在进行时', tips: '记住 be + doing 的结构' },
+    { day: '第5天', content: '学习一般过去时和一般将来时', tips: '对比三种时态的区别' },
+    { day: '第6天', content: '学习句子成分：主语、谓语、宾语、表语', tips: '分析简单句子的结构' },
+    { day: '第7天', content: '复习所有内容，做综合练习', tips: '使用随机练习功能' }
+  ];
+
+  let planText = '📅 一周学习计划\n\n';
+  plan.forEach(item => {
+    planText += `${item.day}：${item.content}\n`;
+    planText += `   💡 ${item.tips}\n\n`;
+  });
+
+  alert(planText);
 }
 
 function setPanelOpen(head, shouldOpen) {

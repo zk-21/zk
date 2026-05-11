@@ -99,10 +99,33 @@
     background: linear-gradient(90deg, #ff6b6b, #ffa500);
     color: white;
     text-align: center;
-    padding: 20px 16px 16px;
+    padding: 16px;
   }
-  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header h1 { font-size: 20px; margin-bottom: 4px; }
   .header p { font-size: 13px; opacity: 0.9; }
+  .voice-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .voice-btn {
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .voice-btn:hover { background: rgba(255,255,255,0.3); }
+  .voice-btn.active { background: rgba(255,255,255,0.9); color: #ff6b6b; }
+  .speed-label { font-size: 11px; opacity: 0.9; }
+  .speed-slider { width: 60px; accent-color: white; cursor: pointer; }
+  #voiceStatus { font-size: 11px; color: #ffd93d; }
   .nav-bar {
     display: flex;
     overflow-x: auto;
@@ -201,7 +224,45 @@
     margin-top: 4px;
   }
   .word-card.revealed .chinese { opacity: 1; }
+  .word-card .phonetic {
+    font-size: 12px;
+    color: #6c7a89;
+    margin-top: 4px;
+    font-family: 'Cambria', 'Times New Roman', serif;
+  }
+  .word-card .example {
+    font-size: 11px; color: #4caf50; margin-top: 4px;
+    opacity: 0; transition: opacity 0.3s;
+    font-style: italic;
+  }
+  .word-card.revealed .example { opacity: 1; }
   .word-card .hint { font-size: 11px; color: #bbb; margin-top: 6px; }
+  .word-card .pos-tag {
+    display: inline-block;
+    padding: 2px 6px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+  .word-card .phrases {
+    font-size: 10px;
+    color: #1e88e5;
+    margin-top: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .word-card.revealed .phrases { opacity: 1; }
+  .word-card .note {
+    font-size: 10px;
+    color: #ff9800;
+    margin-top: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-style: italic;
+  }
+  .word-card.revealed .note { opacity: 1; }
   .sentence-list { display: flex; flex-direction: column; gap: 10px; }
   .sentence-card {
     background: linear-gradient(135deg, #f0fff4, #e6fffa);
@@ -226,6 +287,33 @@
     margin-top: 6px;
   }
   .sentence-card.revealed .cn { opacity: 1; }
+  .sentence-card .tags {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .sentence-card .func-tag {
+    padding: 2px 6px;
+    background: linear-gradient(135deg, #4caf50, #43a047);
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+  }
+  .sentence-card .struct-tag {
+    padding: 2px 6px;
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+    font-size: 10px;
+    border-radius: 4px;
+  }
+  .sentence-card .grammar-tip {
+    font-size: 11px;
+    color: #7b1fa2;
+    margin-top: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .sentence-card.revealed .grammar-tip { opacity: 1; }
   .dialogue-box {
     background: linear-gradient(135deg, #fff3e0, #ffe0b2);
     border-radius: 12px;
@@ -297,7 +385,209 @@
     color: #999;
     font-size: 13px;
   }
+  .learning-tips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+  .tip-card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    border-left: 4px solid #ff9800;
+  }
+  .tip-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+  .tip-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff9800;
+    margin-bottom: 4px;
+  }
+  .tip-content {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  @media (min-width: 600px) {
+    .nav-bar {
+      justify-content: center;
+    }
+    .word-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .quiz-options {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .learning-tips {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .word-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .learning-tips {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .container {
+      max-width: 1000px;
+    }
+    .header {
+      padding: 20px 40px;
+    }
+    .header h1 {
+      font-size: 28px;
+    }
+    .header p {
+      font-size: 16px;
+    }
+    .nav-btn {
+      padding: 10px 24px;
+      font-size: 16px;
+    }
+    .word-card {
+      padding: 18px 16px;
+    }
+    .word-card .emoji {
+      font-size: 40px;
+    }
+    .word-card .english {
+      font-size: 22px;
+    }
+    .section-card {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .language-switcher {
+      padding: 8px 6px;
+    }
+    .lang-btn {
+      padding: 5px 12px;
+      font-size: 12px;
+    }
+    .course-switcher {
+      padding: 8px 4px;
+      gap: 4px;
+    }
+    .grade-label {
+      font-size: 11px;
+      padding: 3px 4px;
+    }
+    .grade-btn {
+      padding: 3px 10px;
+      font-size: 11px;
+    }
+    .header {
+      padding: 12px;
+    }
+    .header h1 {
+      font-size: 18px;
+    }
+    .header p {
+      font-size: 12px;
+    }
+    .voice-controls {
+      gap: 6px;
+    }
+    .voice-btn {
+      padding: 5px 10px;
+      font-size: 11px;
+    }
+    .speed-label {
+      font-size: 10px;
+    }
+    .speed-slider {
+      width: 50px;
+    }
+    .nav-bar {
+      padding: 8px 6px;
+    }
+    .nav-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    .container {
+      padding: 10px;
+    }
+    .unit-title {
+      padding: 12px;
+      font-size: 16px;
+    }
+    .word-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .word-card {
+      padding: 10px 8px;
+    }
+    .word-card .emoji {
+      font-size: 24px;
+    }
+    .word-card .english {
+      font-size: 15px;
+    }
+    .word-card .phonetic {
+      font-size: 11px;
+    }
+    .word-card .chinese {
+      font-size: 12px;
+    }
+    .word-card .example {
+      font-size: 10px;
+    }
+    .sentence-card {
+      padding: 10px;
+    }
+    .sentence-card .en {
+      font-size: 14px;
+    }
+    .sentence-card .cn {
+      font-size: 12px;
+    }
+    .dialogue-box {
+      padding: 14px;
+    }
+    .dialogue-box .line {
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+    .dialogue-box .line .en-text {
+      font-size: 14px;
+    }
+    .quiz-options {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .quiz-option {
+      padding: 12px;
+      font-size: 14px;
+    }
+    .learning-tips {
+      grid-template-columns: 1fr;
+    }
+    .tip-card {
+      padding: 10px;
+    }
+    .footer {
+      padding: 12px;
+      font-size: 12px;
+    }
+  }
 </style>
+<link rel="stylesheet" href="english-assist.css">
 </head>
 <body>
 <div class="language-switcher">
@@ -336,6 +626,12 @@
 <div class="header">
   <h1>🎒 一年级上册英语</h1>
   <p>趣味学习乐园 · 快乐学英语</p>
+  <div class="voice-controls">
+    <button class="voice-btn active" id="voiceToggle" onclick="toggleVoice()">🔊 自动发音</button>
+    <span class="speed-label">语速: <span id="speedVal">0.7</span>x</span>
+    <input type="range" class="speed-slider" id="speedSlider" min="0.3" max="1.2" step="0.1" value="0.7" oninput="changeSpeed(this.value)">
+    <span id="voiceStatus"></span>
+  </div>
 </div>
 
 <div class="nav-bar" id="navBar"></div>
@@ -350,23 +646,23 @@ const unitsData = [
     subtitle: 'Hello! 你好！',
     color: '#ff6b6b',
     words: [
-      { en: 'hello', cn: '你好', emoji: '👋', tip: 'Hello!' },
-      { en: 'hi', cn: '嗨', emoji: '👋', tip: 'Hi!' },
-      { en: 'goodbye', cn: '再见', emoji: '👋', tip: 'Goodbye!' },
-      { en: 'morning', cn: '早上', emoji: '🌅', tip: 'Good morning!' },
-      { en: 'afternoon', cn: '下午', emoji: '☀️', tip: 'Good afternoon!' },
-      { en: 'name', cn: '名字', emoji: '📝', tip: 'My name is...' },
-      { en: 'I', cn: '我', emoji: '👤', tip: 'I am...' },
-      { en: 'am', cn: '是', emoji: '✅', tip: 'I am...' },
+      { en: 'hello', cn: '你好', phonetic: '/həˈləʊ/', emoji: '👋', pos: 'interj.', tip: 'Hello!', example: 'Hello! How are you?', phrases: ['say hello', 'hello everyone'], note: '发音要点：/h/像"喝"的开头，/əʊ/像"欧"' },
+      { en: 'hi', cn: '嗨', phonetic: '/haɪ/', emoji: '👋', pos: 'interj.', tip: 'Hi!', example: 'Hi! Nice to meet you.', phrases: ['Hi there!'], note: '比hello更随意，朋友间常用' },
+      { en: 'goodbye', cn: '再见', phonetic: '/ˌɡʊdˈbaɪ/', emoji: '👋', pos: 'interj.', tip: 'Goodbye!', example: 'Goodbye! See you tomorrow.', phrases: ['say goodbye', 'wave goodbye'], note: '可简说成 bye 或 bye-bye' },
+      { en: 'morning', cn: '早上', phonetic: '/ˈmɔːnɪŋ/', emoji: '🌅', pos: 'n.', tip: 'Good morning!', example: 'Good morning, teacher!', phrases: ['good morning', 'this morning'], note: '重音在第一个音节' },
+      { en: 'afternoon', cn: '下午', phonetic: '/ˌɑːftəˈnuːn/', emoji: '☀️', pos: 'n.', tip: 'Good afternoon!', example: 'Good afternoon, class!', phrases: ['good afternoon', 'in the afternoon'], note: 'af-ter-noon 三个音节，重音在最后' },
+      { en: 'name', cn: '名字', phonetic: '/neɪm/', emoji: '📝', pos: 'n.', tip: 'My name is...', example: 'What is your name?', phrases: ['my name', 'your name'], note: '字母a发/eɪ/音，像"内姆"' },
+      { en: 'I', cn: '我', phonetic: '/aɪ/', emoji: '👤', pos: 'pron.', tip: 'I am...', example: 'I am a student.', phrases: ['I am', 'I like'], note: '永远大写！发音像"爱"' },
+      { en: 'am', cn: '是', phonetic: '/æm/', emoji: '✅', pos: 'v.', tip: 'I am...', example: 'I am happy.', phrases: ['I am', 'I am not'], note: '只能和I连用，不能说You am' },
     ],
     sentences: [
-      { en: 'Hello!', cn: '你好！' },
-      { en: 'Hi!', cn: '嗨！' },
-      { en: 'Goodbye!', cn: '再见！' },
-      { en: 'Good morning.', cn: '早上好。' },
-      { en: 'Good afternoon.', cn: '下午好。' },
-      { en: 'My name is Lily.', cn: '我的名字是莉莉。' },
-      { en: 'I am Tom.', cn: '我是汤姆。' },
+      { en: 'Hello!', cn: '你好！', function: '问候', structure: '感叹句', grammar: '问候语' },
+      { en: 'Hi!', cn: '嗨！', function: '问候', structure: '感叹句', grammar: '非正式问候语' },
+      { en: 'Goodbye!', cn: '再见！', function: '告别', structure: '感叹句', grammar: '告别语' },
+      { en: 'Good morning.', cn: '早上好。', function: '问候', structure: '陈述句', grammar: '时间问候语' },
+      { en: 'Good afternoon.', cn: '下午好。', function: '问候', structure: '陈述句', grammar: '时间问候语' },
+      { en: 'My name is Lily.', cn: '我的名字是莉莉。', function: '自我介绍', structure: '主系表', grammar: 'My name is... 句型' },
+      { en: 'I am Tom.', cn: '我是汤姆。', function: '自我介绍', structure: '主系表', grammar: 'I am... 句型' },
     ],
     dialogue: [
       { speaker: '👧 Lily', text: 'Hello!', cn: '你好！' },
@@ -586,12 +882,22 @@ unitsData.forEach((unit, idx) => {
       <div class="word-grid">`;
 
   unit.words.forEach(w => {
+    const phonetic = w.phonetic || '';
+    const example = w.example || '';
+    const pos = w.pos || '';
+    const phrases = w.phrases ? w.phrases.join(', ') : '';
+    const note = w.note || '';
     html += `<div class="word-card" onclick="revealWord(this)" data-w="${w.en}">
       <span class="speak-icon">🔊</span>
       <div class="emoji">${w.emoji}</div>
       <div class="english">${w.en}</div>
+      ${pos ? `<span class="pos-tag">${pos}</span>` : ''}
+      ${phonetic ? `<div class="phonetic">${phonetic}</div>` : ''}
       <div class="chinese">${w.cn}</div>
-      <div class="hint">👆 点击</div>
+      ${example ? `<div class="example">📝 ${example}</div>` : ''}
+      ${phrases ? `<div class="phrases">🔗 ${phrases}</div>` : ''}
+      ${note ? `<div class="note">💡 ${note}</div>` : ''}
+      <div class="hint">👆 点击听发音</div>
     </div>`;
   });
   html += `</div></div></div>`;
@@ -605,10 +911,15 @@ unitsData.forEach((unit, idx) => {
       <div class="sentence-list">`;
 
   unit.sentences.forEach(s => {
+    const funcTag = s.function ? `<span class="func-tag">${s.function}</span>` : '';
+    const structTag = s.structure ? `<span class="struct-tag">${s.structure}</span>` : '';
+    const grammarTip = s.grammar ? `<div class="grammar-tip">📚 ${s.grammar}</div>` : '';
     html += `<div class="sentence-card" onclick="revealSentence(this)" data-en="${s.en}">
       <span class="speak-icon">🔊</span>
+      <div class="tags">${funcTag}${structTag}</div>
       <div class="en">${s.en}</div>
       <div class="cn">${s.cn}</div>
+      ${grammarTip}
     </div>`;
   });
   html += `</div></div></div>`;
@@ -629,6 +940,37 @@ unitsData.forEach((unit, idx) => {
     </div>`;
   });
   html += `</div></div></div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎯</span> 学习加油站
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="learning-tips">
+        <div class="tip-card">
+          <div class="tip-icon">🔤</div>
+          <div class="tip-title">自然拼读</div>
+          <div class="tip-content">${getPhonicsTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📝</div>
+          <div class="tip-title">语法口诀</div>
+          <div class="tip-content">${getGrammarRhyme(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🌍</div>
+          <div class="tip-title">文化小贴士</div>
+          <div class="tip-content">${getCultureTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💡</div>
+          <div class="tip-title">学习技巧</div>
+          <div class="tip-content">${getStudyTip(unit.id)}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
 
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
@@ -656,31 +998,71 @@ unitsData.forEach((unit, idx) => {
   showQuizQuestion(unit.id);
 });
 
+function getPhonicsTip(unitId) {
+  const tips = {
+    unit1: '字母h在hello中发/h/音，e发/ə/音，ll发/l/音。',
+    unit2: '字母o在one中发/wʌn/，u在four中发/ɔː/音。',
+    unit3: '字母组合ou在colour中发/ʌ/音，ow在yellow中发/əʊ/音。',
+    unit4: '字母a在cat中发/æ/音，o在dog中发/ɒ/音。',
+    unit5: '字母a在father中发/ɑː/音，o在mom中发/ʌ/音。',
+    unit6: '字母oo在book中发/ʊ/音，ee在teacher中发/iː/音。',
+  };
+  return tips[unitId] || '多听标准发音，培养语感。';
+}
+
+function getGrammarRhyme(unitId) {
+  const rhymes = {
+    unit1: 'Hello! Hi! 见面打招呼。My name is... 自我介绍要记住。',
+    unit2: 'One, two, three, 数字记心里。How many? 问数量，回答要说清。',
+    unit3: 'Red, blue, green, 颜色很缤纷。What colour? 问颜色，说出它名称。',
+    unit4: 'Cat, dog, bird, 动物真可爱。I like... 说喜好，表达我的爱。',
+    unit5: 'Father, mother, 家人最亲密。I love my family, 我爱我家里。',
+    unit6: 'School, classroom, 学习好地方。I go to school, 每天上学堂。',
+  };
+  return rhymes[unitId] || '学英语，多练习，天天进步有成绩！';
+}
+
+function getCultureTip(unitId) {
+  const tips = {
+    unit1: '👋 英国人见面常用Hello或Hi，分手时说Goodbye或Bye-bye。',
+    unit2: '🔢 在英语中，数字1-10是最基础的，一定要记牢！',
+    unit3: '🎨 彩虹有七种颜色：red, orange, yellow, green, blue, indigo, violet。',
+    unit4: '🐾 英语中动物叫声很有趣：cat says "meow", dog says "woof"!',
+    unit5: '👨👩👧👦 西方家庭观念很强，经常说"I love my family"。',
+    unit6: '🏫 英国小学生每天早上会说"Good morning, teacher!"',
+  };
+  return tips[unitId] || '英语是了解世界的钥匙！';
+}
+
+function getStudyTip(unitId) {
+  const tips = {
+    unit1: '🎤 每天对着镜子练习说Hello和Goodbye，大胆开口！',
+    unit2: '🔢 用积木或卡片摆出数字，边摆边说英语数字。',
+    unit3: '🎨 给图画涂色，边涂边说颜色的英语单词。',
+    unit4: '🐾 画一张动物海报，写上动物的英语名称。',
+    unit5: '👨👩👧👦 制作家庭树，标注家人的英语称呼。',
+    unit6: '📚 把学习用品贴上英语标签，随时复习。',
+  };
+  return tips[unitId] || '每天学习10分钟，积少成多！';
+}
+
 function switchUnit(idx) {
   document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
   document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
 }
 
 let speechEnabled = true;
+let speechRate = 0.7;
 let currentUtterance = null;
 let useLocalAudio = false;
-let englishVoice = null;
-let chineseVoice = null;
-
-function loadSpeechVoices() {
-  if (!('speechSynthesis' in window)) return;
-  const voices = window.speechSynthesis.getVoices();
-  englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US')) || voices.find(v => v.lang.includes('en')) || null;
-  chineseVoice = voices.find(v => v.lang.includes('zh')) || null;
-}
-
-if ('speechSynthesis' in window) {
-  loadSpeechVoices();
-  window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
-}
+let speechInitialized = false;
 
 function speak(text) {
   if (!speechEnabled || !text) return;
+  
+  if (!speechInitialized) {
+    initSpeech();
+  }
   
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -688,13 +1070,66 @@ function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
     const lang = /[\u4e00-\u9fa5]/.test(text) ? 'zh-CN' : 'en-US';
     utter.lang = lang;
-    utter.rate = 0.8;
+    utter.rate = lang === 'zh-CN' ? Math.min(1, speechRate + 0.2) : speechRate;
     utter.pitch = 1;
     utter.volume = 1;
-    utter.voice = lang === 'en-US' ? englishVoice : chineseVoice;
+    
+    const voices = window.speechSynthesis.getVoices();
+    if (lang === 'en-US') {
+      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
+      if (englishVoice) utter.voice = englishVoice;
+    } else {
+      const chineseVoice = voices.find(v => v.lang.includes('zh'));
+      if (chineseVoice) utter.voice = chineseVoice;
+    }
     
     currentUtterance = utter;
     window.speechSynthesis.speak(utter);
+  }
+}
+
+function initSpeech() {
+  if (speechInitialized) return;
+  
+  try {
+    const testUtterance = new SpeechSynthesisUtterance('');
+    testUtterance.lang = 'en-US';
+    testUtterance.rate = 0.1;
+    window.speechSynthesis.speak(testUtterance);
+    
+    setTimeout(() => {
+      window.speechSynthesis.cancel();
+    }, 50);
+    
+    speechInitialized = true;
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🎙️ 语音就绪';
+    }
+  } catch (e) {
+    console.warn('语音初始化失败:', e);
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🔇 语音不可用';
+      statusEl.style.color = '#ff6b6b';
+    }
+  }
+}
+
+function toggleVoice() {
+  speechEnabled = !speechEnabled;
+  const btn = document.getElementById('voiceToggle');
+  if (btn) {
+    btn.classList.toggle('active', speechEnabled);
+    btn.textContent = speechEnabled ? '🔊 自动发音' : '🔇 关闭发音';
+  }
+}
+
+function changeSpeed(val) {
+  speechRate = parseFloat(val);
+  const speedVal = document.getElementById('speedVal');
+  if (speedVal) {
+    speedVal.textContent = speechRate.toFixed(1);
   }
 }
 
@@ -774,6 +1209,8 @@ function restartQuiz(unitId) {
   quizState[unitId] = { current: 0, score: 0 };
   showQuizQuestion(unitId);
 }
+window.unitsData = unitsData;
 </script>
+<script src="english-assist.js"></script>
 </body>
 </html>

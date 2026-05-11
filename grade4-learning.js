@@ -396,19 +396,14 @@ function showQuizQuestion(unitId) {
 }
 
 function switchUnit(index) {
-  if (index === appState.activeUnit) return;
   appState.activeUnit = index;
-  const buttons = navBar.querySelectorAll('.nav-btn');
-  const units = app.querySelectorAll('.unit');
-  buttons.forEach((btn, i) => btn.classList.toggle('active', i === index));
-  units.forEach((unit, i) => unit.classList.toggle('active', i === index));
+  document.querySelectorAll('.nav-btn').forEach((btn, i) => btn.classList.toggle('active', i === index));
+  document.querySelectorAll('.unit').forEach((unit, i) => unit.classList.toggle('active', i === index));
   stopPlayback();
   clearSpeaking();
-  const activeBtn = buttons[index];
-  if (activeBtn) {
-    navBar.scrollTo({ left: Math.max(0, activeBtn.offsetLeft - 12), behavior: 'auto' });
-  }
-  window.scrollTo({ top: 0, behavior: 'auto' });
+  const activeBtn = document.querySelectorAll('.nav-btn')[index];
+  navBar.scrollTo({ left: Math.max(0, activeBtn.offsetLeft - 12), behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function handleSpeakCard(card) {

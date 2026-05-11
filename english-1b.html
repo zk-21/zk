@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -99,10 +99,33 @@
     background: linear-gradient(90deg, #4caf50, #66bb6a);
     color: white;
     text-align: center;
-    padding: 20px 16px 16px;
+    padding: 16px;
   }
-  .header h1 { font-size: 22px; margin-bottom: 4px; }
+  .header h1 { font-size: 20px; margin-bottom: 4px; }
   .header p { font-size: 13px; opacity: 0.9; }
+  .voice-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .voice-btn {
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .voice-btn:hover { background: rgba(255,255,255,0.3); }
+  .voice-btn.active { background: rgba(255,255,255,0.9); color: #4caf50; }
+  .speed-label { font-size: 11px; opacity: 0.9; }
+  .speed-slider { width: 60px; accent-color: white; cursor: pointer; }
+  #voiceStatus { font-size: 11px; color: #ffd93d; }
   .nav-bar {
     display: flex;
     overflow-x: auto;
@@ -298,6 +321,7 @@
     font-size: 13px;
   }
 </style>
+<link rel="stylesheet" href="english-assist.css">
 </head>
 <body>
 <div class="language-switcher">
@@ -336,6 +360,12 @@
 <div class="header">
   <h1>🎒 一年级下册英语</h1>
   <p>趣味学习乐园 · 快乐学英语</p>
+  <div class="voice-controls">
+    <button class="voice-btn active" id="voiceToggle" onclick="toggleVoice()">🔊 自动发音</button>
+    <span class="speed-label">语速: <span id="speedVal">0.7</span>x</span>
+    <input type="range" class="speed-slider" id="speedSlider" min="0.3" max="1.2" step="0.1" value="0.7" oninput="changeSpeed(this.value)">
+    <span id="voiceStatus"></span>
+  </div>
 </div>
 
 <div class="nav-bar" id="navBar"></div>
@@ -350,16 +380,16 @@ const unitsData = [
     subtitle: 'My Body 我的身体',
     color: '#4caf50',
     words: [
-      { en: 'head', cn: '头', emoji: '👤', tip: 'Head' },
-      { en: 'face', cn: '脸', emoji: '😊', tip: 'Face' },
-      { en: 'eye', cn: '眼睛', emoji: '👀', tip: 'Eye' },
-      { en: 'nose', cn: '鼻子', emoji: '👃', tip: 'Nose' },
-      { en: 'mouth', cn: '嘴巴', emoji: '👄', tip: 'Mouth' },
-      { en: 'ear', cn: '耳朵', emoji: '👂', tip: 'Ear' },
-      { en: 'hand', cn: '手', emoji: '✋', tip: 'Hand' },
-      { en: 'arm', cn: '手臂', emoji: '💪', tip: 'Arm' },
-      { en: 'leg', cn: '腿', emoji: '🦵', tip: 'Leg' },
-      { en: 'foot', cn: '脚', emoji: '👣', tip: 'Foot' },
+      { en: 'head', cn: '头', phonetic: '/hed/', emoji: '👤', tip: 'Head', example: 'This is my head.' },
+      { en: 'face', cn: '脸', phonetic: '/feɪs/', emoji: '😊', tip: 'Face', example: 'Wash your face.' },
+      { en: 'eye', cn: '眼睛', phonetic: '/aɪ/', emoji: '👀', tip: 'Eye', example: 'I have two eyes.' },
+      { en: 'nose', cn: '鼻子', phonetic: '/nəʊz/', emoji: '👃', tip: 'Nose', example: 'Touch your nose.' },
+      { en: 'mouth', cn: '嘴巴', phonetic: '/maʊθ/', emoji: '👄', tip: 'Mouth', example: 'Open your mouth.' },
+      { en: 'ear', cn: '耳朵', phonetic: '/ɪə(r)/', emoji: '👂', tip: 'Ear', example: 'I have two ears.' },
+      { en: 'hand', cn: '手', phonetic: '/hænd/', emoji: '✋', tip: 'Hand', example: 'Clap your hands.' },
+      { en: 'arm', cn: '手臂', phonetic: '/ɑːm/', emoji: '💪', tip: 'Arm', example: 'Wave your arm.' },
+      { en: 'leg', cn: '腿', phonetic: '/leɡ/', emoji: '🦵', tip: 'Leg', example: 'Stretch your leg.' },
+      { en: 'foot', cn: '脚', phonetic: '/fʊt/', emoji: '👣', tip: 'Foot', example: 'Stamp your foot.' },
     ],
     sentences: [
       { en: 'This is my head.', cn: '这是我的头。' },
@@ -588,12 +618,16 @@ unitsData.forEach((unit, idx) => {
       <div class="word-grid">`;
 
   unit.words.forEach(w => {
+    const phonetic = w.phonetic || '';
+    const example = w.example || '';
     html += `<div class="word-card" onclick="revealWord(this)" data-w="${w.en}">
       <span class="speak-icon">🔊</span>
       <div class="emoji">${w.emoji}</div>
       <div class="english">${w.en}</div>
+      ${phonetic ? `<div class="phonetic">${phonetic}</div>` : ''}
       <div class="chinese">${w.cn}</div>
-      <div class="hint">👆 点击</div>
+      ${example ? `<div class="example">📝 ${example}</div>` : ''}
+      <div class="hint">👆 点击听发音</div>
     </div>`;
   });
   html += `</div></div></div>`;
@@ -634,6 +668,37 @@ unitsData.forEach((unit, idx) => {
 
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎯</span> 学习加油站
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="learning-tips">
+        <div class="tip-card">
+          <div class="tip-icon">🔤</div>
+          <div class="tip-title">自然拼读</div>
+          <div class="tip-content">${getPhonicsTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📝</div>
+          <div class="tip-title">语法口诀</div>
+          <div class="tip-content">${getGrammarRhyme(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🌍</div>
+          <div class="tip-title">文化小贴士</div>
+          <div class="tip-content">${getCultureTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💡</div>
+          <div class="tip-title">学习技巧</div>
+          <div class="tip-content">${getStudyTip(unit.id)}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
       <span class="icon">🧠</span> 小测验
       <span class="arrow">▼</span>
     </div>
@@ -658,31 +723,71 @@ unitsData.forEach((unit, idx) => {
   showQuizQuestion(unit.id);
 });
 
+function getPhonicsTip(unitId) {
+  const tips = {
+    unit1: '字母ea在head中发/e/音，ee在feet中发/iː/音。',
+    unit2: '字母i在milk中发/ɪ/音，a在apple中发/æ/音。',
+    unit3: '字母ir在shirt中发/ɜː/音，oa在coat中发/əʊ/音。',
+    unit4: '字母ai在train中发/eɪ/音，oi在toy中发/ɔɪ/音。',
+    unit5: '字母u在sunny中发/ʌ/音，ow在snowy中发/əʊ/音。',
+    unit6: '字母u在run中发/ʌ/音，i在swim中发/ɪ/音。',
+  };
+  return tips[unitId] || '多听多练，培养正确发音。';
+}
+
+function getGrammarRhyme(unitId) {
+  const rhymes = {
+    unit1: 'Head, face, eye, nose, 身体部位要记牢。Touch your ... 做动作，学得开心又热闹。',
+    unit2: 'Rice, noodles, bread, 美味食物摆出来。I like ... 说喜好，健康饮食很重要。',
+    unit3: 'Shirt, pants, shoes, 衣服鞋子穿整齐。Put on ... 穿衣服，自己事情自己做。',
+    unit4: 'Ball, car, plane, 玩具世界真精彩。Let\'s play ... 玩游戏，快乐童年乐开怀。',
+    unit5: 'Sunny, rainy, cloudy, 天气变化真奇妙。It is ... 说天气，出门记得看预报。',
+    unit6: 'Run, jump, sing, 动起来呀真开心。I can ... 说本领，自信满满展才能。',
+  };
+  return rhymes[unitId] || '学英语，快乐多，天天进步笑呵呵！';
+}
+
+function getCultureTip(unitId) {
+  const tips = {
+    unit1: '👤 在英语中，身体部位是基础词汇，要记牢哦！',
+    unit2: '🍎 英国人早餐常吃bread和milk，很健康！',
+    unit3: '👕 西方小朋友自己穿衣服，说"Put on your shoes."',
+    unit4: '🧸 泰迪熊Teddy bear起源于美国，很受欢迎！',
+    unit5: '🌤️ 英国人很喜欢谈论天气，是常见话题。',
+    unit6: '🏃 体育课上常用"Run! Jump! Dance!"来发指令。',
+  };
+  return tips[unitId] || '学习英语，了解世界！';
+}
+
+function getStudyTip(unitId) {
+  const tips = {
+    unit1: '👐 指着身体部位说英语，边指边说记得牢！',
+    unit2: '🍽️ 吃饭时说说食物的英语名称。',
+    unit3: '👕 穿衣服时说说衣物的英语。',
+    unit4: '🧩 玩玩具时用英语描述玩具和动作。',
+    unit5: '🌤️ 每天看看天气，用英语说一说。',
+    unit6: '🏃 做动作时大声说出英语动词！',
+  };
+  return tips[unitId] || '每天练习，进步看得见！';
+}
+
 function switchUnit(idx) {
   document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
   document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
 }
 
 let speechEnabled = true;
+let speechRate = 0.7;
 let currentUtterance = null;
 let useLocalAudio = false;
-let englishVoice = null;
-let chineseVoice = null;
-
-function loadSpeechVoices() {
-  if (!('speechSynthesis' in window)) return;
-  const voices = window.speechSynthesis.getVoices();
-  englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US')) || voices.find(v => v.lang.includes('en')) || null;
-  chineseVoice = voices.find(v => v.lang.includes('zh')) || null;
-}
-
-if ('speechSynthesis' in window) {
-  loadSpeechVoices();
-  window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
-}
+let speechInitialized = false;
 
 function speak(text) {
   if (!speechEnabled || !text) return;
+  
+  if (!speechInitialized) {
+    initSpeech();
+  }
   
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -690,13 +795,66 @@ function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
     const lang = /[\u4e00-\u9fa5]/.test(text) ? 'zh-CN' : 'en-US';
     utter.lang = lang;
-    utter.rate = 0.8;
+    utter.rate = lang === 'zh-CN' ? Math.min(1, speechRate + 0.2) : speechRate;
     utter.pitch = 1;
     utter.volume = 1;
-    utter.voice = lang === 'en-US' ? englishVoice : chineseVoice;
+    
+    const voices = window.speechSynthesis.getVoices();
+    if (lang === 'en-US') {
+      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
+      if (englishVoice) utter.voice = englishVoice;
+    } else {
+      const chineseVoice = voices.find(v => v.lang.includes('zh'));
+      if (chineseVoice) utter.voice = chineseVoice;
+    }
     
     currentUtterance = utter;
     window.speechSynthesis.speak(utter);
+  }
+}
+
+function initSpeech() {
+  if (speechInitialized) return;
+  
+  try {
+    const testUtterance = new SpeechSynthesisUtterance('');
+    testUtterance.lang = 'en-US';
+    testUtterance.rate = 0.1;
+    window.speechSynthesis.speak(testUtterance);
+    
+    setTimeout(() => {
+      window.speechSynthesis.cancel();
+    }, 50);
+    
+    speechInitialized = true;
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🎙️ 语音就绪';
+    }
+  } catch (e) {
+    console.warn('语音初始化失败:', e);
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🔇 语音不可用';
+      statusEl.style.color = '#ff6b6b';
+    }
+  }
+}
+
+function toggleVoice() {
+  speechEnabled = !speechEnabled;
+  const btn = document.getElementById('voiceToggle');
+  if (btn) {
+    btn.classList.toggle('active', speechEnabled);
+    btn.textContent = speechEnabled ? '🔊 自动发音' : '🔇 关闭发音';
+  }
+}
+
+function changeSpeed(val) {
+  speechRate = parseFloat(val);
+  const speedVal = document.getElementById('speedVal');
+  if (speedVal) {
+    speedVal.textContent = speechRate.toFixed(1);
   }
 }
 
@@ -776,6 +934,8 @@ function restartQuiz(unitId) {
   quizState[unitId] = { current: 0, score: 0 };
   showQuizQuestion(unitId);
 }
+window.unitsData = unitsData;
 </script>
+<script src="english-assist.js"></script>
 </body>
 </html>

@@ -99,8 +99,31 @@
     background: linear-gradient(90deg, #9c27b0, #ce93d8);
     color: white;
     text-align: center;
-    padding: 20px 16px 16px;
+    padding: 16px;
   }
+  .voice-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .voice-btn {
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .voice-btn:hover { background: rgba(255,255,255,0.3); }
+  .voice-btn.active { background: rgba(255,255,255,0.9); color: #9c27b0; }
+  .speed-label { font-size: 11px; opacity: 0.9; }
+  .speed-slider { width: 60px; accent-color: white; cursor: pointer; }
+  #voiceStatus { font-size: 11px; color: #ffd93d; }
   .header h1 { font-size: 22px; margin-bottom: 4px; }
   .header p { font-size: 13px; opacity: 0.9; }
   .nav-bar {
@@ -299,6 +322,7 @@
     font-size: 13px;
   }
 </style>
+<link rel="stylesheet" href="english-assist.css">
 </head>
 <body>
 <div class="language-switcher">
@@ -337,6 +361,12 @@
 <div class="header">
   <h1>🎒 二年级下册英语</h1>
   <p>趣味学习乐园 · 快乐学英语</p>
+  <div class="voice-controls">
+    <button class="voice-btn active" id="voiceToggle" onclick="toggleVoice()">🔊 自动发音</button>
+    <span class="speed-label">语速: <span id="speedVal">0.7</span>x</span>
+    <input type="range" class="speed-slider" id="speedSlider" min="0.3" max="1.2" step="0.1" value="0.7" oninput="changeSpeed(this.value)">
+    <span id="voiceStatus"></span>
+  </div>
 </div>
 
 <div class="nav-bar" id="navBar"></div>
@@ -640,6 +670,37 @@ unitsData.forEach((unit, idx) => {
 
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎯</span> 学习加油站
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="learning-tips">
+        <div class="tip-card">
+          <div class="tip-icon">🔤</div>
+          <div class="tip-title">自然拼读</div>
+          <div class="tip-content">${getPhonicsTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📝</div>
+          <div class="tip-title">语法口诀</div>
+          <div class="tip-content">${getGrammarRhyme(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🌍</div>
+          <div class="tip-title">文化小贴士</div>
+          <div class="tip-content">${getCultureTip(unit.id)}</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💡</div>
+          <div class="tip-title">学习技巧</div>
+          <div class="tip-content">${getStudyTip(unit.id)}</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
       <span class="icon">🧠</span> 小测验
       <span class="arrow">▼</span>
     </div>
@@ -664,31 +725,71 @@ unitsData.forEach((unit, idx) => {
   showQuizQuestion(unit.id);
 });
 
+function getPhonicsTip(unitId) {
+  const tips = {
+    unit1: '字母组合dr在draw中发/dr/音，aw在draw中发/ɔː/音。',
+    unit2: '字母组合sh在shop中发/ʃ/音，op在shop中发/ɒp/音。',
+    unit3: '字母组合sp在sport中发/sp/音，or在sport中发/ɔː/音。',
+    unit4: '字母组合tr在tree中发/tr/音，ee在tree中发/iː/音。',
+    unit5: '字母组合pl在play中发/pl/音，ay在play中发/eɪ/音。',
+    unit6: '字母组合pl在plane中发/pl/音，ai在train中发/eɪ/音。',
+  };
+  return tips[unitId] || '多听标准发音，培养语感。';
+}
+
+function getGrammarRhyme(unitId) {
+  const rhymes = {
+    unit1: 'Draw a ... Color it ... 画画涂色真有趣。I like ... 说喜好，表达我的心意。',
+    unit2: 'Go to the ... 去商店买东西。I want ... 说想要，礼貌用语要牢记。',
+    unit3: 'Play ... Do ... 运动游戏真开心。Let\'s ... 提建议，大家一起做事情。',
+    unit4: 'This is ... That is ... 介绍物品很简单。I see ... 说看到，眼睛看到就发言。',
+    unit5: 'Let\'s play ... 玩游戏呀真高兴。Catch! Run! Jump! 动作词语要记清。',
+    unit6: 'By plane ... By train ... 交通工具真方便。Have fun ... 祝愉快，旅途平安到终点。',
+  };
+  return rhymes[unitId] || '学英语，快乐多，天天进步笑呵呵！';
+}
+
+function getCultureTip(unitId) {
+  const tips = {
+    unit1: '🎨 英国小朋友很喜欢画画，常用crayons（蜡笔）。',
+    unit2: '🛒 英国超市很大，里面什么都有！',
+    unit3: '⚽ 足球是英国最受欢迎的运动！',
+    unit4: '🌲 英国有很多公园，周末大家喜欢去散步。',
+    unit5: '🎮 英国小朋友喜欢玩各种户外游戏。',
+    unit6: '✈️ 英国人很喜欢旅行，夏天常去海边度假。',
+  };
+  return tips[unitId] || '学习英语，了解世界！';
+}
+
+function getStudyTip(unitId) {
+  const tips = {
+    unit1: '🎨 画画时说说颜色和物品的英语。',
+    unit2: '🛒 和爸爸妈妈去超市时，说说看到的东西。',
+    unit3: '⚽ 运动时说说动作的英语，边做边说。',
+    unit4: '🌲 去公园时，用英语描述看到的景色。',
+    unit5: '🎮 和朋友玩游戏时，用英语发指令。',
+    unit6: '🗺️ 看看地图，说说你想去哪里旅行。',
+  };
+  return tips[unitId] || '每天练习，进步看得见！';
+}
+
 function switchUnit(idx) {
   document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
   document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
 }
 
 let speechEnabled = true;
+let speechRate = 0.7;
 let currentUtterance = null;
 let useLocalAudio = false;
-let englishVoice = null;
-let chineseVoice = null;
-
-function loadSpeechVoices() {
-  if (!('speechSynthesis' in window)) return;
-  const voices = window.speechSynthesis.getVoices();
-  englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US')) || voices.find(v => v.lang.includes('en')) || null;
-  chineseVoice = voices.find(v => v.lang.includes('zh')) || null;
-}
-
-if ('speechSynthesis' in window) {
-  loadSpeechVoices();
-  window.speechSynthesis.onvoiceschanged = loadSpeechVoices;
-}
+let speechInitialized = false;
 
 function speak(text) {
   if (!speechEnabled || !text) return;
+  
+  if (!speechInitialized) {
+    initSpeech();
+  }
   
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
@@ -696,13 +797,66 @@ function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
     const lang = /[\u4e00-\u9fa5]/.test(text) ? 'zh-CN' : 'en-US';
     utter.lang = lang;
-    utter.rate = 0.8;
+    utter.rate = lang === 'zh-CN' ? Math.min(1, speechRate + 0.2) : speechRate;
     utter.pitch = 1;
     utter.volume = 1;
-    utter.voice = lang === 'en-US' ? englishVoice : chineseVoice;
+    
+    const voices = window.speechSynthesis.getVoices();
+    if (lang === 'en-US') {
+      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
+      if (englishVoice) utter.voice = englishVoice;
+    } else {
+      const chineseVoice = voices.find(v => v.lang.includes('zh'));
+      if (chineseVoice) utter.voice = chineseVoice;
+    }
     
     currentUtterance = utter;
     window.speechSynthesis.speak(utter);
+  }
+}
+
+function initSpeech() {
+  if (speechInitialized) return;
+  
+  try {
+    const testUtterance = new SpeechSynthesisUtterance('');
+    testUtterance.lang = 'en-US';
+    testUtterance.rate = 0.1;
+    window.speechSynthesis.speak(testUtterance);
+    
+    setTimeout(() => {
+      window.speechSynthesis.cancel();
+    }, 50);
+    
+    speechInitialized = true;
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🎙️ 语音就绪';
+    }
+  } catch (e) {
+    console.warn('语音初始化失败:', e);
+    const statusEl = document.getElementById('voiceStatus');
+    if (statusEl) {
+      statusEl.textContent = '🔇 语音不可用';
+      statusEl.style.color = '#ff6b6b';
+    }
+  }
+}
+
+function toggleVoice() {
+  speechEnabled = !speechEnabled;
+  const btn = document.getElementById('voiceToggle');
+  if (btn) {
+    btn.classList.toggle('active', speechEnabled);
+    btn.textContent = speechEnabled ? '🔊 自动发音' : '🔇 关闭发音';
+  }
+}
+
+function changeSpeed(val) {
+  speechRate = parseFloat(val);
+  const speedVal = document.getElementById('speedVal');
+  if (speedVal) {
+    speedVal.textContent = speechRate.toFixed(1);
   }
 }
 
@@ -782,6 +936,8 @@ function restartQuiz(unitId) {
   quizState[unitId] = { current: 0, score: 0 };
   showQuizQuestion(unitId);
 }
+window.unitsData = unitsData;
 </script>
+<script src="english-assist.js"></script>
 </body>
 </html>
