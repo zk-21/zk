@@ -259,6 +259,106 @@
   font-weight: 800;
 }
 
+.assist-reciting {
+  grid-column: 1 / -1;
+  border-color: rgba(37, 99, 235, 0.32);
+  background: linear-gradient(135deg, #f8fbff, #eef6ff);
+}
+
+.recite-section {
+  margin-top: 12px;
+}
+
+.recite-section h5 {
+  margin: 0 0 8px;
+  color: #1e3a8a;
+  font-size: 14px;
+}
+
+.recite-word-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.recite-word {
+  padding: 10px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  text-align: left;
+  background: #fff;
+  cursor: pointer;
+}
+
+.recite-word b,
+.recite-word small {
+  display: block;
+}
+
+.recite-word span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 6px 0;
+}
+
+.recite-word em,
+.recite-chunks span,
+.recite-steps span {
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-style: normal;
+  color: #1d4ed8;
+  background: #dbeafe;
+  font-weight: 800;
+}
+
+.recite-sentence,
+.recite-mask,
+.recite-cn,
+.recite-roles details {
+  padding: 9px;
+  border-radius: 9px;
+  background: #fff;
+  margin-bottom: 8px;
+}
+
+.recite-chunks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.recite-sentence small {
+  display: block;
+  margin-top: 5px;
+  color: #667085;
+}
+
+.recite-mask summary,
+.recite-cn summary,
+.recite-roles summary {
+  cursor: pointer;
+  color: #263142;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.recite-mask div,
+.recite-cn div,
+.recite-roles div {
+  margin-top: 7px;
+  color: #475467;
+}
+
+.recite-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
 @media (max-width: 720px) {
   .assist-grid {
     grid-template-columns: 1fr;

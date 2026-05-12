@@ -18,6 +18,7 @@
     gradeFocus: '本年级学习重点',
     memory: '记忆小练',
     challenge: '进阶任务',
+    recitePhonics: '跟读背诵与自然拼读',
     mistakes: '错题复习',
     must: '必会词',
     read: '认读词',
@@ -53,6 +54,11 @@
     if (/四年级|grade4/i.test(text)) return 4;
     if (/五年级|english-5/i.test(text)) return 5;
     return 3;
+  }
+
+  function isGrade3BPage() {
+    const text = `${document.title || ''} ${location.pathname || ''}`;
+    return /三年级下册|english-learning(?:-fixed)?\.html/i.test(text);
   }
 
   function getWords(unit) {
@@ -297,6 +303,80 @@
     ];
   }
 
+  function splitWordChunks(word) {
+    const raw = String(word || '').trim();
+    if (!raw) return [];
+    if (raw.includes(' ')) return raw.split(/\s+/);
+    if (raw.includes('-')) return raw.split('-');
+    const lower = raw.toLowerCase();
+    const known = {
+      schoolbag: ['school', 'bag'],
+      classroom: ['class', 'room'],
+      blackboard: ['black', 'board'],
+      breakfast: ['break', 'fast'],
+      football: ['foot', 'ball'],
+      basketball: ['bas', 'ket', 'ball'],
+      pineapple: ['pine', 'apple'],
+      morning: ['morn', 'ing'],
+      afternoon: ['after', 'noon'],
+      behind: ['be', 'hind'],
+      under: ['un', 'der'],
+      colour: ['col', 'our'],
+      yellow: ['yel', 'low'],
+      animal: ['an', 'i', 'mal'],
+      rabbit: ['rab', 'bit'],
+      chicken: ['chick', 'en'],
+      window: ['win', 'dow'],
+    };
+    if (known[lower]) return known[lower];
+    const parts = raw.match(/[^aeiou]*[aeiou]+(?:[^aeiou]{0,2}(?=[^aeiou]*[aeiou]|$))?/gi);
+    return parts && parts.length > 1 ? parts : [raw];
+  }
+
+  function segmentSentence(sentence) {
+    const words = clean(sentence).split(' ').filter(Boolean);
+    if (words.length <= 4) return [sentence];
+    const chunks = [];
+    for (let i = 0; i < words.length; i += 3) {
+      chunks.push(words.slice(i, i + 3).join(' '));
+    }
+    return chunks;
+  }
+
+  function maskSentence(sentence) {
+    const words = clean(sentence).split(' ');
+    return words.map((word, index) => {
+      if (index % 2 === 1 && /[A-Za-z]/.test(word)) return '____';
+      return word;
+    }).join(' ');
+  }
+
+  function buildGrade3BRecitePhonics(unit) {
+    if (!isGrade3BPage()) return null;
+    const words = getWords(unit).slice(0, 6);
+    const sentences = getSentences(unit).slice(0, 4);
+    const dialogue = buildRoleplay(unit).slice(0, 4);
+    return {
+      wordChunks: words.map(word => ({
+        en: word.en,
+        cn: word.cn || '',
+        chunks: splitWordChunks(word.en),
+      })),
+      sentenceChunks: sentences.map(item => ({
+        en: item.en,
+        cn: item.cn || '',
+        chunks: segmentSentence(item.en),
+        masked: maskSentence(item.en),
+      })),
+      cnRecall: sentences.slice(0, 3).map(item => ({
+        cn: item.cn || '看中文，说英文。',
+        en: item.en,
+      })),
+      roleRecite: dialogue,
+      steps: ['听一遍', '慢速跟读', '分段读', '遮词背诵', '只看中文说英文', '角色背诵', '第二天再复习'],
+    };
+  }
+
   function speakButton(text) {
     return `<button class="assist-speak" type="button" data-assist-speak="${htmlEscape(text)}">${labels.speak}</button>`;
   }
@@ -314,6 +394,61 @@
       </div>`;
   }
 
+  function renderGrade3BRecitePhonics(data) {
+    if (!data) return '';
+    return `
+      <div class="assist-card assist-reciting">
+        <h4>${labels.recitePhonics}</h4>
+        <div class="recite-section">
+          <h5>单词拆块拼读</h5>
+          <div class="recite-word-list">
+            ${data.wordChunks.map(item => `
+              <button class="recite-word" type="button" data-assist-speak="${htmlEscape(item.en)}">
+                <b>${htmlEscape(item.en)}</b>
+                <span>${item.chunks.map(chunk => `<em>${htmlEscape(chunk)}</em>`).join('')}</span>
+                <small>${htmlEscape(item.cn)}</small>
+              </button>`).join('')}
+          </div>
+        </div>
+        <div class="recite-section">
+          <h5>句子分段跟读</h5>
+          ${data.sentenceChunks.map(item => `
+            <div class="recite-sentence">
+              <div class="recite-chunks">${item.chunks.map(chunk => `<span>${htmlEscape(chunk)}</span>`).join('')}</div>
+              ${speakButton(item.en)}
+              <small>${htmlEscape(item.cn)}</small>
+            </div>`).join('')}
+        </div>
+        <div class="recite-section">
+          <h5>遮词背诵</h5>
+          ${data.sentenceChunks.map(item => `
+            <details class="recite-mask">
+              <summary>${htmlEscape(item.masked)}</summary>
+              <div>${htmlEscape(item.en)} ${speakButton(item.en)}</div>
+            </details>`).join('')}
+        </div>
+        <div class="recite-section">
+          <h5>只看中文说英文</h5>
+          ${data.cnRecall.map(item => `
+            <details class="recite-cn">
+              <summary>${htmlEscape(item.cn)}</summary>
+              <div>${htmlEscape(item.en)} ${speakButton(item.en)}</div>
+            </details>`).join('')}
+        </div>
+        <div class="recite-section">
+          <h5>角色背诵</h5>
+          <div class="recite-roles">
+            ${data.roleRecite.map(item => `
+              <details>
+                <summary>${htmlEscape(item.role)}：${htmlEscape(item.cn || '点击查看英文')}</summary>
+                <div>${htmlEscape(item.en)} ${speakButton(item.en)}</div>
+              </details>`).join('')}
+          </div>
+        </div>
+        <div class="recite-steps">${data.steps.map(step => `<span>${htmlEscape(step)}</span>`).join('')}</div>
+      </div>`;
+  }
+
   function renderAssist(unit, index) {
     const key = unitKey(unit, index);
     const words = splitWords(unit);
@@ -326,6 +461,7 @@
     const gradeFocus = buildGradeFocus(unit);
     const memory = buildMemoryDrill(unit);
     const challenge = buildChallenge(unit);
+    const recitePhonics = buildGrade3BRecitePhonics(unit);
 
     return `
       <section class="assist-box" data-assist-unit="${htmlEscape(key)}">
@@ -389,6 +525,7 @@
             <h4>${labels.phonics}</h4>
             <ul class="assist-list">${buildPhonics(unit).map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ul>
           </div>
+          ${renderGrade3BRecitePhonics(recitePhonics)}
           <div class="assist-card">
             <h4>${labels.lightGrammar}</h4>
             <div class="assist-grammar">
