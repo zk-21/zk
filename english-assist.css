@@ -21,11 +21,20 @@
 }
 
 .assist-head p,
-.assist-muted {
+.assist-muted,
+.assist-source {
   margin: 4px 0 0;
   color: #667085;
   font-size: 13px;
   line-height: 1.45;
+}
+
+.assist-source {
+  margin: -4px 0 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: #475467;
+  background: #fff8e6;
 }
 
 .assist-badge {
@@ -105,7 +114,9 @@
 .assist-lines,
 .assist-roleplay,
 .assist-listening,
-.assist-mistake-list {
+.assist-mistake-list,
+.assist-grammar,
+.assist-extra-quiz {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -113,14 +124,17 @@
 
 .assist-line,
 .assist-role-line,
-.assist-mistake {
+.assist-mistake,
+.assist-grammar-rule,
+.assist-extra-quiz details {
   padding: 8px;
   border-radius: 8px;
   background: #f8fafc;
 }
 
 .assist-line span,
-.assist-role-line span {
+.assist-role-line span,
+.assist-grammar-rule span {
   display: block;
   color: #263142;
   font-weight: 800;
@@ -135,6 +149,48 @@
   color: #667085;
   font-size: 12px;
   line-height: 1.35;
+}
+
+.assist-grammar-rule b {
+  display: block;
+  margin-bottom: 4px;
+  color: #7c2d12;
+}
+
+.assist-grammar-rule small {
+  display: block;
+  margin-top: 5px;
+  color: #667085;
+  font-size: 12px;
+}
+
+.assist-extra-quiz summary {
+  cursor: pointer;
+  color: #263142;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.assist-extra-quiz details div {
+  margin-top: 7px;
+  color: #475467;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.assist-review {
+  border-color: rgba(124, 58, 237, 0.28);
+  background: #fbf8ff;
+}
+
+.assist-grade-focus {
+  border-color: rgba(14, 116, 144, 0.26);
+  background: #f0fbff;
+}
+
+.assist-challenge {
+  border-color: rgba(217, 119, 6, 0.28);
+  background: #fffaf0;
 }
 
 .assist-role-line b {
