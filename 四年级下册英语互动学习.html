@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>四年级下册英语 · 译林版互动学习</title>
   <link rel="stylesheet" href="grade4-learning.css">
-  <link rel="stylesheet" href="english-assist.css">
   <style>
     .language-switcher {
       display: flex;
@@ -29,6 +28,76 @@
     }
     .lang-btn:hover { background: rgba(255,255,255,0.25); }
     .lang-btn.active { color: #7b1fa2; background: #fff; border-color: #fff; }
+
+    .course-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      flex-wrap: wrap;
+    }
+
+    .course-switcher .grade-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 18px;
+    }
+
+    .course-switcher .grade-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      padding: 3px 6px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+
+    .course-switcher .grade-btn {
+      flex: 0 0 auto;
+      min-height: 28px;
+      padding: 5px 12px;
+      border: none;
+      border-radius: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .course-switcher .grade-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .course-switcher .grade-btn.active {
+      color: #172033;
+      background: #fff;
+    }
+
+    .course-switcher .grammar-btn {
+      flex: 0 0 auto;
+      min-height: 32px;
+      padding: 6px 14px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 16px;
+      font-size: 12px;
+      color: #fff;
+      background: linear-gradient(135deg, #f093fb, #f5576c);
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      margin-left: 4px;
+    }
+
+    .course-switcher .grammar-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(240, 147, 251, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -88,6 +157,5 @@
   </script>
   <script src="grade4b-data.js"></script>
   <script src="grade4-learning.js"></script>
-  <script src="english-assist.js"></script>
 </body>
 </html>
