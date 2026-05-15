@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -1049,12 +1049,12 @@ const unitsData = [
     cartoon: [
       { speaker: '👦 Sam', text: 'Do you have a mango, Bobby?', cn: '你有一个芒果吗，博比？' },
       { speaker: '👦 Bobby', text: 'No, I don\'t.', cn: '不，我没有。' },
-      { speaker: '� Sam', text: 'One, two, three, look! I have a mango!', cn: '一、二、三，看！我有一个芒果！' },
-      { speaker: '� Bobby', text: 'Cool!', cn: '酷！' },
-      { speaker: '� Sam', text: 'One, two, three, look! I have two mangoes.', cn: '一、二、三，看！我有两个芒果。' },
+      { speaker: '👦 Sam', text: 'One, two, three, look! I have a mango!', cn: '一、二、三，看！我有一个芒果！' },
+      { speaker: '👦 Bobby', text: 'Cool!', cn: '酷！' },
+      { speaker: '👦 Sam', text: 'One, two, three, look! I have two mangoes.', cn: '一、二、三，看！我有两个芒果。' },
       { speaker: '👦 Bobby', text: 'Great!', cn: '太棒了！' },
-      { speaker: '� Bobby', text: 'Ha ha!', cn: '哈哈！' },
-      { speaker: '� Sam', text: 'Let\'s share the mangoes!', cn: '我们一起分享这些芒果吧！' },
+      { speaker: '👦 Bobby', text: 'Ha ha!', cn: '哈哈！' },
+      { speaker: '👦 Sam', text: 'Let\'s share the mangoes!', cn: '我们一起分享这些芒果吧！' },
       { speaker: '👦 Bobby', text: 'Thank you! I like mangoes. They\'re sweet.', cn: '谢谢你！我喜欢芒果。它们是甜的。' },
     ],
     story: [
@@ -1295,13 +1295,13 @@ const unitsData = [
       { en: 'The little balloon is pink.', cn: '小气球是粉红色的。' },
     ],
     cartoon: [
-      { speaker: '� Tina', text: 'Can I buy a balloon, Mum?', cn: '我能买一个气球吗，妈妈？' },
+      { speaker: '👧 Tina', text: 'Can I buy a balloon, Mum?', cn: '我能买一个气球吗，妈妈？' },
       { speaker: '👩 Mum', text: 'Sure.', cn: '当然。' },
       { speaker: '👧 Tina', text: 'Hello! I want a balloon.', cn: '你好！我想要一个气球。' },
       { speaker: '🦒 Giraffe', text: 'OK. What colour?', cn: '好的。什么颜色？' },
       { speaker: '👧 Tina', text: 'Pink, please.', cn: '请给我粉红色的。' },
-      { speaker: '� Giraffe', text: 'Here you are.', cn: '给你。' },
-      { speaker: '� Mum', text: 'What about you, Bobby?', cn: '你呢，博比？' },
+      { speaker: '🦒 Giraffe', text: 'Here you are.', cn: '给你。' },
+      { speaker: '👩 Mum', text: 'What about you, Bobby?', cn: '你呢，博比？' },
       { speaker: '👦 Bobby', text: 'I want a green balloon, a red balloon, an orange balloon ...', cn: '我想要一个绿色的气球、一个红色的气球、一个橙红色的气球……' },
       { speaker: '👧 Tina', text: 'Bobby! That balloon is for you.', cn: '博比！那个气球是给你的。' },
     ],
@@ -1309,15 +1309,15 @@ const unitsData = [
       { speaker: '🧑 Guide', text: 'Look, this is a chameleon. It\'s my little friend. What colour is it?', cn: '看，这是一只变色龙。它是我的小朋友。它是什么颜色的？' },
       { speaker: '👦 Liu Tao & 👧 Su Hai', text: 'It\'s green.', cn: '它是绿色的。' },
       { speaker: '🧑 Guide', text: 'What colour is it now? Can you see it?', cn: '现在它是什么颜色的？你能看见它吗？' },
-      { speaker: '� Su Hai', text: 'Yes, it\'s here.', cn: '是的，它在这里。' },
-      { speaker: '� Liu Tao', text: 'It\'s brown.', cn: '它是棕色的。' },
-      { speaker: '� Yang Ling', text: 'It\'s yellow and red now.', cn: '现在它是黄色和红色的。' },
+      { speaker: '👧 Su Hai', text: 'Yes, it\'s here.', cn: '是的，它在这里。' },
+      { speaker: '👦 Liu Tao', text: 'It\'s brown.', cn: '它是棕色的。' },
+      { speaker: '👧 Yang Ling', text: 'It\'s yellow and red now.', cn: '现在它是黄色和红色的。' },
       { speaker: '👦 Mike', text: 'It\'s cool!', cn: '它很酷！' },
       { speaker: '🧑 Guide', text: 'Yes, my little friend is very cool.', cn: '是的，我的小朋友很酷。' },
       { speaker: '🧑 Guide', text: 'What colour is it now?', cn: '现在它是什么颜色的？' },
       { speaker: '👦 Wang Bing', text: 'It\'s green again!', cn: '它又是绿色的了！' },
       { speaker: '👦 Liu Tao', text: 'How come?', cn: '怎么回事？' },
-      { speaker: '� Su Hai', text: 'Wow!', cn: '哇！' },
+      { speaker: '👧 Su Hai', text: 'Wow!', cn: '哇！' },
     ],
     phrases: [
       { en: 'buy a balloon', cn: '买一个气球' },
@@ -2147,7 +2147,7 @@ unitsData.forEach((unit, idx) => {
   let html = `
     <div class="unit-title" style="background:linear-gradient(90deg, ${unit.color}, ${unit.color}dd)">
       ${unit.title} ${unit.subtitle}
-      <small>📝 核心词汇 + 重点句型 + 课文对话 + 小测验</small>
+      <small>学习目标 → 核心词汇 → 重点短语 → 重点句型 → 课文跟读 → 语法提示 → 小测验</small>
     </div>
   `;
 
@@ -2176,6 +2176,30 @@ unitsData.forEach((unit, idx) => {
   });
 
   html += `</div></div></div>`;
+
+  // Phrases section
+  if (unit.phrases && unit.phrases.length > 0) {
+    html += `<div class="section-card">
+      <div class="section-header" onclick="toggleSection(this)">
+        <span class="icon">📌</span> 重点短语
+        <span class="arrow">▼</span>
+      </div>
+      <div class="section-body">
+        <p style="font-size:13px;color:#999;margin-bottom:12px;">💡 先把常用短语接在词汇后面学，再进入完整句型。</p>
+        <div class="word-grid">`;
+
+    unit.phrases.forEach((p, pi) => {
+      html += `<div class="word-card" onclick="revealWord(this)" data-w="${p.en}" style="background:linear-gradient(135deg, #e8eaf6, #c5cae9);">
+        <span class="speak-icon">🔊</span>
+        <div class="emoji">📝</div>
+        <div class="english">${p.en}</div>
+        <div class="chinese">${p.cn}</div>
+        <div class="hint">👆 点击听发音</div>
+      </div>`;
+    });
+
+    html += `</div></div></div>`;
+  }
 
   // Sentences section
   html += `<div class="section-card">
@@ -2262,30 +2286,6 @@ unitsData.forEach((unit, idx) => {
         <div class="speaker-label">${d.speaker}</div>
         <div class="en-text">${d.text}</div>
         <div class="cn-text">${d.cn}</div>
-      </div>`;
-    });
-
-    html += `</div></div></div>`;
-  }
-
-  // Phrases section
-  if (unit.phrases && unit.phrases.length > 0) {
-    html += `<div class="section-card">
-      <div class="section-header" onclick="toggleSection(this)">
-        <span class="icon">📌</span> 重点短语
-        <span class="arrow">▼</span>
-      </div>
-      <div class="section-body">
-        <p style="font-size:13px;color:#999;margin-bottom:12px;">💡 点击短语查看中文意思和发音</p>
-        <div class="word-grid">`;
-
-    unit.phrases.forEach((p, pi) => {
-      html += `<div class="word-card" onclick="revealWord(this)" data-w="${p.en}" style="background:linear-gradient(135deg, #e8eaf6, #c5cae9);">
-        <span class="speak-icon">🔊</span>
-        <div class="emoji">📝</div>
-        <div class="english">${p.en}</div>
-        <div class="chinese">${p.cn}</div>
-        <div class="hint">👆 点击听发音</div>
       </div>`;
     });
 
@@ -2734,6 +2734,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 window.unitsData = unitsData;
 </script>
-<script src="english-assist.js"></script>
+<script src="english-assist.js?v=memory-all-20260515"></script>
 </body>
 </html>

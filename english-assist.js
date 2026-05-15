@@ -16,7 +16,7 @@
     review: '阶段复习',
     source: '资料说明',
     gradeFocus: '本年级学习重点',
-    memory: '记忆小练',
+    memory: '记忆窍门',
     challenge: '进阶任务',
     recitePhonics: '跟读背诵与自然拼读',
     mistakes: '错题复习',
@@ -35,6 +35,8 @@
     .replace(/"/g, '&quot;');
 
   const clean = value => String(value || '').replace(/\s+/g, ' ').trim();
+
+  const normalizeLessonKey = value => clean(value).toLowerCase();
 
   function getUnits() {
     if (Array.isArray(window.COURSE_UNITS)) return window.COURSE_UNITS;
@@ -65,6 +67,22 @@
     return (unit.words || []).filter(item => item && item.en);
   }
 
+  function getLessonVocabulary(unit) {
+    const seen = new Set();
+    return [...(unit.words || []), ...(unit.phrases || [])]
+      .filter(item => item && item.en)
+      .map(item => ({
+        ...item,
+        kind: (unit.phrases || []).includes(item) ? '短语' : '词汇',
+      }))
+      .filter(item => {
+        const key = normalizeLessonKey(item.en);
+        if (!key || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+  }
+
   function getSentences(unit) {
     return (unit.sentences || []).filter(item => item && item.en);
   }
@@ -73,17 +91,51 @@
     return (unit.dialogue || unit.story || []).filter(item => item && item.text);
   }
 
-  function speak(text) {
+  function setSpeakButtonPlaying(button, isPlaying) {
+    if (!button) return;
+    button.classList.toggle('is-playing', isPlaying);
+    button.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+    const label = button.querySelector('.assist-speak-label');
+    if (label) {
+      if (!label.dataset.defaultLabel) label.dataset.defaultLabel = label.textContent || labels.speak;
+      label.textContent = isPlaying ? '播放中' : label.dataset.defaultLabel;
+    }
+  }
+
+  function clearSpeakButtons(exceptButton) {
+    document.querySelectorAll('.assist-speak.is-playing').forEach(button => {
+      if (button !== exceptButton) setSpeakButtonPlaying(button, false);
+    });
+  }
+
+  function speak(text, button, options = {}) {
     if (!text) return;
+    clearSpeakButtons(button);
+    setSpeakButtonPlaying(button, true);
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      setSpeakButtonPlaying(button, false);
+    };
     if (typeof window.speak === 'function') {
-      window.speak(text);
+      const fallbackTimer = window.setTimeout(finish, Math.max(1200, String(text).length * 110));
+      window.speak(text, options, () => {
+        window.clearTimeout(fallbackTimer);
+        finish();
+      });
       return;
     }
-    if (!window.speechSynthesis) return;
+    if (!window.speechSynthesis) {
+      finish();
+      return;
+    }
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = /[\u4e00-\u9fff]/.test(text) ? 'zh-CN' : 'en-US';
-    utter.rate = utter.lang === 'zh-CN' ? 0.9 : 0.76;
+    utter.rate = typeof options.rate === 'number' ? options.rate : (utter.lang === 'zh-CN' ? 0.9 : 0.76);
+    utter.onend = finish;
+    utter.onerror = finish;
     window.speechSynthesis.speak(utter);
   }
 
@@ -269,14 +321,325 @@
     ];
   }
 
+  function chunkMeaning(chunk) {
+    const meanings = {
+      a: '一个',
+      an: '一个',
+      all: '全部',
+      animal: '动物',
+      apple: '苹果',
+      art: '美术',
+      afternoon: '下午',
+      after: '之后',
+      bag: '包',
+      ball: '球',
+      basket: '篮子',
+      be: '是',
+      black: '黑色',
+      board: '板',
+      book: '书',
+      box: '盒子',
+      boy: '男孩',
+      bear: '熊',
+      bed: '床',
+      bedroom: '卧室',
+      bread: '面包',
+      breakfast: '早餐',
+      butter: '黄油',
+      can: '能',
+      car: '汽车',
+      card: '卡片',
+      cat: '猫',
+      chair: '椅子',
+      chicken: '鸡',
+      class: '班级/课',
+      classroom: '教室',
+      clean: '打扫',
+      colour: '颜色',
+      cow: '奶牛',
+      day: '天',
+      desk: '课桌',
+      dog: '狗',
+      door: '门',
+      duck: '鸭子',
+      down: '向下',
+      eat: '吃',
+      English: '英语',
+      farm: '农场',
+      fish: '鱼',
+      floor: '地板',
+      flower: '花',
+      foot: '脚',
+      football: '足球',
+      fruit: '水果',
+      garden: '花园',
+      girl: '女孩',
+      glass: '玻璃',
+      glasses: '眼镜',
+      good: '好的',
+      go: '去',
+      grape: '葡萄',
+      green: '绿色',
+      home: '家',
+      IT: '信息技术',
+      lesson: '课',
+      library: '图书馆',
+      look: '看',
+      long: '长的',
+      living: '生活/居住',
+      mail: '信件',
+      mango: '芒果',
+      Maths: '数学',
+      milk: '牛奶',
+      morning: '早晨',
+      music: '音乐',
+      noon: '中午',
+      noodles: '面条',
+      out: '出去',
+      orange: '橙子/橙色',
+      panda: '熊猫',
+      PE: '体育',
+      pen: '钢笔',
+      pencil: '铅笔',
+      pineapple: '菠萝',
+      plane: '飞机',
+      playground: '操场',
+      play: '玩',
+      rabbit: '兔子',
+      red: '红色',
+      rice: '米饭',
+      room: '房间',
+      ruler: '尺子',
+      school: '学校',
+      schoolbag: '书包',
+      science: '科学',
+      sheep: '羊',
+      sit: '坐',
+      sport: '运动',
+      subject: '学科',
+      sun: '太阳',
+      tiger: '老虎',
+      teddy: '泰迪',
+      tree: '树',
+      TV: '电视',
+      tv: '电视',
+      up: '向上',
+      window: '窗户',
+      yellow: '黄色',
+      zoo: '动物园',
+      at: '在/向',
+      to: '到',
+      from: '从',
+      in: '在里面',
+      on: '在上面',
+      under: '在下面',
+      behind: '在后面',
+      cloud: '云',
+      rain: '雨',
+      snow: '雪',
+      wind: '风',
+      shirt: '衬衫',
+      shoes: '鞋子',
+      socks: '袜子',
+      hat: '帽子',
+      coat: '外套',
+      table: '桌子',
+      sofa: '沙发',
+      lamp: '灯',
+    };
+    return meanings[chunk] || meanings[chunk.toLowerCase()] || '';
+  }
+
+  function buildWordMemoryTip(word) {
+    const en = clean(word.en);
+    if (!en) return '';
+    const cn = clean(word.cn);
+    const lower = en.toLowerCase();
+    const yAdjectiveRoots = {
+      sunny: ['sun', '太阳'],
+      rainy: ['rain', '雨'],
+      cloudy: ['cloud', '云'],
+      windy: ['wind', '风'],
+      snowy: ['snow', '雪'],
+    };
+    if (yAdjectiveRoots[lower]) {
+      const [root, meaning] = yAdjectiveRoots[lower];
+      return `${en} = ${root}（${meaning}）+ y（有……的）；合起来记“${cn || `${meaning}多的`}”。`;
+    }
+    const actionMemory = {
+      hello: '挥挥手说 hello，把“打招呼”的动作和声音一起记。',
+      hi: '见到朋友轻轻挥手说 hi，记住这是更随意的“嗨”。',
+      goodbye: '挥手离开时说 goodbye，把“再见”的场景记住。',
+      morning: '早上起床看太阳，说 morning，把“早晨”放进画面。',
+      afternoon: '午饭后到傍晚前说 afternoon，把“下午”放进一天的时间线。',
+      name: '指着自己介绍名字：My name is ...，用自我介绍记 name。',
+      one: '伸出 1 根手指说 one。',
+      two: '伸出 2 根手指说 two。',
+      three: '伸出 3 根手指说 three。',
+      four: '伸出 4 根手指说 four。',
+      five: '伸出一只手 5 根手指说 five。',
+      six: '先 5 根手指再加 1 根，说 six。',
+      seven: '先 5 根手指再加 2 根，说 seven。',
+      eight: '先 5 根手指再加 3 根，说 eight。',
+      nine: '先 5 根手指再加 4 根，说 nine。',
+      ten: '两只手全部伸出，说 ten。',
+      red: '找一个红色物品，说 red，把颜色和实物绑在一起。',
+      yellow: '找一个黄色物品，说 yellow，把颜色和实物绑在一起。',
+      blue: '找一个蓝色物品，说 blue，把颜色和实物绑在一起。',
+      green: '找一个绿色物品，说 green，把颜色和实物绑在一起。',
+      orange: '拿橙子或找橙色物品，说 orange，记“橙子/橙色”。',
+      purple: '找紫色物品，说 purple，把颜色和实物绑在一起。',
+      pink: '找粉色物品，说 pink，把颜色和实物绑在一起。',
+      black: '指黑色物品说 black，把颜色和实物绑在一起。',
+      white: '指白色物品说 white，把颜色和实物绑在一起。',
+      colour: '看一盒彩笔或彩虹，说 colour，记“颜色”。',
+      cat: '学猫叫或做猫爪动作，说 cat。',
+      dog: '学小狗汪汪叫，说 dog。',
+      bird: '做小鸟扇翅膀动作，说 bird。',
+      fish: '做鱼游泳动作，说 fish。',
+      rabbit: '做兔耳朵动作，说 rabbit。',
+      bear: '张开双臂做大熊动作，说 bear。',
+      monkey: '做猴子挠头动作，说 monkey。',
+      elephant: '用手臂做长鼻子动作，说 elephant。',
+      father: '看家庭照片指爸爸，说 father。',
+      mother: '看家庭照片指妈妈，说 mother。',
+      brother: '看家庭照片指兄弟，说 brother。',
+      sister: '看家庭照片指姐妹，说 sister。',
+      family: '看全家福说 family，把一家人放进画面。',
+      dad: '指爸爸或照片说 dad，这是口语里的“爸爸”。',
+      mum: '指妈妈或照片说 mum，这是口语里的“妈妈”。',
+      grandpa: '指爷爷/外公照片说 grandpa。',
+      grandma: '指奶奶/外婆照片说 grandma。',
+      school: '想象走进学校大门，说 school。',
+      classroom: 'class（班级/课）+ room（房间）；上课的房间就是 classroom。',
+      desk: '拍拍课桌说 desk。',
+      chair: '坐到椅子上说 chair。',
+      book: '拿起一本书说 book。',
+      pencil: '拿铅笔写一写，说 pencil。',
+      ruler: '用尺子量一量，说 ruler。',
+      teacher: '指老师或想象老师上课，说 teacher。',
+      student: '指自己或同学，说 student。',
+      head: '摸摸头，说 head，把动作和“头”绑在一起。',
+      face: '双手框住脸，说 face，把动作和“脸”绑在一起。',
+      eye: '指一指眼睛，说 eye，把动作和“眼睛”绑在一起。',
+      eyes: '指一指双眼，说 eyes，把动作和“眼睛”绑在一起。',
+      nose: '点一点鼻子，说 nose，把动作和“鼻子”绑在一起。',
+      mouth: '指一指嘴巴，说 mouth，把动作和“嘴巴”绑在一起。',
+      ear: '摸摸耳朵，说 ear，把动作和“耳朵”绑在一起。',
+      ears: '摸摸两只耳朵，说 ears，把动作和“耳朵”绑在一起。',
+      hand: '伸出手，说 hand，把动作和“手”绑在一起。',
+      hands: '伸出双手，说 hands，把动作和“手”绑在一起。',
+      arm: '抬起胳膊，说 arm，把动作和“胳膊”绑在一起。',
+      leg: '拍拍腿，说 leg，把动作和“腿”绑在一起。',
+      foot: '跺跺脚，说 foot，把动作和“脚”绑在一起。',
+      ball: '拍一拍球或做投球动作，说 ball，把动作和“球”绑在一起。',
+      football: '做踢球动作，说 football，把 foot（脚）和 ball（球）连起来记。',
+      basketball: '做投篮动作，说 basketball，把 basket（篮子）和 ball（球）连起来记。',
+      car: '手扶方向盘做开车动作，说 car，把动作和“汽车”绑在一起。',
+      doll: '做抱娃娃的动作，说 doll，把动作和“娃娃”绑在一起。',
+      train: '手臂做火车前进动作，说 train。',
+      plane: '张开双臂做飞机飞行动作，说 plane。',
+      bike: '做骑自行车动作，说 bike。',
+      kite: '做放风筝动作，说 kite。',
+      toy: '拿一个玩具说 toy，记“玩具”。',
+      rice: '看米饭图片或饭碗，说 rice。',
+      noodles: '想象用筷子夹面条，说 noodles。',
+      bread: '拿面包或看面包图片，说 bread。',
+      milk: '做喝牛奶动作，说 milk。',
+      egg: '想象敲鸡蛋，说 egg。',
+      apple: '拿苹果或看苹果图片，说 apple。',
+      banana: '做剥香蕉动作，说 banana。',
+      water: '做喝水动作，说 water。',
+      juice: '拿果汁盒或做喝果汁动作，说 juice。',
+      shirt: '指衬衫或上衣，说 shirt。',
+      't-shirt': '看 T 恤上的 T 形，说 T-shirt。',
+      skirt: '指裙子或转一圈，说 skirt。',
+      dress: '指连衣裙图片，说 dress。',
+      pants: '指裤子或拍拍裤腿，说 pants。',
+      shoes: '指鞋子或做穿鞋动作，说 shoes。',
+      socks: '指袜子或做穿袜子动作，说 socks。',
+      hat: '做戴帽子动作，说 hat。',
+      coat: '做穿外套动作，说 coat。',
+      sweater: '做穿毛衣动作，说 sweater。',
+      hot: '扇扇风说 hot，记“热”。',
+      cold: '抱住胳膊发抖，说 cold，记“冷”。',
+      warm: '双手搓一搓说 warm，记“温暖”。',
+      weather: '看窗外天气，说 weather。',
+      today: '指日历上的今天，说 today。',
+      run: '做跑步动作，说 run。',
+      jump: '跳一下说 jump。',
+      walk: '走两步说 walk。',
+      swim: '做游泳动作，说 swim。',
+      dance: '做跳舞动作，说 dance。',
+      sing: '做唱歌动作，说 sing。',
+      read: '拿书读一读，说 read。',
+      write: '拿笔写一写，说 write。',
+      draw: '做画画动作，说 draw。',
+      play: '做玩耍动作，说 play。',
+      blackboard: 'black（黑色）+ board（板）；教室里的黑色板就是 blackboard。',
+      window: '指窗户说 window。',
+      door: '指门说 door。',
+      eraser: '拿橡皮擦一擦，说 eraser。',
+      friend: '指好朋友说 friend。',
+      happy: '笑一笑说 happy。',
+      sad: '做难过表情说 sad。',
+      tall: '手举高说 tall。',
+      short: '手放低说 short。',
+      big: '双手张大说 big。',
+      small: '双手缩小说 small。',
+      new: '指新东西说 new。',
+      old: '指旧东西说 old。',
+      nice: '竖大拇指说 nice。',
+      home: '想象回到家，说 home。',
+      bedroom: 'bed（床）+ room（房间）；有床的房间就是 bedroom。',
+      kitchen: '想象做饭的地方，说 kitchen。',
+      bathroom: 'bath（洗澡）+ room（房间）；洗澡的房间就是 bathroom。',
+      table: '指桌子说 table。',
+      sofa: '坐在沙发上说 sofa。',
+      tv: '指电视说 TV。',
+      bed: '指床说 bed。',
+      lamp: '打开灯说 lamp。',
+    };
+    if (actionMemory[lower]) {
+      return `${en}：${actionMemory[lower]}`;
+    }
+    const chunks = splitWordChunks(en).filter(Boolean);
+    const compoundChunks = chunks
+      .filter(chunk => chunk.toLowerCase() !== en.toLowerCase())
+      .map(chunk => ({ chunk, meaning: chunkMeaning(chunk) }));
+
+    if (compoundChunks.length >= 2 && compoundChunks.every(item => item.meaning)) {
+      const meaningfulChunks = compoundChunks.map(item => `${item.chunk}（${item.meaning}）`);
+      return `${en} = ${meaningfulChunks.join(' + ')}；把几个熟词合成一幅中文画面，再记“${cn || en}”。`;
+    }
+
+    return '';
+  }
+
+  function buildPhraseMemoryTip(item) {
+    const en = clean(item.en);
+    if (!en || !/\s/.test(en)) return '';
+    const cn = clean(item.cn);
+    const chunks = en.split(/\s+/).filter(Boolean);
+    const explained = chunks.map(chunk => {
+      const meaning = chunkMeaning(chunk);
+      return meaning ? `${chunk}（${meaning}）` : chunk;
+    });
+    const hasMeaning = explained.some((part, index) => part !== chunks[index]);
+    if (!hasMeaning) return '';
+    return `${en} = ${explained.join(' + ')}；顺着中文小故事记：${cn || explained.join(' + ')}。`;
+  }
+
   function buildMemoryDrill(unit) {
-    const words = getWords(unit).slice(0, 5);
+    const phrases = (unit.phrases || []).filter(item => item && item.en).slice(0, 3);
+    const words = getWords(unit).slice(0, 4);
     const sentence = getSentences(unit)[0]?.en || '';
-    return [
-      words.length ? `遮住中文，看英文说意思：${words.map(word => word.en).join(' / ')}` : '遮住中文，看英文说意思。',
-      words.length ? `遮住英文，看中文说英文：${words.map(word => word.cn || word.en).join(' / ')}` : '遮住英文，看中文说英文。',
-      sentence ? `把句子分成 2-3 段读：${sentence}` : '把长句分成 2-3 段读，再连起来说。',
-    ];
+    const phraseTips = phrases.map(buildPhraseMemoryTip).filter(Boolean);
+    const wordTips = words.map(buildWordMemoryTip).filter(Boolean);
+    const tips = [...phraseTips, ...wordTips];
+    tips.push(words.length ? `遮住中文，看英文说意思：${words.map(word => word.en).join(' / ')}` : '遮住中文，看英文说意思。');
+    tips.push(sentence ? `把句子分成 2-3 段读：${sentence}` : '把长句分成 2-3 段读，再连起来说。');
+    return tips;
   }
 
   function buildChallenge(unit) {
@@ -310,7 +673,25 @@
     if (raw.includes('-')) return raw.split('-');
     const lower = raw.toLowerCase();
     const known = {
+      pen: ['p', 'en'],
+      pencil: ['pen', 'cil'],
+      ruler: ['ru', 'ler'],
+      rubber: ['rub', 'ber'],
+      desk: ['d', 'esk'],
+      chair: ['ch', 'air'],
+      floor: ['fl', 'oor'],
+      school: ['sch', 'ool'],
+      close: ['cl', 'ose'],
+      clean: ['cl', 'ean'],
+      sweep: ['sw', 'eep'],
+      keep: ['k', 'eep'],
+      dirty: ['dir', 'ty'],
+      guess: ['g', 'uess'],
+      again: ['a', 'gain'],
+      long: ['l', 'ong'],
+      thing: ['th', 'ing'],
       schoolbag: ['school', 'bag'],
+      'pencil case': ['pencil', 'case'],
       classroom: ['class', 'room'],
       blackboard: ['black', 'board'],
       breakfast: ['break', 'fast'],
@@ -329,6 +710,9 @@
       window: ['win', 'dow'],
     };
     if (known[lower]) return known[lower];
+    if (/^[bcdfghjklmnpqrstvwxyz][aeiou][bcdfghjklmnpqrstvwxyz]$/i.test(raw)) {
+      return [raw[0], raw.slice(1)];
+    }
     const parts = raw.match(/[^aeiou]*[aeiou]+(?:[^aeiou]{0,2}(?=[^aeiou]*[aeiou]|$))?/gi);
     return parts && parts.length > 1 ? parts : [raw];
   }
@@ -377,8 +761,128 @@
     };
   }
 
+  function maskWord(word, level = 1) {
+    const source = String(word || '').trim();
+    if (!source) return '';
+    if (source.includes(' ')) {
+      return source.split(/\s+/).map(part => maskWord(part, level)).join(' ');
+    }
+    if (level >= 2) return source.replace(/[A-Za-z]/g, '_');
+    return source.split('').map((char, index) => {
+      if (!/[A-Za-z]/.test(char)) return char;
+      return index === 0 || index === source.length - 1 ? char : '_';
+    }).join(' ');
+  }
+
+  function buildTeacherHint(word) {
+    const en = String(word?.en || '').trim();
+    const lower = en.toLowerCase();
+    const chunks = splitWordChunks(en);
+    const hints = [];
+    if (/(.)\1/.test(lower.replace(/\s+/g, ''))) {
+      const doubleLetter = lower.replace(/\s+/g, '').match(/(.)\1/)?.[1];
+      if (doubleLetter) hints.push(`注意双写 ${doubleLetter}${doubleLetter}`);
+    }
+    if (chunks.length > 1) hints.push(`教师提示：按词块读 ${chunks.join(' + ')}`);
+    if (word?.phonetic) hints.push(`读音：${word.phonetic}`);
+    if (!hints.length) hints.push('教师提示：先听音，再看首尾字母回忆。');
+    return hints.slice(0, 2).join('；');
+  }
+
+  function buildDictationHint(expected, actual) {
+    const want = clean(expected).toLowerCase();
+    const got = clean(actual).toLowerCase();
+    if (!got) return '先听一遍，再试着写出来。';
+    if (got === want) return '写对了，继续保持。';
+    if (got.replace(/\s+/g, '') === want.replace(/\s+/g, '')) return '字母对了，注意单词之间要空格。';
+    if (Math.abs(got.length - want.length) >= 2) return got.length < want.length ? '少写了字母，按词块再补一遍。' : '多写了字母，读一遍后再精简。';
+    for (let i = 0; i < Math.max(want.length, got.length); i++) {
+      if (want[i] !== got[i]) {
+        const need = want[i] ? `这里应该是 ${want[i]}` : '这里不需要再写字母';
+        const has = got[i] ? `，你写成了 ${got[i]}` : '，你漏写了';
+        return `${need}${has}。`;
+      }
+    }
+    return '顺序有点乱，按词块再写一次。';
+  }
+
+  function readWordLesson(unitKeyValue) {
+    try {
+      return JSON.parse(localStorage.getItem(`english-word-lesson:${location.pathname}:${unitKeyValue}`) || '{}');
+    } catch {
+      return {};
+    }
+  }
+
+  function writeWordLesson(unitKeyValue, data) {
+    localStorage.setItem(`english-word-lesson:${location.pathname}:${unitKeyValue}`, JSON.stringify(data));
+  }
+
+  function renderWordLesson(unit, index) {
+    const key = unitKey(unit, index);
+    const words = getLessonVocabulary(unit);
+    if (!words.length) return '';
+    const wordCount = words.filter(item => item.kind !== '短语').length;
+    const phraseCount = words.length - wordCount;
+
+    return `
+      <div class="assist-card word-lesson-card" data-word-lesson="${htmlEscape(key)}">
+        <div class="word-lesson-top">
+          <div>
+            <h4>单词带背课</h4>
+            <p>完整重点词汇 ${wordCount} 个${phraseCount ? `，重点短语 ${phraseCount} 个` : ''}：先听，再拆词拼读，最后遮挡默写。</p>
+            <p class="word-lesson-stars-note">星级：听过 → 会读 → 会拼 → 会写 → 会用</p>
+          </div>
+          <span class="word-lesson-count">0 / ${words.length}</span>
+        </div>
+        <div class="word-lesson-stage" data-word-stage>听音建义</div>
+        <div class="word-lesson-main">
+          <div class="word-lesson-emoji" data-word-emoji>${htmlEscape(words[0].emoji || '🔤')}</div>
+          <div class="word-lesson-cn" data-word-cn>${htmlEscape(words[0].cn || '')}</div>
+          <div class="word-lesson-word is-hidden" data-word-en>${htmlEscape(words[0].en)}</div>
+          <div class="word-lesson-phonetic" data-word-phonetic>${htmlEscape(words[0].phonetic || '')}</div>
+          <div class="word-lesson-chunks" data-word-chunks></div>
+          <div class="word-lesson-mask" data-word-mask></div>
+          <div class="word-lesson-hint" data-word-hint></div>
+        </div>
+        <div class="word-lesson-actions" data-word-actions>
+          <button class="assist-speak word-lesson-speak" type="button" data-word-action="listen">
+            <span class="assist-speak-icon" aria-hidden="true">🔊</span>
+            <span class="assist-speak-label">听一听</span>
+          </button>
+          <button type="button" data-word-action="show">看词认读</button>
+          <button type="button" data-word-action="phonics">拆词拼读</button>
+          <button type="button" data-word-action="mask">遮挡回忆</button>
+        </div>
+        <div class="word-lesson-write is-locked" data-word-write>
+          <label>默写检测</label>
+          <div class="word-lesson-input-row">
+            <input type="text" data-word-input autocomplete="off" placeholder="听完后写英文">
+            <button type="button" data-word-action="check">检查</button>
+          </div>
+          <div class="word-lesson-feedback" data-word-feedback></div>
+        </div>
+        <div class="word-lesson-nav">
+          <button type="button" data-word-action="prev">上一个</button>
+          <button type="button" data-word-action="known">我会写了</button>
+          <button type="button" data-word-action="next">下一个</button>
+        </div>
+        <div class="word-lesson-list" data-word-list>
+          ${words.map((word, wordIndex) => `
+            <button type="button" data-word-select="${wordIndex}" data-word-en-value="${htmlEscape(word.en)}" data-word-cn-value="${htmlEscape(word.cn || '')}" data-word-emoji-value="${htmlEscape(word.emoji || '🔤')}" data-word-phonetic-value="${htmlEscape(word.phonetic || '')}" data-word-example-value="${htmlEscape(word.example || word.tip || '')}" data-word-hint-value="${htmlEscape(buildTeacherHint(word))}">
+              <b>${htmlEscape(word.en)}</b>
+              <small><em>${htmlEscape(word.kind || '词汇')}</em>${htmlEscape(word.cn || '')}</small>
+              <span data-word-stars>☆☆☆☆☆</span>
+            </button>`).join('')}
+        </div>
+      </div>`;
+  }
+
   function speakButton(text) {
-    return `<button class="assist-speak" type="button" data-assist-speak="${htmlEscape(text)}">${labels.speak}</button>`;
+    return `<button class="assist-speak" type="button" data-assist-speak="${htmlEscape(text)}" aria-label="点读 ${htmlEscape(text)}" aria-pressed="false">
+      <span class="assist-speak-icon" aria-hidden="true">🔊</span>
+      <span class="assist-speak-label">${labels.speak}</span>
+    </button>`;
   }
 
   function renderWordLevel(title, words) {
@@ -474,13 +978,18 @@
         </div>
         <div class="assist-source">${labels.source}：教材原文区域保持不变；本区为原创辅助练习，用于巩固词汇、句型、听说和复习。</div>
         <div class="assist-grid">
-          <div class="assist-card assist-grade-focus">
-            <h4>${labels.gradeFocus}</h4>
-            <ol>${gradeFocus.map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ol>
-          </div>
           <div class="assist-card">
             <h4>${labels.objectives}</h4>
             <ol>${buildObjectives(unit).map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ol>
+          </div>
+          <div class="assist-card">
+            <h4>${labels.path}</h4>
+            <div class="assist-path">${buildStudyPath().map(item => `<span>${htmlEscape(item)}</span>`).join('')}</div>
+          </div>
+          ${renderWordLesson(unit, index)}
+          <div class="assist-card assist-grade-focus">
+            <h4>${labels.gradeFocus}</h4>
+            <ol>${gradeFocus.map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ol>
           </div>
           <div class="assist-card">
             <h4>${labels.wordLevels}</h4>
@@ -554,15 +1063,13 @@
           </div>
           <div class="assist-card">
             <h4>${labels.memory}</h4>
-            <ol>${memory.map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ol>
+            <div class="assist-memory">
+              ${memory.map(item => `<div class="assist-memory-tip">${htmlEscape(item)}</div>`).join('')}
+            </div>
           </div>
           <div class="assist-card assist-challenge">
             <h4>${labels.challenge}</h4>
             <ol>${challenge.map(item => `<li>${htmlEscape(item)}</li>`).join('')}</ol>
-          </div>
-          <div class="assist-card">
-            <h4>${labels.path}</h4>
-            <div class="assist-path">${buildStudyPath().map(item => `<span>${htmlEscape(item)}</span>`).join('')}</div>
           </div>
           <div class="assist-card">
             <h4>${labels.extraQuiz}</h4>
@@ -658,11 +1165,218 @@
     return clean(area?.querySelector('.quiz-option.correct')?.textContent || '');
   }
 
+  function getWordLessonButtons(card) {
+    return Array.from(card.querySelectorAll('[data-word-select]'));
+  }
+
+  function getActiveWordButton(card) {
+    const buttons = getWordLessonButtons(card);
+    const active = buttons.find(button => button.classList.contains('active'));
+    return active || buttons[0] || null;
+  }
+
+  function getWordLessonIndex(card) {
+    const buttons = getWordLessonButtons(card);
+    const active = getActiveWordButton(card);
+    return Math.max(0, buttons.indexOf(active));
+  }
+
+  function updateWordLessonCard(card, index = 0) {
+    const buttons = getWordLessonButtons(card);
+    if (!buttons.length) return;
+    const nextIndex = Math.max(0, Math.min(index, buttons.length - 1));
+    const button = buttons[nextIndex];
+    const key = card.dataset.wordLesson;
+    const progress = readWordLesson(key);
+
+    buttons.forEach((item, itemIndex) => {
+      const isActive = itemIndex === nextIndex;
+      item.classList.toggle('active', isActive);
+      const stars = Math.max(0, Math.min(5, Number(progress[item.dataset.wordEnValue] || 0)));
+      const starEl = item.querySelector('[data-word-stars]');
+      if (starEl) starEl.textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+    });
+
+    const en = button.dataset.wordEnValue || '';
+    const cn = button.dataset.wordCnValue || '';
+    const emoji = button.dataset.wordEmojiValue || '🔤';
+    const phonetic = button.dataset.wordPhoneticValue || '';
+    const chunks = splitWordChunks(en);
+
+    card.querySelector('[data-word-emoji]').textContent = emoji;
+    card.querySelector('[data-word-cn]').textContent = cn;
+    card.querySelector('[data-word-en]').textContent = en;
+    card.querySelector('[data-word-en]').classList.add('is-hidden');
+    card.querySelector('[data-word-phonetic]').textContent = phonetic;
+    card.querySelector('[data-word-chunks]').innerHTML = chunks.map(chunk => `<span>${htmlEscape(chunk)}</span>`).join('');
+    card.querySelector('[data-word-chunks]').classList.remove('is-visible');
+    card.querySelector('[data-word-mask]').textContent = maskWord(en, 1);
+    card.querySelector('[data-word-mask]').classList.remove('is-visible', 'is-full');
+    card.querySelector('[data-word-hint]').textContent = button.dataset.wordHintValue || buildTeacherHint({ en, phonetic });
+    card.querySelector('[data-word-hint]').classList.remove('is-visible');
+    card.querySelector('[data-word-stage]').textContent = '听音建义';
+    card.querySelector('[data-word-input]').value = '';
+    card.querySelector('[data-word-feedback]').textContent = '';
+    card.querySelector('.word-lesson-count').textContent = `${nextIndex + 1} / ${buttons.length}`;
+    setWordLessonStage(card, 'listen');
+  }
+
+  function setWordLessonStage(card, stage) {
+    const stageText = {
+      listen: '听音建义',
+      show: '看词认读',
+      phonics: '自然拼读拆词',
+      mask: '遮挡回忆',
+      write: '默写检测',
+    };
+    const wordEl = card.querySelector('[data-word-en]');
+    const chunksEl = card.querySelector('[data-word-chunks]');
+    const maskEl = card.querySelector('[data-word-mask]');
+    const hintEl = card.querySelector('[data-word-hint]');
+    const writeEl = card.querySelector('[data-word-write]');
+
+    card.dataset.wordStage = stage;
+    card.querySelector('[data-word-stage]').textContent = stageText[stage] || stageText.listen;
+    card.querySelectorAll('[data-word-action]').forEach(button => {
+      button.classList.toggle('is-current', button.dataset.wordAction === stage);
+    });
+
+    wordEl.classList.toggle('is-hidden', stage === 'listen' || stage === 'mask');
+    chunksEl.classList.toggle('is-visible', stage === 'phonics');
+    maskEl.classList.toggle('is-visible', stage === 'mask');
+    hintEl.classList.toggle('is-visible', stage === 'show' || stage === 'phonics' || stage === 'mask' || stage === 'write');
+    writeEl.classList.toggle('is-locked', stage !== 'mask' && stage !== 'write');
+  }
+
+  function refreshWordLessonStars(card) {
+    const key = card.dataset.wordLesson;
+    const progress = readWordLesson(key);
+    getWordLessonButtons(card).forEach(item => {
+      const stars = Math.max(0, Math.min(5, Number(progress[item.dataset.wordEnValue] || 0)));
+      const starEl = item.querySelector('[data-word-stars]');
+      if (starEl) starEl.textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+    });
+  }
+
+  function setWordLessonMastery(card, word, level) {
+    const key = card.dataset.wordLesson;
+    const progress = readWordLesson(key);
+    progress[word] = Math.max(Number(progress[word] || 0), level);
+    writeWordLesson(key, progress);
+    refreshWordLessonStars(card);
+  }
+
+  function recordWordLessonMistake(card, expected, selected) {
+    const key = card.dataset.wordLesson;
+    const items = readMistakes(key);
+    items.push({
+      question: `默写单词：${expected}`,
+      selected: selected || '空白',
+      correct: expected,
+      type: '默写错',
+      time: Date.now(),
+    });
+    writeMistakes(key, items);
+    refreshMistakes(key);
+  }
+
+  function handleWordLessonAction(target) {
+    const card = target.closest('[data-word-lesson]');
+    if (!card) return false;
+
+    const buttons = getWordLessonButtons(card);
+    const currentIndex = getWordLessonIndex(card);
+    const active = getActiveWordButton(card);
+    if (!active) return true;
+    const word = active.dataset.wordEnValue || '';
+    const action = target.dataset.wordAction;
+
+    if (target.dataset.wordSelect) {
+      updateWordLessonCard(card, Number(target.dataset.wordSelect));
+      return true;
+    }
+
+    if (action === 'listen') {
+      setWordLessonStage(card, 'listen');
+      speak(word, target, { rate: 0.68 });
+      setWordLessonMastery(card, word, 1);
+      return true;
+    }
+
+    if (action === 'show') {
+      setWordLessonStage(card, 'show');
+      speak(word, card.querySelector('.word-lesson-speak'), { rate: 0.76 });
+      setWordLessonMastery(card, word, 2);
+      return true;
+    }
+
+    if (action === 'phonics') {
+      setWordLessonStage(card, 'phonics');
+      speak(word, card.querySelector('.word-lesson-speak'), { rate: 0.55 });
+      setWordLessonMastery(card, word, 3);
+      return true;
+    }
+
+    if (action === 'mask') {
+      const mask = card.querySelector('[data-word-mask]');
+      const wasMaskStage = card.dataset.wordStage === 'mask';
+      mask.classList.toggle('is-full', wasMaskStage ? !mask.classList.contains('is-full') : false);
+      mask.textContent = mask.classList.contains('is-full') ? maskWord(word, 2) : maskWord(word, 1);
+      setWordLessonStage(card, 'mask');
+      setWordLessonMastery(card, word, 3);
+      return true;
+    }
+
+    if (action === 'check') {
+      setWordLessonStage(card, 'write');
+      const input = card.querySelector('[data-word-input]');
+      const answer = clean(input.value);
+      const ok = answer.toLowerCase() === clean(word).toLowerCase();
+      const feedback = card.querySelector('[data-word-feedback]');
+      feedback.classList.toggle('is-correct', ok);
+      feedback.classList.toggle('is-wrong', !ok);
+      feedback.textContent = ok ? '写对了。现在试着放进句子里说一遍。' : buildDictationHint(word, answer);
+      if (ok) {
+        setWordLessonMastery(card, word, 4);
+      } else {
+        recordWordLessonMistake(card, word, answer);
+      }
+      return true;
+    }
+
+    if (action === 'known') {
+      setWordLessonMastery(card, word, 5);
+      updateWordLessonCard(card, Math.min(currentIndex + 1, buttons.length - 1));
+      return true;
+    }
+
+    if (action === 'next') {
+      updateWordLessonCard(card, Math.min(currentIndex + 1, buttons.length - 1));
+      return true;
+    }
+
+    if (action === 'prev') {
+      updateWordLessonCard(card, Math.max(currentIndex - 1, 0));
+      return true;
+    }
+
+    return true;
+  }
+
+  function initWordLessons() {
+    document.querySelectorAll('[data-word-lesson]').forEach(card => updateWordLessonCard(card, 0));
+  }
+
   function attachEvents() {
     document.addEventListener('click', event => {
+      const wordLessonTarget = event.target.closest('[data-word-action], [data-word-select]');
+      if (wordLessonTarget && handleWordLessonAction(wordLessonTarget)) {
+        return;
+      }
+
       const speakTarget = event.target.closest('[data-assist-speak]');
       if (speakTarget) {
-        speak(speakTarget.dataset.assistSpeak || speakTarget.textContent);
+        speak(speakTarget.dataset.assistSpeak || speakTarget.textContent, speakTarget);
         return;
       }
 
@@ -699,6 +1413,7 @@
       }
     });
     refreshMistakes();
+    initWordLessons();
   }
 
   function init() {

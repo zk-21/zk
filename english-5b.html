@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -693,6 +693,23 @@ unitsData.forEach((unit, idx) => {
   });
   html += `</div></div></div>`;
 
+  html += `<div class="section-card">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🎭</span> 课文对话
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <div class="dialogue-box">`;
+
+  unit.dialogue.forEach((d, di) => {
+    html += `<div class="line ${di % 2 === 0 ? 'speaker-a' : 'speaker-b'}" onclick="revealDialogue(this)" data-en="${d.text}">
+      <div class="speaker-label">${d.speaker}</div>
+      <div class="en-text">${d.text}</div>
+      <div class="cn-text">${d.cn}</div>
+    </div>`;
+  });
+  html += `</div></div></div>`;
+
   if (unit.grammar && unit.grammar.length > 0) {
     html += `<div class="section-card">
       <div class="section-header" onclick="toggleSection(this)">
@@ -710,23 +727,6 @@ unitsData.forEach((unit, idx) => {
     });
     html += `</div></div>`;
   }
-
-  html += `<div class="section-card">
-    <div class="section-header" onclick="toggleSection(this)">
-      <span class="icon">🎭</span> 课文对话
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body">
-      <div class="dialogue-box">`;
-
-  unit.dialogue.forEach((d, di) => {
-    html += `<div class="line ${di % 2 === 0 ? 'speaker-a' : 'speaker-b'}" onclick="revealDialogue(this)" data-en="${d.text}">
-      <div class="speaker-label">${d.speaker}</div>
-      <div class="en-text">${d.text}</div>
-      <div class="cn-text">${d.cn}</div>
-    </div>`;
-  });
-  html += `</div></div></div>`;
 
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
@@ -998,6 +998,6 @@ function restartQuiz(unitId) {
 }
 window.unitsData = unitsData;
 </script>
-<script src="english-assist.js"></script>
+<script src="english-assist.js?v=memory-all-20260515"></script>
 </body>
 </html>
