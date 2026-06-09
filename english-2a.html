@@ -4,322 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>二年级上册英语 · 趣味学习乐园</title>
+<link rel="stylesheet" href="shared-learning.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --theme-color: #1565c0; --theme-gradient: linear-gradient(90deg, #2196f3, #64b5f6); }
   body {
-    font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    min-height: 100vh;
-    padding-bottom: 60px;
-    color: #2f3542;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .language-switcher {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 12px;
-    background: #1565c0;
-  }
-  .lang-btn {
-    flex: 0 0 auto;
-    min-height: 34px;
-    padding: 7px 18px;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 18px;
-    color: rgba(255,255,255,0.9);
-    font-size: 14px;
-    font-weight: 700;
-    text-decoration: none;
-    background: rgba(255,255,255,0.15);
-    transition: all 0.3s;
-  }
-  .lang-btn:hover { background: rgba(255,255,255,0.25); }
-  .lang-btn.active { color: #1565c0; background: #fff; border-color: #fff; }
-  .course-switcher {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px 8px;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  }
-  .grade-group {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 16px;
-  }
-  .grade-label {
-    color: rgba(255,255,255,0.6);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 6px;
-  }
-  .grade-btn {
-    min-height: 28px;
-    padding: 4px 12px;
-    border: none;
-    border-radius: 12px;
-    color: rgba(255,255,255,0.9);
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    background: rgba(255,255,255,0.12);
-    transition: all 0.25s;
-  }
-  .grade-btn:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-1px);
-  }
-  .grade-btn.active {
-    color: #1a1a2e;
-    background: linear-gradient(135deg, #64b5f6 0%, #1e88e5 100%);
-    box-shadow: 0 2px 8px rgba(30, 136, 229, 0.4);
-  }
-  .grammar-btn {
-    min-height: 28px;
-    padding: 4px 14px;
-    border: none;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 700;
-    text-decoration: none;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transition: all 0.25s;
-  }
-  .grammar-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-  }
-  .header {
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
-    color: white;
-    text-align: center;
-    padding: 16px;
-  }
-  .voice-controls {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-  }
-  .voice-btn {
-    padding: 6px 12px;
-    border: 1px solid rgba(255,255,255,0.5);
-    border-radius: 16px;
-    background: rgba(255,255,255,0.2);
-    color: white;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .voice-btn:hover { background: rgba(255,255,255,0.3); }
-  .voice-btn.active { background: rgba(255,255,255,0.9); color: #2196f3; }
-  .speed-label { font-size: 11px; opacity: 0.9; }
-  .speed-slider { width: 60px; accent-color: white; cursor: pointer; }
-  #voiceStatus { font-size: 11px; color: #ffd93d; }
-  .header h1 { font-size: 22px; margin-bottom: 4px; }
-  .header p { font-size: 13px; opacity: 0.9; }
-  .nav-bar {
-    display: flex;
-    overflow-x: auto;
-    background: white;
-    padding: 10px 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-btn {
-    flex: 0 0 auto;
-    padding: 8px 16px;
-    margin-right: 8px;
-    border: none;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    background: #f0f0f0;
-    color: #666;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .nav-btn.active {
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
-    color: white;
-  }
-  .container { padding: 16px; }
-  .unit-section { display: none; }
-  .unit-section.active { display: block; }
-  .unit-title {
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
-    color: white;
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    font-size: 18px;
-    font-weight: 700;
-  }
-  .section-card {
-    background: white;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    background: #fafafa;
-    cursor: pointer;
-    font-weight: 600;
-    color: #333;
-  }
-  .section-header .icon { margin-right: 8px; }
-  .section-header .arrow {
-    font-size: 12px;
-    transition: transform 0.3s;
-  }
-  .section-header.open .arrow { transform: rotate(180deg); }
-  .section-body {
-    padding: 16px;
-    display: none;
-  }
-  .section-body.open { display: block; }
-  .word-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .word-card {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border: 2px solid #90caf9;
-    border-radius: 12px;
-    padding: 14px 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-  }
-  .word-card:hover { transform: translateY(-4px); }
-  .word-card .speak-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 14px;
-    opacity: 0.5;
-  }
-  .word-card .emoji { font-size: 32px; margin-bottom: 6px; }
-  .word-card .english { font-size: 18px; font-weight: 700; color: #333; }
-  .word-card .phonetic { font-size: 12px; color: #999; margin-top: 2px; }
-  .word-card .chinese {
-    font-size: 13px; color: #666;
-    opacity: 0; transition: opacity 0.3s;
-    margin-top: 4px;
-  }
-  .word-card.revealed .chinese { opacity: 1; }
-  .word-card .hint { font-size: 11px; color: #bbb; margin-top: 6px; }
-  .sentence-list { display: flex; flex-direction: column; gap: 10px; }
-  .sentence-card {
-    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-    border: 2px solid #bae6fd;
-    border-radius: 12px;
-    padding: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-  }
-  .sentence-card .speak-icon {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 14px;
-    opacity: 0.5;
-  }
-  .sentence-card .en { font-size: 16px; font-weight: 600; color: #333; }
-  .sentence-card .cn {
-    font-size: 13px; color: #666;
-    opacity: 0; transition: opacity 0.3s;
-    margin-top: 6px;
-  }
-  .sentence-card.revealed .cn { opacity: 1; }
-  .dialogue-box {
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-radius: 12px;
-    padding: 20px;
-  }
-  .dialogue-box .line {
-    margin-bottom: 12px;
-    padding: 10px 14px;
-    border-radius: 12px;
-    max-width: 85%;
-    position: relative;
-    cursor: pointer;
-  }
-  .dialogue-box .line.speaker-a { background: #fff; margin-right: auto; }
-  .dialogue-box .line.speaker-b { background: #e3f2fd; margin-left: auto; }
-  .dialogue-box .line .speaker-label { font-size: 11px; color: #999; margin-bottom: 4px; }
-  .dialogue-box .line .en-text { font-size: 16px; font-weight: 600; color: #333; }
-  .dialogue-box .line .cn-text {
-    font-size: 13px; color: #999;
-    opacity: 0; transition: opacity 0.3s;
-    margin-top: 4px;
-  }
-  .dialogue-box .line.revealed .cn-text { opacity: 1; }
-  .quiz-container { padding: 16px; }
-  .quiz-question { text-align: center; margin-bottom: 20px; }
-  .quiz-question .q-text { font-size: 18px; font-weight: 700; color: #333; }
-  .quiz-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .quiz-option {
-    padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-  }
-  .quiz-option:hover { border-color: #2196f3; }
-  .quiz-option.correct { background: #e8f5e9; border-color: #4caf50; }
-  .quiz-option.wrong { background: #ffebee; border-color: #f44336; }
-  .quiz-progress { text-align: center; font-size: 13px; color: #999; margin-bottom: 16px; }
-  .quiz-score {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-    border-radius: 12px;
-    display: none;
-  }
-  .quiz-score.show { display: block; }
-  .score-emoji { font-size: 64px; }
-  .score-text { font-size: 20px; font-weight: 700; margin-top: 8px; }
-  .score-detail { font-size: 14px; color: #666; margin-top: 8px; }
-  .quiz-score button {
-    margin-top: 16px;
-    padding: 10px 24px;
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .footer {
-    text-align: center;
-    padding: 16px;
-    color: #999;
-    font-size: 13px;
   }
 </style>
 <link rel="stylesheet" href="english-assist.css">
@@ -373,6 +62,7 @@
 <div class="container" id="container"></div>
 <div class="footer">💪 每天学一点，进步一大步！</div>
 
+<script src="shared-learning.js"></script>
 <script>
 const unitsData = [
   {
@@ -595,154 +285,26 @@ const unitsData = [
   },
 ];
 
-const navBar = document.getElementById('navBar');
-const container = document.getElementById('container');
-let quizState = {};
-
-unitsData.forEach((unit, idx) => {
-  const btn = document.createElement('button');
-  btn.className = 'nav-btn' + (idx === 0 ? ' active' : '');
-  btn.textContent = unit.title;
-  btn.addEventListener('click', () => switchUnit(idx));
-  navBar.appendChild(btn);
-
-  const section = document.createElement('div');
-  section.className = 'unit-section' + (idx === 0 ? ' active' : '');
-  section.id = unit.id;
-
-  let html = `<div class="unit-title" style="background:linear-gradient(90deg, ${unit.color}, ${unit.color}dd)">${unit.title} ${unit.subtitle}</div>`;
-
-  html += `<div class="section-card">
-    <div class="section-header open" onclick="toggleSection(this)">
-      <span class="icon">📦</span> 核心词汇
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body open">
-      <div class="word-grid">`;
-
-  unit.words.forEach(w => {
-    html += `<div class="word-card" onclick="revealWord(this)" data-w="${w.en}">
-      <span class="speak-icon">🔊</span>
-      <div class="emoji">${w.emoji}</div>
-      <div class="english">${w.en}</div>
-      <div class="phonetic">${w.ipa || ''}</div>
-      <div class="chinese">${w.cn}</div>
-      <div class="hint">👆 点击</div>
-    </div>`;
-  });
-  html += `</div></div></div>`;
-
-  html += `<div class="section-card">
-    <div class="section-header" onclick="toggleSection(this)">
-      <span class="icon">💬</span> 重点句型
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body">
-      <div class="sentence-list">`;
-
-  unit.sentences.forEach(s => {
-    html += `<div class="sentence-card" onclick="revealSentence(this)" data-en="${s.en}">
-      <span class="speak-icon">🔊</span>
-      <div class="en">${s.en}</div>
-      <div class="cn">${s.cn}</div>
-    </div>`;
-  });
-  html += `</div></div></div>`;
-
-  html += `<div class="section-card">
-    <div class="section-header" onclick="toggleSection(this)">
-      <span class="icon">🎭</span> 课文对话
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body">
-      <div class="dialogue-box">`;
-
-  unit.dialogue.forEach((d, di) => {
-    html += `<div class="line ${di % 2 === 0 ? 'speaker-a' : 'speaker-b'}" onclick="revealDialogue(this)" data-en="${d.text}">
-      <div class="speaker-label">${d.speaker}</div>
-      <div class="en-text">${d.text}</div>
-      <div class="cn-text">${d.cn}</div>
-    </div>`;
-  });
-  html += `</div></div></div>`;
-
-  html += `<div class="section-card">
-    <div class="section-header" onclick="toggleSection(this)">
-      <span class="icon">🎯</span> 学习加油站
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body">
-      <div class="learning-tips">
-        <div class="tip-card">
-          <div class="tip-icon">🔤</div>
-          <div class="tip-title">自然拼读</div>
-          <div class="tip-content">${getPhonicsTip(unit.id)}</div>
-        </div>
-        <div class="tip-card">
-          <div class="tip-icon">📝</div>
-          <div class="tip-title">语法口诀</div>
-          <div class="tip-content">${getGrammarRhyme(unit.id)}</div>
-        </div>
-        <div class="tip-card">
-          <div class="tip-icon">🌍</div>
-          <div class="tip-title">文化小贴士</div>
-          <div class="tip-content">${getCultureTip(unit.id)}</div>
-        </div>
-        <div class="tip-card">
-          <div class="tip-icon">💡</div>
-          <div class="tip-title">学习技巧</div>
-          <div class="tip-content">${getStudyTip(unit.id)}</div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-
-  html += `<div class="section-card">
-    <div class="section-header" onclick="toggleSection(this)">
-      <span class="icon">🧠</span> 小测验
-      <span class="arrow">▼</span>
-    </div>
-    <div class="section-body">
-      <div class="quiz-container" id="quiz-${unit.id}">
-        <div class="quiz-progress" id="qp-${unit.id}">第 1 / ${unit.quiz.length} 题</div>
-        <div id="qarea-${unit.id}"></div>
-        <div class="quiz-score" id="score-${unit.id}">
-          <div class="score-emoji">🎉</div>
-          <div class="score-text">测验完成！</div>
-          <div class="score-detail" id="sd-${unit.id}"></div>
-          <button onclick="restartQuiz('${unit.id}')">再做一次</button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-
-  section.innerHTML = html;
-  container.appendChild(section);
-
-  quizState[unit.id] = { current: 0, score: 0 };
-  showQuizQuestion(unit.id);
-});
-
 function getPhonicsTip(unitId) {
   const tips = {
-    unit1: '字母组合oo在classroom中发长音/uː/，ea在eraser中发/eɪ/音。',
-    unit2: '字母i在friend中发/e/音，a在happy中发/æ/音。',
-    unit3: '字母o在home中发/əʊ/音，oo在bedroom中发/uː/音。',
-    unit4: '字母ou在house中发/aʊ/音，ow在flower中发/aʊ/音。',
-    unit5: '字母i在time中发/aɪ/音，oa在boat中发/əʊ/音。',
-    unit6: '字母组合pr在spring中发/pr/音，su在summer中发/sʌ/音。',
+    unit1: '<span class="tip-rule">字母组合 <strong>oo</strong> 在 classroom 中发 /uː/ 长音</span><span class="tip-example">classroom /ˈklɑːsruːm/</span><span class="tip-rule">字母组合 <strong>ea</strong> 在 eraser 中发 /eɪ/ 双元音</span><span class="tip-rule">字母 <strong>ck</strong> 在 blackboard 中发 /k/ 音</span>',
+    unit2: '<span class="tip-rule">字母 <strong>ie</strong> 在 friend 中发 /e/ 短音（特殊拼写）</span><span class="tip-example">friend /frend/</span><span class="tip-rule">字母 <strong>a</strong> 在 happy 中发 /æ/ 短音</span><span class="tip-rule">字母 <strong>y</strong> 在词尾发 /i/ 音</span><span class="tip-example">happy /ˈhæpi/</span>',
+    unit3: '<span class="tip-rule">字母 <strong>o</strong> 在 home 中发 /əʊ/ 双元音</span><span class="tip-example">home /həʊm/</span><span class="tip-rule">字母组合 <strong>oo</strong> 在 bedroom 中发 /uː/ 长音</span><span class="tip-rule">字母组合 <strong>th</strong> 在 bathroom 中发 /θ/ 音</span>',
+    unit4: '<span class="tip-rule">字母组合 <strong>ou</strong> 在 house 中发 /aʊ/ 双元音</span><span class="tip-example">house /haʊs/, mouse /maʊs/</span><span class="tip-rule">字母组合 <strong>ow</strong> 在 flower 中也发 /aʊ/ 音</span><span class="tip-rule">注意：ou 和 ow 都可以发 /aʊ/ 音！</span>',
+    unit5: '<span class="tip-rule">字母 <strong>i</strong> 在 time 中发 /aɪ/ 双元音（开音节）</span><span class="tip-example">time /taɪm/, bike /baɪk/</span><span class="tip-rule">字母组合 <strong>oa</strong> 在 boat 中发 /əʊ/ 双元音</span><span class="tip-example">boat /bəʊt/, coat /kəʊt/</span>',
+    unit6: '<span class="tip-rule">字母组合 <strong>pr</strong> 在 spring 中发 /pr/ 音</span><span class="tip-example">spring /sprɪŋ/</span><span class="tip-rule">字母组合 <strong>su</strong> 在 summer 中发 /sʌ/ 音</span><span class="tip-rule">字母组合 <strong>ing</strong> 在 spring 中发 /ɪŋ/ 鼻音</span>',
   };
   return tips[unitId] || '多听标准发音，培养语感。';
 }
 
 function getGrammarRhyme(unitId) {
   const rhymes = {
-    unit1: 'This is ... That is ... 介绍物品要用它。Open the ... Close the ... 祈使句要记住。',
-    unit2: 'He is ... She is ... 描述朋友很简单。Tall, short, happy, sad, 形容词放后面。',
-    unit3: 'Living room, bedroom, 家里房间要分清。Welcome to my home, 欢迎来我家串门。',
-    unit4: 'In the ... On the ... 方位介词要记牢。There is ... There are ... 存在句型很重要。',
-    unit5: 'I can ... You can ... 会做什么说清楚。Can you ...? 问别人要记住。',
-    unit6: 'Spring, summer, 四季变化真美丽。It is ... in ... 描述季节很容易。',
+    unit1: '<span class="tip-rule"><strong>This is ...</strong> 近处 / <strong>That is ...</strong> 远处</span><span class="tip-rule"><strong>Open / Close the ...</strong> 祈使句（指令）</span><span class="tip-rule">教室物品：desk, chair, blackboard, window, door</span>',
+    unit2: '<span class="tip-rule"><strong>He is ... / She is ...</strong> 描述他人</span><span class="tip-rule">形容词放 is 后面：She is <strong>tall</strong>. He is <strong>happy</strong>.</span><span class="tip-rule">常用形容词：tall, short, thin, fat, happy, sad</span>',
+    unit3: '<span class="tip-rule"><strong>Welcome to my home.</strong> 欢迎来我家</span><span class="tip-rule"><strong>This is the ...</strong> 介绍房间</span><span class="tip-rule">房间名称：living room, bedroom, kitchen, bathroom</span>',
+    unit4: '<span class="tip-rule"><strong>There is + 单数 / There are + 复数</strong> 表达"有"</span><span class="tip-rule"><strong>in / on / under / behind</strong> 方位介词</span><span class="tip-rule">口诀：in 在里面，on 在上面，under 在下面，behind 在后面</span>',
+    unit5: '<span class="tip-rule"><strong>I can + 动词原形</strong> 表达能力</span><span class="tip-rule"><strong>Can you ...?</strong> 询问能力</span><span class="tip-rule"><strong>Yes, I can. / No, I can\'t.</strong> 回答</span>',
+    unit6: '<span class="tip-rule"><strong>It is + 形容词 + in + 季节</strong> 描述季节</span><span class="tip-rule"><strong>I like ...</strong> 表达最喜欢的季节</span><span class="tip-rule">四季：spring 春, summer 夏, autumn 秋, winter 冬</span>',
   };
   return rhymes[unitId] || '学英语，多练习，天天进步有成绩！';
 }
@@ -761,181 +323,22 @@ function getCultureTip(unitId) {
 
 function getStudyTip(unitId) {
   const tips = {
-    unit1: '📚 在教室里找物品，说出它们的英语名称。',
-    unit2: '👫 描述你的朋友，用英语说出他们的特点。',
-    unit3: '🏠 画一张你家的平面图，标注房间名称。',
-    unit4: '🌳 去公园时，说说看到的东西的英语。',
-    unit5: '🚣 说说你会做的事情，用"I can ..."。',
-    unit6: '📅 每个季节画一幅画，写上季节的英语。',
+    unit1: '在教室里玩 <strong>"I spy"</strong> 游戏：I spy a desk! 把教室物品贴上英语标签，每天看到就读。',
+    unit2: '画一幅朋友的画像，用英语描述：<strong>She is tall. He is happy.</strong> 做形容词配对卡片（高-矮、胖-瘦）。',
+    unit3: '画一张<strong>家的平面图</strong>，标注每个房间的英语名称。玩"Welcome to my home"角色扮演游戏。',
+    unit4: '用积木搭一个小房子，用英语描述物品位置：<strong>The book is on the desk.</strong> 玩藏宝游戏练习方位词。',
+    unit5: '列出你会做的 5 件事，用 <strong>I can ...</strong> 写下来。和朋友比赛，看谁说的本领多！',
+    unit6: '每个季节画一幅画，写上 <strong>It is warm in spring.</strong> 做四季转盘，转到哪个季节就用英语描述。',
   };
   return tips[unitId] || '每天学习，进步看得见！';
 }
 
-function switchUnit(idx) {
-  document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-  document.querySelectorAll('.unit-section').forEach((s, i) => s.classList.toggle('active', i === idx));
-}
 
-let speechEnabled = true;
-let speechRate = 0.7;
-let currentUtterance = null;
-let useLocalAudio = false;
-let speechInitialized = false;
-
-function speak(text) {
-  if (!speechEnabled || !text) return;
-  
-  if (!speechInitialized) {
-    initSpeech();
-  }
-  
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    
-    const utter = new SpeechSynthesisUtterance(text);
-    const lang = /[\u4e00-\u9fa5]/.test(text) ? 'zh-CN' : 'en-US';
-    utter.lang = lang;
-    utter.rate = lang === 'zh-CN' ? Math.min(1, speechRate + 0.2) : speechRate;
-    utter.pitch = 1;
-    utter.volume = 1;
-    
-    const voices = window.speechSynthesis.getVoices();
-    if (lang === 'en-US') {
-      const englishVoice = voices.find(v => v.lang.includes('en') && v.name && (v.name.includes('David') || v.name.includes('Female') || v.lang === 'en-US'));
-      if (englishVoice) utter.voice = englishVoice;
-    } else {
-      const chineseVoice = voices.find(v => v.lang.includes('zh'));
-      if (chineseVoice) utter.voice = chineseVoice;
-    }
-    
-    currentUtterance = utter;
-    window.speechSynthesis.speak(utter);
-  }
-}
-
-function initSpeech() {
-  if (speechInitialized) return;
-  
-  try {
-    const testUtterance = new SpeechSynthesisUtterance('');
-    testUtterance.lang = 'en-US';
-    testUtterance.rate = 0.1;
-    window.speechSynthesis.speak(testUtterance);
-    
-    setTimeout(() => {
-      window.speechSynthesis.cancel();
-    }, 50);
-    
-    speechInitialized = true;
-    const statusEl = document.getElementById('voiceStatus');
-    if (statusEl) {
-      statusEl.textContent = '🎙️ 语音就绪';
-    }
-  } catch (e) {
-    console.warn('语音初始化失败:', e);
-    const statusEl = document.getElementById('voiceStatus');
-    if (statusEl) {
-      statusEl.textContent = '🔇 语音不可用';
-      statusEl.style.color = '#ff6b6b';
-    }
-  }
-}
-
-function toggleVoice() {
-  speechEnabled = !speechEnabled;
-  const btn = document.getElementById('voiceToggle');
-  if (btn) {
-    btn.classList.toggle('active', speechEnabled);
-    btn.textContent = speechEnabled ? '🔊 自动发音' : '🔇 关闭发音';
-  }
-}
-
-function changeSpeed(val) {
-  speechRate = parseFloat(val);
-  const speedVal = document.getElementById('speedVal');
-  if (speedVal) {
-    speedVal.textContent = speechRate.toFixed(1);
-  }
-}
-
-function toggleSection(header) {
-  header.classList.toggle('open');
-  header.nextElementSibling.classList.toggle('open');
-}
-
-function revealWord(card) {
-  card.classList.toggle('revealed');
-  const word = card.dataset.w;
-  if (word) speak(word);
-}
-
-function revealSentence(card) {
-  card.classList.toggle('revealed');
-  const sentence = card.dataset.en || card.dataset.s;
-  if (sentence) speak(sentence);
-}
-
-function revealDialogue(line) {
-  line.classList.toggle('revealed');
-  const text = line.dataset.en || line.dataset.t;
-  if (text) speak(text);
-}
-
-function showQuizQuestion(unitId) {
-  const unit = unitsData.find(u => u.id === unitId);
-  const state = quizState[unitId];
-  const q = unit.quiz[state.current];
-  
-  if (!q) {
-    document.getElementById('qarea-' + unitId).style.display = 'none';
-    document.getElementById('score-' + unitId).classList.add('show');
-    document.getElementById('sd-' + unitId).textContent = `答对 ${state.score} / ${unit.quiz.length} 题`;
-    return;
-  }
-
-  document.getElementById('qp-' + unitId).textContent = `第 ${state.current + 1} / ${unit.quiz.length} 题`;
-  document.getElementById('score-' + unitId).classList.remove('show');
-  
-  let html = `<div class="quiz-question">`;
-  if (q.emoji) html += `<div class="big-emoji">${q.emoji}</div>`;
-  html += `<div class="q-text">${q.q}</div></div>`;
-  
-  html += `<div class="quiz-options">`;
-  q.options.forEach(opt => {
-    html += `<div class="quiz-option" onclick="checkAnswer('${unitId}', '${opt}')">${opt}</div>`;
-  });
-  html += `</div>`;
-  
-  document.getElementById('qarea-' + unitId).innerHTML = html;
-  document.getElementById('qarea-' + unitId).style.display = 'block';
-}
-
-function checkAnswer(unitId, answer) {
-  const unit = unitsData.find(u => u.id === unitId);
-  const state = quizState[unitId];
-  const q = unit.quiz[state.current];
-  
-  document.querySelectorAll('.quiz-option').forEach(opt => {
-    if (opt.textContent === q.answer) {
-      opt.classList.add('correct');
-      if (answer === q.answer) state.score++;
-    } else if (opt.textContent === answer && answer !== q.answer) {
-      opt.classList.add('wrong');
-    }
-  });
-  
-  setTimeout(() => {
-    state.current++;
-    showQuizQuestion(unitId);
-  }, 1500);
-}
-
-function restartQuiz(unitId) {
-  quizState[unitId] = { current: 0, score: 0 };
-  showQuizQuestion(unitId);
-}
+renderAllUnits(unitsData, document.getElementById('navBar'), document.getElementById('container'), {
+    phonics: getPhonicsTip, grammar: getGrammarRhyme, culture: getCultureTip, study: getStudyTip
+});
 window.unitsData = unitsData;
 </script>
-<script src="english-assist.js?v=memory-all-20260515"></script>
+<script src="english-assist.js?v=memory-all-20260608b"></script>
 </body>
 </html>

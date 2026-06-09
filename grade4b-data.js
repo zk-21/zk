@@ -2,12 +2,12 @@ window.COURSE_TITLE = '四年级下册英语 · 译林版互动学习';
 window.COURSE_SUBTITLE = '按新版主题整理 · 原创练习内容 · 音频目录 audio/grade4b/en';
 window.COURSE_AUDIO_BASE = 'audio/grade4b/en';
 
-const unit = (id, title, subtitle, color, words, sentences, dialogue, phrases, grammar, quiz) => ({
+const u = (id, title, subtitle, color, words, sentences, dialogue, phrases, grammar, quiz) => ({
   id, title, subtitle, color, words, sentences, dialogue, phrases, grammar, quiz
 });
 
 window.COURSE_UNITS = [
-  unit('u1', 'Unit 1', 'We are friends 我们是朋友', '#2f80ed',
+  u('u1', 'Unit 1', 'We are friends 我们是朋友', '#2f80ed',
     [
       { en: 'friend', cn: '朋友', emoji: '🤝', ipa: '/frend/' },
       { en: 'kind', cn: '友好的；善良的', emoji: '😊', ipa: '/kaɪnd/' },
@@ -50,7 +50,7 @@ window.COURSE_UNITS = [
       { emoji: '😊', q: 'kind 是什么意思？', answer: '友好的；善良的', options: ['安静的', '友好的；善良的', '困难的', '不同的'] }
     ]),
 
-  unit('u2', 'Unit 2', 'Helping others at school 在学校帮助他人', '#17a673',
+  u('u2', 'Unit 2', 'Helping others at school 在学校帮助他人', '#17a673',
     [
       { en: 'help', cn: '帮助', emoji: '🙋', ipa: '/help/' },
       { en: 'carry', cn: '搬；提', emoji: '📦', ipa: '/ˈkæri/' },
@@ -93,7 +93,7 @@ window.COURSE_UNITS = [
       { emoji: '🪴', q: 'water the plants 是什么意思？', answer: '给植物浇水', options: ['种植物', '给植物浇水', '搬植物', '画植物'] }
     ]),
 
-  unit('u3', 'Unit 3', 'Making choices 做选择', '#f59f00',
+  u('u3', 'Unit 3', 'Making choices 做选择', '#f59f00',
     [
       { en: 'choice', cn: '选择', emoji: '🔀', ipa: '/tʃɔɪs/' },
       { en: 'choose', cn: '选择', emoji: '✅', ipa: '/tʃuːz/' },
@@ -136,7 +136,7 @@ window.COURSE_UNITS = [
       { emoji: '💬', q: 'because 是什么意思？', answer: '因为', options: ['但是', '或者', '因为', '所以'] }
     ]),
 
-  unit('u4', 'Unit 4', 'Having fun together 一起玩得开心', '#9b59b6',
+  u('u4', 'Unit 4', 'Having fun together 一起玩得开心', '#9b59b6',
     [
       { en: 'fun', cn: '乐趣', emoji: '🎉', ipa: '/fʌn/' },
       { en: 'together', cn: '一起', emoji: '👫', ipa: '/təˈɡeðə(r)/' },
@@ -179,7 +179,7 @@ window.COURSE_UNITS = [
       { emoji: '🎈', q: 'party 是什么意思？', answer: '聚会', options: ['聚会', '玩具', '运动', '家务'] }
     ]),
 
-  unit('u5', 'Unit 5', 'Eating out 外出就餐', '#e05252',
+  u('u5', 'Unit 5', 'Eating out 外出就餐', '#e05252',
     [
       { en: 'restaurant', cn: '餐馆', emoji: '🍽️', ipa: '/ˈrestrɒnt/' },
       { en: 'menu', cn: '菜单', emoji: '📋', ipa: '/ˈmenjuː/' },
@@ -222,7 +222,7 @@ window.COURSE_UNITS = [
       { emoji: '🧾', q: 'bill 是什么意思？', answer: '账单', options: ['菜单', '账单', '杯子', '盘子'] }
     ]),
 
-  unit('u6', 'Unit 6', 'Jobs 职业', '#1488cc',
+  u('u6', 'Unit 6', 'Jobs 职业', '#1488cc',
     [
       { en: 'job', cn: '工作；职业', emoji: '💼', ipa: '/dʒɒb/' },
       { en: 'doctor', cn: '医生', emoji: '👩‍⚕️', ipa: '/ˈdɒktə(r)/' },
@@ -265,7 +265,7 @@ window.COURSE_UNITS = [
       { emoji: '🚒', q: 'firefighter 是什么意思？', answer: '消防员', options: ['警察', '司机', '消防员', '厨师'] }
     ]),
 
-  unit('u7', 'Unit 7', 'Doing chores at home 在家做家务', '#2f9e44',
+  u('u7', 'Unit 7', 'Doing chores at home 在家做家务', '#2f9e44',
     [
       { en: 'chore', cn: '家务', emoji: '🧺', ipa: '/tʃɔː(r)/' },
       { en: 'wash', cn: '洗', emoji: '🧼', ipa: '/wɒʃ/' },
@@ -308,7 +308,7 @@ window.COURSE_UNITS = [
       { emoji: '🛏️', q: 'make the bed 是什么意思？', answer: '整理床铺', options: ['睡觉', '整理床铺', '买床', '打扫房间'] }
     ]),
 
-  unit('u8', 'Unit 8', 'Plans for the summer 暑假计划', '#7950f2',
+  u('u8', 'Unit 8', 'Plans for the summer 暑假计划', '#7950f2',
     [
       { en: 'plan', cn: '计划', emoji: '🗓️', ipa: '/plæn/' },
       { en: 'summer', cn: '夏天；暑假', emoji: '🏖️', ipa: '/ˈsʌmə(r)/' },
@@ -442,3 +442,54 @@ window.COURSE_GRAMMAR_GUIDE = [
     ]
   }
 ];
+
+window.COURSE_TIPS = {
+  u1: {
+    phonics: '<span class="tip-rule">字母组合 <strong>ie</strong> 在 friend 中发 /e/ 音</span><span class="tip-example">friend /frend/</span><span class="tip-rule">字母组合 <strong>ob</strong> 在 hobby 中发 /ɒb/ 音</span><span class="tip-rule">字母组合 <strong>er</strong> 在 together 中发 /ə/ 轻音</span>',
+    grammar: '<span class="tip-rule"><strong>We are ...</strong> 描述关系</span><span class="tip-rule"><strong>She / He is ... and ...</strong> 描述品质</span><span class="tip-rule"><strong>We have the same ...</strong> 我们有相同的……</span>',
+    memory: '画出你和好朋友的样子，旁边写 <strong>We are good friends.</strong> 和彼此的爱好。用 <strong>same / different</strong> 比较你和朋友的异同。',
+    culture: '英语国家小朋友交朋友时常说 <strong>Let\'s play together!</strong> 分享玩具和零食是表达友好的重要方式。'
+  },
+  u2: {
+    phonics: '<span class="tip-rule">字母组合 <strong>el</strong> 在 help 中发 /el/ 音</span><span class="tip-example">help /help/</span><span class="tip-rule">字母组合 <strong>ul</strong> 在 useful 中发 /fl/ 音</span><span class="tip-rule">字母组合 <strong>or</strong> 在 homework 中发 /ɜː/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>Can you help me?</strong> 请求帮助</span><span class="tip-rule"><strong>Let me help you.</strong> 主动帮忙</span><span class="tip-rule"><strong>Thank you for helping me.</strong> 感谢帮助</span>',
+    memory: '在学校找到三个可以帮忙的场景（如搬书、擦黑板），用英语说出来：<strong>Let me help you!</strong> 做一个"帮忙记录表"。',
+    culture: '西方学校很重视 <strong>volunteer（志愿者）</strong> 精神。很多学校有 <strong>Helping Day</strong>，鼓励学生为社区做贡献。'
+  },
+  u3: {
+    phonics: '<span class="tip-rule">字母组合 <strong>oi</strong> 在 choice 中发 /ɔɪ/ 双元音</span><span class="tip-example">choice /tʃɔɪs/</span><span class="tip-rule">字母组合 <strong>ou</strong> 在 would 中发 /ʊ/ 音</span><span class="tip-rule">字母组合 <strong>ea</strong> 在 read 中发 /iː/ 或 /e/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I would like ...</strong> 我想要……（比 I want 更礼貌）</span><span class="tip-rule"><strong>Would you like ...?</strong> 你想要……吗？</span><span class="tip-rule"><strong>I choose ...</strong> 我选择……</span>',
+    memory: '在餐厅/商店场景练习：<strong>I would like an ice cream, please.</strong> 做选择题卡片：左边画两个选项，用 <strong>I choose ...</strong> 做出选择。',
+    culture: '英语中 <strong>would like</strong> 比 <strong>want</strong> 更礼貌。在餐厅点餐时一定要说 <strong>I would like ..., please.</strong> 才显得有礼貌！'
+  },
+  u4: {
+    phonics: '<span class="tip-rule">字母组合 <strong>un</strong> 在 fun 中发 /ʌn/ 音</span><span class="tip-example">fun /fʌn/</span><span class="tip-rule">字母组合 <strong>ou</strong> 在 playground 中发 /aʊ/ 音</span><span class="tip-rule">字母组合 <strong>sw</strong> 在 swing 中发 /sw/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>Let\'s ...</strong> 提议一起做</span><span class="tip-rule"><strong>Shall we ...?</strong> 我们……好吗？</span><span class="tip-rule"><strong>That sounds great / fun!</strong> 听起来很棒！</span>',
+    memory: '课间和小伙伴用英语提议：<strong>Let\'s play!</strong> <strong>Shall we go to the playground?</strong> 把游乐设施贴上英语标签练习。',
+    culture: '西方学校课间活动很丰富，常见的有 <strong>swing（秋千）、slide（滑梯）、seesaw（跷跷板）</strong>。小朋友一起玩时要学会轮流（take turns）。'
+  },
+  u5: {
+    phonics: '<span class="tip-rule">字母组合 <strong>ea</strong> 在 eat 中发 /iː/ 长音</span><span class="tip-example">eat /iːt/</span><span class="tip-rule">字母组合 <strong>ou</strong> 在 soup 中发 /uː/ 音</span><span class="tip-rule">字母组合 <strong>en</strong> 在 menu 中发 /juː/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I\'d like ...</strong> 我想要点……</span><span class="tip-rule"><strong>Can I have ...?</strong> 我能要……吗？</span><span class="tip-rule"><strong>Here you are.</strong> 给你。</span>',
+    memory: '制作一份英文<strong>菜单</strong>，画出食物并标注价格。和家人玩"餐厅游戏"：一人当服务员，一人当顾客，练习点餐对话。',
+    culture: '在英语国家餐厅点餐时说 <strong>Can I have ..., please?</strong> 吃完后通常要给 <strong>tip（小费）</strong>，一般是消费额的 10%-15%。'
+  },
+  u6: {
+    phonics: '<span class="tip-rule">字母组合 <strong>or</strong> 在 doctor 中发 /ə/ 轻音</span><span class="tip-example">doctor /ˈdɒktə/</span><span class="tip-rule">字母组合 <strong>ur</strong> 在 nurse 中发 /ɜː/ 音</span><span class="tip-rule">字母组合 <strong>oo</strong> 在 cook 中发 /ʊ/ 短音</span>',
+    grammar: '<span class="tip-rule"><strong>What does he / she do?</strong> 他/她做什么工作？</span><span class="tip-rule"><strong>He / She is a ...</strong> 他/她是一名……</span><span class="tip-rule"><strong>I want to be a ...</strong> 我想成为……</span>',
+    memory: '画出你梦想的职业，写上 <strong>I want to be a ...</strong>。采访家人职业，用英语记录：<strong>My father is a ...</strong>',
+    culture: '英语中职业名词前通常加 <strong>a / an</strong>：a doctor, an engineer。注意以元音开头的职业用 <strong>an</strong>：an artist, an engineer。'
+  },
+  u7: {
+    phonics: '<span class="tip-rule">字母组合 <strong>ea</strong> 在 clean 中发 /iː/ 长音</span><span class="tip-example">clean /kliːn/</span><span class="tip-rule">字母组合 <strong>oo</strong> 在 broom 中发 /uː/ 长音</span><span class="tip-rule">字母组合 <strong>wa</strong> 在 wash 中发 /wɒ/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I can ...</strong> 我能做（家务）</span><span class="tip-rule"><strong>Can you ...?</strong> 你能……吗？</span><span class="tip-rule"><strong>Let\'s keep ... tidy.</strong> 让我们保持……整洁</span>',
+    memory: '制作<strong>家务清单</strong>（Chore Chart），每完成一项打勾并说 <strong>I can sweep the floor!</strong> 用英语标签贴在家务工具上。',
+    culture: '西方家庭通常让孩子从小做家务赚 <strong>pocket money（零花钱）</strong>。比如洗碗、除草、遛狗都可以获得零花钱。'
+  },
+  u8: {
+    phonics: '<span class="tip-rule">字母组合 <strong>oi</strong> 在 going 中发 /əʊ/ 音</span><span class="tip-example">going /ˈɡəʊɪŋ/</span><span class="tip-rule">字母组合 <strong>su</strong> 在 summer 中发 /sʌ/ 音</span><span class="tip-rule">字母组合 <strong>is</strong> 在 visit 中发 /ɪz/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I am going to ...</strong> 我打算……（计划）</span><span class="tip-rule"><strong>We are going to ...</strong> 我们打算……</span><span class="tip-rule"><strong>What are your plans?</strong> 你的计划是什么？</span>',
+    memory: '画一张<strong>暑假计划海报</strong>，列出 3-5 个打算做的事，用 <strong>I am going to ...</strong> 写英语句子。和同学互相分享暑假计划。',
+    culture: '西方暑假一般从 <strong>6月底到9月初</strong>，大约 2 个多月。很多家庭会去 <strong>beach（海滩）</strong> 度假或参加 <strong>summer camp（夏令营）</strong>。'
+  }
+};

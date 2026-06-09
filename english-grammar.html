@@ -104,6 +104,173 @@
       background: #fff;
       border-color: #fff;
     }
+
+    .grammar-search-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .grammar-search-input {
+      flex: 1 1 240px;
+      min-height: 40px;
+      padding: 10px 14px;
+      border: 1px solid rgba(23,32,51,0.16);
+      border-radius: 12px;
+      font-size: 14px;
+      color: #172033;
+      background: #fff;
+    }
+
+    .grammar-search-input:focus {
+      outline: none;
+      border-color: #6f42c1;
+      box-shadow: 0 0 0 3px rgba(111,66,193,0.14);
+    }
+
+    .grammar-search-clear {
+      min-height: 40px;
+      padding: 0 14px;
+      border: none;
+      border-radius: 12px;
+      background: #172033;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .grammar-search-clear:hover {
+      background: #0f1728;
+    }
+
+    .grammar-search-tip {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #5b6475;
+      line-height: 1.5;
+    }
+
+    .grammar-book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .grammar-book-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px;
+      border: 1px solid rgba(111,66,193,0.16);
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fbf8ff, #f5f8ff);
+    }
+
+    .grammar-book-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .grammar-book-labels {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .grammar-book-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #6f42c1;
+      background: #efe7ff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .grammar-book-top h4 {
+      font-size: 16px;
+      color: #1f2937;
+    }
+
+    .grammar-book-top p {
+      margin-top: 6px;
+      color: #667085;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .grammar-book-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 10px;
+      background: #fff;
+      color: #6f42c1;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 10px rgba(31,41,55,0.08);
+    }
+
+    .grammar-book-link:hover {
+      background: #f6f0ff;
+    }
+
+    .grammar-book-queries {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .grammar-book-chip {
+      min-height: 32px;
+      padding: 6px 12px;
+      border: 1px solid rgba(111,66,193,0.18);
+      border-radius: 999px;
+      color: #1f3b64;
+      background: rgba(255,255,255,0.88);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .grammar-book-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(111,66,193,0.34);
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(111,66,193,0.12);
+    }
+
+    .grammar-highlight {
+      padding: 0 2px;
+      border-radius: 4px;
+      color: inherit;
+      background: linear-gradient(transparent 35%, rgba(255,225,105,0.95) 35%);
+    }
+
+    @media (max-width: 640px) {
+      .grammar-book-top {
+        flex-direction: column;
+      }
+
+      .grammar-book-link {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>

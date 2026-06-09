@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>三年级下语文 · 趣味学习乐园</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/3.4.1/tailwind.min.js" onerror="this.onerror=null;this.src='https://cdn.tailwindcss.com'"></script>
+    <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet" onerror="this.onerror=null;this.href='https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap'">
     <style>
-        body { font-family: 'Noto Sans SC', sans-serif; }
+        body { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif; }
         .language-switcher {
             display: flex;
             justify-content: center;
@@ -77,6 +76,30 @@
                 opacity: 0;
             }
         }
+        .course-switcher {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+            padding: 10px 8px; background: #ad1457;
+        }
+        .grade-group { display: flex; align-items: center; gap: 4px; padding: 4px 8px; background: rgba(255,255,255,0.05); border-radius: 14px; }
+        .grade-label { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 600; padding: 4px 6px; }
+        .grade-btn {
+            min-height: 28px; padding: 4px 12px; border: none; border-radius: 12px;
+            color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700;
+            text-decoration: none; background: transparent; cursor: pointer; transition: all 0.2s;
+        }
+        .grade-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        .grade-btn.active { color: #c2185b; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .grammar-btn {
+            margin-left: 8px; padding: 4px 14px; border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 12px; color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 700;
+            text-decoration: none; background: rgba(255,255,255,0.1); transition: all 0.2s;
+        }
+        .grammar-btn:hover { background: rgba(255,255,255,0.25); }
+        @media (max-width: 640px) {
+            .course-switcher { padding: 8px 4px; gap: 4px; }
+            .grade-label { font-size: 11px; padding: 3px 4px; }
+            .grade-btn { padding: 3px 10px; font-size: 11px; }
+        }
         .hidden-section { display: none; }
         .hidden-section.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -95,6 +118,36 @@
         <a href="三年级下册语文互动学习.html" class="lang-btn active">📖 语文</a>
         <a href="english-learning.html" class="lang-btn">🔤 英语</a>
     </div>
+    <!-- 课程导航 -->
+    <div class="course-switcher">
+      <div class="grade-group">
+        <span class="grade-label">一年级</span>
+        <a href="english-1a.html" class="grade-btn">上册</a>
+        <a href="english-1b.html" class="grade-btn">下册</a>
+      </div>
+      <div class="grade-group">
+        <span class="grade-label">二年级</span>
+        <a href="english-2a.html" class="grade-btn">上册</a>
+        <a href="english-2b.html" class="grade-btn">下册</a>
+      </div>
+      <div class="grade-group">
+        <span class="grade-label">三年级</span>
+        <a href="三年级上册英语互动学习.html" class="grade-btn">英语上</a>
+        <a href="三年级下册语文互动学习.html" class="grade-btn active">语文下</a>
+        <a href="english-learning.html" class="grade-btn">英语下</a>
+      </div>
+      <div class="grade-group">
+        <span class="grade-label">四年级</span>
+        <a href="四年级上册英语互动学习.html" class="grade-btn">上册</a>
+        <a href="四年级下册英语互动学习.html" class="grade-btn">下册</a>
+      </div>
+      <div class="grade-group">
+        <span class="grade-label">五年级</span>
+        <a href="english-5a.html" class="grade-btn">上册</a>
+        <a href="english-5b.html" class="grade-btn">下册</a>
+      </div>
+      <a href="english-grammar.html" class="grammar-btn">📚 语法</a>
+    </div>
     <!-- 顶部导航 -->
     <nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -109,7 +162,7 @@
                 </div>
                 <div class="text-sm text-gray-500">加油，小达人！</div>
                 <button id="sound-toggle" class="text-xl hover:text-indigo-600 transition-colors">
-                    <i class="fa fa-volume-up"></i>
+                    🔊
                 </button>
             </div>
         </div>
@@ -258,7 +311,7 @@
         <!-- 课后词语 -->
         <div class="bg-white rounded-2xl p-6 shadow-md mb-6">
             <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <span>�</span> 课后词语
+                <span>📚</span> 课后词语
                 <span class="text-xs font-normal text-gray-400">本单元重点词语，点击可以朗读~</span>
             </h3>
             <div id="word-list" class="flex flex-wrap gap-2"></div>
@@ -1623,9 +1676,9 @@
         soundToggle.addEventListener('click', () => {
             soundEnabled = !soundEnabled;
             if (soundEnabled) {
-                soundToggle.innerHTML = '<i class="fa fa-volume-up"></i>';
+                soundToggle.innerHTML = '🔊';
             } else {
-                soundToggle.innerHTML = '<i class="fa fa-volume-off"></i>';
+                soundToggle.innerHTML = '🔇';
             }
         });
     }

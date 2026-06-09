@@ -430,3 +430,54 @@ window.COURSE_GRAMMAR_GUIDE = [
     ]
   }
 ];
+
+window.COURSE_TIPS = {
+  u1: {
+    phonics: '<span class="tip-rule">字母 <strong>h</strong> 在词首发 /h/ 音，轻吐气</span><span class="tip-example">hello /həˈləʊ/, hi /haɪ/</span><span class="tip-rule">字母组合 <strong>oo</strong> 在 good 中发 /ʊ/ 短音</span><span class="tip-example">good /ɡʊd/, morning /ˈmɔːnɪŋ/</span>',
+    grammar: '<span class="tip-rule"><strong>Hello / Hi</strong> 用于打招呼</span><span class="tip-rule"><strong>Good morning / afternoon</strong> 按时段问候</span><span class="tip-rule"><strong>Goodbye / Bye</strong> 用于告别</span>',
+    memory: '每天上学前对着镜子说一遍 <strong>Hello, good morning!</strong>，养成打招呼的习惯。可以和家人角色扮演：一人当老师，一人当学生，练习课堂问候。',
+    culture: '在英国和美国，人们见面时常说 <strong>Hello</strong> 或 <strong>Hi</strong>。正式场合用 <strong>Good morning</strong>。和长辈说话一般不用 Hi 哦！'
+  },
+  u2: {
+    phonics: '<span class="tip-rule">字母 <strong>w</strong> 在 what 中发 /w/ 音，嘴唇收圆</span><span class="tip-example">what /wɒt/, where /weə/</span><span class="tip-rule">字母 <strong>h</strong> 在 how 中不单独发音</span><span class="tip-rule">字母 <strong>t</strong> 在 what 末尾发 /t/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I am ...</strong> 自我介绍：I am Su Hai.</span><span class="tip-rule"><strong>What is your name?</strong> 询问姓名</span><span class="tip-rule"><strong>My name is ...</strong> 回答姓名</span>',
+    memory: '把自己的英文名写在卡片上，每天练习拼读：<strong>My name is ...</strong>。编一首小调：你叫什么名？What is your name? 我叫小明，My name is Xiaoming!',
+    culture: '英语国家的人<strong>名在前、姓在后</strong>，和中国相反！如 Tom Smith，Tom 是名，Smith 是姓。好朋友之间常叫昵称。'
+  },
+  u3: {
+    phonics: '<span class="tip-rule">字母 <strong>y</strong> 在 yes 中发 /j/ 音</span><span class="tip-example">yes /jes/, you /juː/</span><span class="tip-rule">字母 <strong>s</strong> 在 six 中发 /s/ 音</span><span class="tip-rule">字母 <strong>t</strong> 在 ten 中发 /t/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>Are you ...?</strong> 确认身份：Are you Liu Tao?</span><span class="tip-rule"><strong>Yes, I am. / No, I am not.</strong> 肯定/否定回答</span><span class="tip-rule"><strong>Goodbye!</strong> 告别</span>',
+    memory: '用手指比划数字 1-10，边比边说英语。制作数字卡片，正面写英语、背面画对应数量的圆点，翻牌配对练习。',
+    culture: '西方课堂上，老师进教室时学生要说 <strong>Good morning, Miss / Mr ...</strong>，这是基本的课堂礼仪哦！'
+  },
+  u4: {
+    phonics: '<span class="tip-rule">字母组合 <strong>th</strong> 在 this 中发 /ð/ 音，舌尖轻咬</span><span class="tip-example">this /ðɪs/, that /ðæt/</span><span class="tip-rule">字母组合 <strong>fr</strong> 在 friend 中发 /fr/</span><span class="tip-example">friend /frend/</span>',
+    grammar: '<span class="tip-rule"><strong>This is ...</strong> 介绍他人：This is Mike.</span><span class="tip-rule"><strong>He is / She is ...</strong> 描述他人</span><span class="tip-rule"><strong>He\'s / She\'s my friend.</strong></span>',
+    memory: '画一幅好朋友的画像，在旁边写上 <strong>This is ... He\'s / She\'s my friend.</strong> 练习介绍。用手指指向照片里的人来练习。',
+    culture: '西方小朋友第一次交朋友时常说 <strong>Hi, I\'m ... Nice to meet you!</strong> 握手时看着对方眼睛表示友好和真诚。'
+  },
+  u5: {
+    phonics: '<span class="tip-rule">字母组合 <strong>th</strong> 在 mother 中发 /ð/ 音</span><span class="tip-example">mother /ˈmʌðə/, father /ˈfɑːðə/</span><span class="tip-rule">字母组合 <strong>er</strong> 在词尾发 /ə/ 轻音</span><span class="tip-rule">字母组合 <strong>br</strong> 在 brother 中发 /br/</span>',
+    grammar: '<span class="tip-rule"><strong>This is my ...</strong> 介绍家人</span><span class="tip-rule"><strong>Who is he / she?</strong> 询问身份</span><span class="tip-rule"><strong>He / She is my ...</strong> 回答</span>',
+    memory: '画一棵<strong>家庭树</strong>（Family Tree），在每个成员旁标注英语称呼。用"小手拍拍"的节奏唱：Who is she? She is my mother!',
+    culture: '英语中 <strong>family</strong> 通常指核心家庭（爸妈和孩子）。西方家庭很重视宠物，很多家庭把猫狗也当作 family member！'
+  },
+  u6: {
+    phonics: '<span class="tip-rule">字母组合 <strong>ea</strong> 在 teacher 中发 /iː/ 长音</span><span class="tip-example">teacher /ˈtiːtʃə/</span><span class="tip-rule">字母组合 <strong>oo</strong> 在 look 中发 /ʊ/ 短音</span><span class="tip-rule">字母组合 <strong>gr</strong> 在 grandpa 中发 /ɡr/</span>',
+    grammar: '<span class="tip-rule"><strong>Is he your ...?</strong> 确认男性家人</span><span class="tip-rule"><strong>Is she your ...?</strong> 确认女性家人</span><span class="tip-rule"><strong>Yes, he / she is. / No, he / she isn\'t.</strong></span>',
+    memory: '拿出家庭照片，指着每个人问 <strong>Is he your ...?</strong> 并回答。玩"猜猜他是谁"游戏：描述一个人，让朋友用 Is he/she ...? 来猜。',
+    culture: '英语中 <strong>grandpa / grandma</strong> 既可称呼自己的祖父母，有时也称呼年长的熟人。西方家庭常举办 family reunion（家庭聚会）。'
+  },
+  u7: {
+    phonics: '<span class="tip-rule">字母组合 <strong>th</strong> 在 three 中发 /θ/ 音，舌尖轻咬送气</span><span class="tip-example">three /θriː/, thank /θæŋk/</span><span class="tip-rule">字母组合 <strong>ir</strong> 在 bird 中发 /ɜː/ 音</span><span class="tip-rule">字母组合 <strong>or</strong> 在 for 中发 /ɔː/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>Happy Birthday!</strong> 生日祝福</span><span class="tip-rule"><strong>This ... is for you.</strong> 赠送礼物</span><span class="tip-rule"><strong>Thank you! / Thanks!</strong> 表达感谢</span>',
+    memory: '学唱英文生日歌 <strong>Happy Birthday to You</strong>，把歌词中的名字替换成家人名字练习。制作生日卡片，写上 <strong>Happy Birthday! This card is for you.</strong>',
+    culture: '西方过生日时大家会唱 <strong>Happy Birthday</strong>，吹蜡烛前要<strong>许愿（make a wish）</strong>。收到礼物要当面打开并说 <strong>Thank you!</strong>'
+  },
+  u8: {
+    phonics: '<span class="tip-rule">字母组合 <strong>dr</strong> 发 /dr/ 音</span><span class="tip-example">draw /drɔː/</span><span class="tip-rule">字母组合 <strong>ph</strong> 发 /f/ 音</span><span class="tip-example">photo /ˈfəʊtəʊ/</span><span class="tip-rule">字母组合 <strong>th</strong> 在 this 中发 /ð/ 音</span>',
+    grammar: '<span class="tip-rule"><strong>I can ...</strong> 表达能力</span><span class="tip-rule"><strong>Can you ...?</strong> 询问能力/请求帮助</span><span class="tip-rule"><strong>Yes, I can. / No, I can\'t.</strong></span><span class="tip-rule"><strong>Can you help me?</strong> 请求帮助</span>',
+    memory: '做动作说英语：边画边说 <strong>I can draw</strong>，边跳边说 <strong>I can dance</strong>，动作加深记忆。把 <strong>I can...</strong> 编成歌曲唱出来。',
+    culture: '在西方课堂中，<strong>帮忙</strong>是很受鼓励的行为。说 <strong>Can you help me?</strong> 时记得加 <strong>Please</strong>，帮完忙要说 <strong>Thank you!</strong>'
+  }
+};

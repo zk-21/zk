@@ -171,6 +171,7 @@
   .voice-btn:focus-visible,
   .course-switcher a:focus-visible,
   .nav-btn:focus-visible,
+  .hub-action:focus-visible,
   .section-header:focus-visible,
   .word-card:focus-visible,
   .sentence-card:focus-visible,
@@ -179,7 +180,11 @@
   .dialogue-box .line:focus-visible,
   .quiz-option:focus-visible,
   .quiz-next:focus-visible,
-  .quiz-score button:focus-visible {
+  .quiz-score button:focus-visible,
+  .dictation-box button:focus-visible,
+  .dictation-input:focus-visible,
+  .mistake-redo-btn:focus-visible,
+  .mistake-redo-input:focus-visible {
     outline: 3px solid rgba(77,150,255,0.45);
     outline-offset: 2px;
   }
@@ -195,6 +200,1185 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+
+  .study-hub {
+    width: min(1120px, 100%);
+    margin: 16px auto 0;
+    padding: 0 16px;
+  }
+
+  .study-hub-shell {
+    background:
+      radial-gradient(circle at top right, rgba(255, 214, 102, 0.25), transparent 36%),
+      linear-gradient(135deg, rgba(255,255,255,0.97), rgba(248,251,255,0.95));
+    border: 1px solid rgba(77, 150, 255, 0.12);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: 0 14px 36px rgba(30, 58, 138, 0.08);
+  }
+
+  .study-hub-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 16px;
+  }
+
+  .study-hub-copy {
+    min-width: 0;
+  }
+
+  .study-hub-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(77, 150, 255, 0.12);
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .study-hub-copy h2 {
+    margin-top: 12px;
+    font-size: 28px;
+    line-height: 1.2;
+    color: #1f2937;
+  }
+
+  .study-hub-copy p {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #5b6475;
+  }
+
+  .study-hub-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .hub-stat {
+    padding: 14px 12px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fbff, #eef5ff);
+    border: 1px solid rgba(77, 150, 255, 0.12);
+    text-align: center;
+  }
+
+  .hub-stat strong {
+    display: block;
+    font-size: 22px;
+    color: #1f2937;
+  }
+
+  .hub-stat span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .study-hub-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .hub-action {
+    min-height: 44px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+  }
+
+  .hub-action:hover {
+    transform: translateY(-1px);
+  }
+
+  .hub-action.primary {
+    color: #fff;
+    background: linear-gradient(135deg, #ff7a59, #ffb020);
+    box-shadow: 0 10px 24px rgba(255, 122, 89, 0.28);
+  }
+
+  .hub-action.secondary {
+    color: #0f172a;
+    background: linear-gradient(135deg, #d8ecff, #eef7ff);
+  }
+
+  .hub-action.ghost {
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.06);
+  }
+
+  .study-hub-bottom {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.92fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .theme-review-card {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), transparent 34%),
+      linear-gradient(135deg, #ffffff, #f7fffb);
+    border: 1px solid rgba(16, 185, 129, 0.14);
+  }
+
+  .theme-review-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .theme-review-head h3 {
+    color: #14532d;
+    font-size: 18px;
+  }
+
+  .theme-review-head p {
+    margin-top: 4px;
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .theme-review-badge {
+    flex: 0 0 auto;
+    padding: 5px 10px;
+    border-radius: 999px;
+    color: #047857;
+    background: #d1fae5;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .theme-review-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .theme-review-summary-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .theme-review-summary-card strong {
+    display: block;
+    color: #14532d;
+    font-size: 13px;
+  }
+
+  .theme-review-summary-card span {
+    display: block;
+    margin-top: 5px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .theme-review-focus {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .theme-review-focus button {
+    min-height: 30px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 999px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-review-focus button.weak {
+    color: #9f1239;
+    background: #ffe4e6;
+  }
+
+  .theme-review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .theme-review-item {
+    padding: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.92);
+  }
+
+  .theme-review-item.weak {
+    border-color: rgba(248, 113, 113, 0.22);
+    background: linear-gradient(135deg, #ffffff, #fff7f5);
+  }
+
+  .theme-review-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .theme-review-item strong {
+    display: block;
+    color: #0f172a;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .theme-review-item span {
+    display: block;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.5;
+    min-height: 36px;
+  }
+
+  .theme-review-item em {
+    display: block;
+    margin-top: 6px;
+    color: #475467;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 1.5;
+  }
+
+  .theme-review-flag {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #4338ca;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .theme-review-flag.pending {
+    background: #fff7ed;
+    color: #c2410c;
+  }
+
+  .theme-review-flag.weak {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .theme-review-item button {
+    margin-top: 10px;
+    min-height: 34px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-sprint-shell {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    background:
+      radial-gradient(circle at top left, rgba(14, 165, 233, 0.08), transparent 28%),
+      linear-gradient(135deg, #ffffff, #f3fbff);
+  }
+
+  .theme-sprint-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+    gap: 14px;
+  }
+
+  .theme-sprint-copy h3 {
+    color: #0f766e;
+    font-size: 20px;
+  }
+
+  .theme-sprint-copy p {
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .theme-sprint-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .theme-sprint-stat {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .theme-sprint-stat strong {
+    display: block;
+    color: #0f172a;
+    font-size: 18px;
+  }
+
+  .theme-sprint-stat span {
+    display: block;
+    margin-top: 4px;
+    color: #667085;
+    font-size: 12px;
+  }
+
+  .theme-sprint-focus-box,
+  .theme-sprint-quiz-box {
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .theme-sprint-focus-box h4,
+  .theme-sprint-quiz-box h4 {
+    color: #1d4ed8;
+    font-size: 14px;
+  }
+
+  .theme-sprint-focus-box p,
+  .theme-sprint-quiz-box p {
+    margin-top: 6px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .theme-sprint-focus-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .theme-sprint-focus-item {
+    min-height: 36px;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-sprint-focus-item.weak {
+    color: #9f1239;
+    background: #ffe4e6;
+  }
+
+  .theme-sprint-focus-item small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .theme-sprint-quiz {
+    margin-top: 12px;
+  }
+
+  .theme-sprint-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .theme-sprint-head h5 {
+    color: #0f172a;
+    font-size: 15px;
+  }
+
+  .theme-sprint-progress {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .theme-sprint-question {
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 6px;
+  }
+
+  .theme-sprint-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    margin-bottom: 10px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #1d4ed8;
+    background: #dbeafe;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .theme-sprint-actions,
+  .theme-sprint-result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .theme-sprint-actions button,
+  .theme-sprint-result-actions button {
+    min-height: 32px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 9px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-sprint-result {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #475467;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .theme-sprint-diagnostics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  .theme-sprint-diagnostic-box {
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .theme-sprint-diagnostic-box h4 {
+    color: #1d4ed8;
+    font-size: 14px;
+  }
+
+  .theme-sprint-diagnostic-box p {
+    margin-top: 6px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .theme-sprint-diagnostic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .theme-sprint-diagnostic-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  .theme-sprint-diagnostic-copy {
+    min-width: 0;
+  }
+
+  .theme-sprint-diagnostic-copy strong {
+    display: block;
+    color: #0f172a;
+    font-size: 13px;
+  }
+
+  .theme-sprint-diagnostic-copy span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .theme-sprint-diagnostic-item button {
+    flex: 0 0 auto;
+    min-height: 32px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 9px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-sprint-diagnostic-score {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    margin-top: 4px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: #b91c1c;
+    background: #fee2e2;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .theme-mistake-pool {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .theme-mistake-pool h4 {
+    color: #1d4ed8;
+    font-size: 14px;
+  }
+
+  .theme-mistake-pool p {
+    margin-top: 6px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .theme-mistake-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .theme-mistake-item {
+    padding: 12px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.14);
+  }
+
+  .theme-mistake-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .theme-mistake-copy strong {
+    display: block;
+    color: #0f172a;
+    font-size: 13px;
+  }
+
+  .theme-mistake-copy span {
+    display: block;
+    margin-top: 4px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .theme-mistake-question {
+    margin-top: 10px;
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .theme-mistake-feedback {
+    margin-top: 10px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    background: #fff7ed;
+    color: #9a3412;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .theme-mistake-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .theme-mistake-actions button,
+  .theme-mistake-head button {
+    min-height: 32px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 9px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-type-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .theme-type-chip {
+    min-height: 34px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    color: #4338ca;
+    background: #eef2ff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-type-chip.weak {
+    color: #9f1239;
+    background: #ffe4e6;
+  }
+
+  .theme-type-chip small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .theme-page-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .theme-page-nav button {
+    min-height: 34px;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 999px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-page-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .theme-page-card {
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    background:
+      radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 34%),
+      linear-gradient(135deg, #ffffff, #f7fffb);
+  }
+
+  .theme-page-card.weak {
+    border-color: rgba(248, 113, 113, 0.22);
+    background:
+      radial-gradient(circle at top right, rgba(248,113,113,0.08), transparent 34%),
+      linear-gradient(135deg, #ffffff, #fff7f5);
+  }
+
+  .theme-page-card h3 {
+    color: #14532d;
+    font-size: 18px;
+  }
+
+  .theme-page-card p {
+    margin-top: 6px;
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .theme-page-meta {
+    display: inline-flex;
+    margin-top: 10px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: #047857;
+    background: #d1fae5;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .theme-page-block {
+    margin-top: 12px;
+  }
+
+  .theme-page-block h4 {
+    color: #1d4ed8;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .theme-page-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .theme-page-list span {
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #334155;
+    background: rgba(255,255,255,0.88);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .theme-page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .theme-page-actions button {
+    min-height: 34px;
+    padding: 7px 11px;
+    border: none;
+    border-radius: 10px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-quiz {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(148, 163, 184, 0.35);
+  }
+
+  .theme-quiz-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .theme-quiz-head h4 {
+    color: #1d4ed8;
+    font-size: 14px;
+  }
+
+  .theme-quiz-progress {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .theme-quiz-question {
+    color: #334155;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .theme-quiz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .theme-quiz-actions button {
+    min-height: 32px;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 9px;
+    color: #14532d;
+    background: #dcfce7;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .theme-quiz-result {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #475467;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .hub-card {
+    border-radius: 18px;
+    padding: 16px;
+    background: rgba(255,255,255,0.86);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .hub-card h3 {
+    font-size: 16px;
+    color: #1f2937;
+    margin-bottom: 10px;
+  }
+
+  .hub-card p {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .hub-progress-box {
+    margin: 2px 0 14px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fbff, #fef7e7);
+    border: 1px solid rgba(255, 176, 32, 0.18);
+  }
+
+  .hub-progress-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .hub-progress-row strong {
+    font-size: 20px;
+    color: #0f172a;
+  }
+
+  .hub-progress-row span {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .hub-progress-bar {
+    height: 10px;
+    margin-top: 10px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.18);
+    overflow: hidden;
+  }
+
+  .hub-progress-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ff9f1c, #ffd166, #6bcb77);
+    transition: width 0.25s ease;
+  }
+
+  .hub-progress-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .hub-progress-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .hub-progress-step.done {
+    color: #166534;
+    background: rgba(22, 163, 74, 0.1);
+    border-color: rgba(34, 197, 94, 0.18);
+  }
+
+  .hub-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hub-reward {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff9db, #eefcf3);
+    border: 1px solid rgba(107, 203, 119, 0.18);
+  }
+
+  .hub-reward strong {
+    display: block;
+    font-size: 14px;
+    color: #1f2937;
+  }
+
+  .hub-reward span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #5f6b7a;
+  }
+
+  .hub-reward.done {
+    background: linear-gradient(135deg, #effcf4, #fef7d8);
+    border-color: rgba(34, 197, 94, 0.22);
+  }
+
+  .hub-task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  }
+
+  .hub-task.done {
+    background: linear-gradient(135deg, #effcf4, #e5f9ec);
+  }
+
+  .hub-task-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: #2563eb;
+    background: rgba(37, 99, 235, 0.12);
+    flex-shrink: 0;
+  }
+
+  .hub-task.done .hub-task-mark {
+    color: #fff;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+  }
+
+  .hub-task-text strong {
+    display: block;
+    font-size: 14px;
+    color: #1f2937;
+  }
+
+  .hub-task-text span {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: #6b7280;
+  }
+
+  .hub-mistake-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hub-mistake-item {
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #fff7f5, #fff0ed);
+    border: 1px solid rgba(255, 122, 89, 0.16);
+  }
+
+  .hub-mistake-item strong {
+    display: block;
+    font-size: 13px;
+    color: #7c2d12;
+    line-height: 1.5;
+  }
+
+  .hub-mistake-item span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #9a3412;
+    line-height: 1.5;
+  }
+
+  .hub-empty {
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f7fbff, #eef6ff);
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .mistake-arena {
+    width: min(1120px, 100%);
+    margin: 14px auto 0;
+    padding: 0 16px;
+  }
+
+  .mistake-arena-shell {
+    padding: 18px;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at top left, rgba(255, 176, 32, 0.16), transparent 34%),
+      linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,255,0.96));
+    border: 1px solid rgba(255, 176, 32, 0.16);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  }
+
+  .mistake-arena-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(120px, 0.5fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  .mistake-arena-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 176, 32, 0.14);
+    color: #b45309;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mistake-arena-copy h3 {
+    margin-top: 12px;
+    font-size: 24px;
+    line-height: 1.25;
+    color: #1f2937;
+  }
+
+  .mistake-arena-copy p {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #64748b;
+  }
+
+  .mistake-arena-stat {
+    padding: 14px 12px;
+    border-radius: 16px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff7ed, #fffdf5);
+    border: 1px solid rgba(255, 176, 32, 0.16);
+  }
+
+  .mistake-arena-stat strong {
+    display: block;
+    font-size: 24px;
+    color: #9a3412;
+  }
+
+  .mistake-arena-stat span {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #7c2d12;
+  }
+
+  .mistake-arena-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .global-mistake-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .global-mistake-card {
+    border-radius: 18px;
+    padding: 16px;
+    background: linear-gradient(135deg, #fff, #fff9f3);
+    border: 1px solid rgba(255, 176, 32, 0.14);
+  }
+
+  .global-mistake-unit {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(77, 150, 255, 0.12);
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .hub-card.flash,
+  .section-card.flash,
+  .mistake-arena-shell.flash,
+  .unit-guide-card.flash {
+    animation: hubFlash 1.1s ease;
+  }
+
+  @keyframes hubFlash {
+    0% { box-shadow: 0 0 0 0 rgba(255, 176, 32, 0.35); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 176, 32, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 176, 32, 0); }
   }
 
   .nav-bar {
@@ -247,6 +1431,104 @@
     font-weight: 700;
   }
   .unit-title small { display: block; font-size: 14px; opacity: 0.9; margin-top: 4px; font-weight: 400; }
+
+  .unit-guide-card {
+    margin: -2px 0 16px;
+    padding: 16px;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top right, rgba(77, 150, 255, 0.14), transparent 34%),
+      linear-gradient(135deg, #ffffff, #f7fbff);
+    border: 1px solid rgba(77, 150, 255, 0.14);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  }
+
+  .unit-guide-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(77, 150, 255, 0.12);
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .unit-guide-card strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #1f2937;
+  }
+
+  .unit-guide-card p {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #64748b;
+  }
+
+  .unit-guide-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .unit-guide-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  .unit-guide-step.done {
+    color: #166534;
+    background: rgba(22, 163, 74, 0.1);
+    border-color: rgba(34, 197, 94, 0.18);
+  }
+
+  .unit-guide-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .unit-guide-btn {
+    min-height: 40px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .unit-guide-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .unit-guide-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, #4d96ff, #6bcb77);
+    box-shadow: 0 10px 22px rgba(77, 150, 255, 0.24);
+  }
+
+  .unit-guide-btn.ghost {
+    background: rgba(15, 23, 42, 0.07);
+    color: #0f172a;
+  }
 
   .section-card {
     background: #fff;
@@ -357,6 +1639,301 @@
     border-color: #ffd93d;
   }
 
+  .dictation-tipline {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 12px;
+  }
+
+  .dictation-box {
+    background:
+      radial-gradient(circle at top right, rgba(255, 184, 77, 0.14), transparent 30%),
+      linear-gradient(135deg, #fffef8, #f7fbff 52%, #f0fff6 100%);
+    border: 1px solid rgba(255, 193, 7, 0.16);
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .dictation-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .dictation-stage {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 176, 32, 0.16);
+    color: #b45309;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .dictation-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .dictation-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    color: #475569;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .dictation-prompt {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  .dictation-emoji {
+    width: 72px;
+    height: 72px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    background: linear-gradient(135deg, #fff2cc, #ffe7a8);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+  }
+
+  .dictation-cn {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1f2937;
+  }
+
+  .dictation-note {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .dictation-actions,
+  .dictation-submit-row,
+  .dictation-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .dictation-btn {
+    min-height: 42px;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.06);
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s, background 0.25s;
+  }
+
+  .dictation-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(15, 23, 42, 0.1);
+  }
+
+  .dictation-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, #4d96ff, #6bcb77);
+  }
+
+  .dictation-input {
+    flex: 1 1 240px;
+    min-height: 48px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 2px solid #dbe6f3;
+    background: rgba(255,255,255,0.96);
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .dictation-input::placeholder {
+    color: #9aa4b2;
+    font-weight: 500;
+  }
+
+  .dictation-feedback {
+    min-height: 48px;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .dictation-feedback.success {
+    background: #ebfff1;
+    border: 1px solid #9be2b6;
+    color: #166534;
+  }
+
+  .dictation-feedback.error {
+    background: #fff1f0;
+    border: 1px solid #ffc3bd;
+    color: #b42318;
+  }
+
+  .dictation-answer {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.9);
+    border: 1px dashed rgba(59, 130, 246, 0.3);
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .dictation-answer strong {
+    color: #1d4ed8;
+  }
+
+  .dictation-result {
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  .dictation-result .result-emoji {
+    font-size: 52px;
+  }
+
+  .dictation-result h4 {
+    margin-top: 8px;
+    font-size: 22px;
+    color: #1f2937;
+  }
+
+  .dictation-result p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.7;
+  }
+
+  .mistake-review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mistake-redo-card {
+    padding: 16px;
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at top right, rgba(255, 122, 89, 0.12), transparent 28%),
+      linear-gradient(135deg, #fffaf7, #fff3ef 100%);
+    border: 1px solid rgba(255, 122, 89, 0.14);
+  }
+
+  .mistake-redo-question {
+    font-size: 15px;
+    font-weight: 800;
+    color: #7c2d12;
+    line-height: 1.6;
+  }
+
+  .mistake-redo-meta {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #9a3412;
+    line-height: 1.6;
+  }
+
+  .mistake-redo-input-row,
+  .mistake-redo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .mistake-redo-input {
+    flex: 1 1 220px;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 2px solid #f4c4bb;
+    background: rgba(255,255,255,0.96);
+    font-size: 15px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .mistake-redo-btn {
+    min-height: 42px;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 14px;
+    background: rgba(124, 45, 18, 0.08);
+    color: #7c2d12;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s, background 0.25s;
+  }
+
+  .mistake-redo-btn:hover {
+    transform: translateY(-1px);
+    background: rgba(124, 45, 18, 0.14);
+  }
+
+  .mistake-redo-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, #ff7a59, #ff9f1c);
+  }
+
+  .mistake-redo-feedback {
+    min-height: 22px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #7c2d12;
+  }
+
+  .mistake-redo-feedback.success {
+    color: #166534;
+  }
+
+  .mistake-redo-feedback.error {
+    color: #b42318;
+  }
+
+  .mistake-redo-answer {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.9);
+    border: 1px dashed rgba(255, 122, 89, 0.28);
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
   /* Sentence cards */
   .sentence-list { display: flex; flex-direction: column; gap: 12px; }
 
@@ -421,6 +1998,343 @@
   .grammar-card:hover .speak-icon { opacity: 0.8; }
   .grammar-card .rule-text { font-size: 16px; font-weight: 600; color: #2e7d32; }
   .grammar-card .hint-text { font-size: 11px; color: #bbb; margin-top: 6px; }
+
+  /* Unit output practice */
+  .output-practice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .output-practice-card {
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(77,150,255,0.16);
+    background: linear-gradient(135deg, #f8fbff, #eef6ff);
+  }
+  .output-practice-card h4 {
+    margin-bottom: 10px;
+    color: #1f4f8f;
+    font-size: 15px;
+  }
+  .output-task-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .output-task-check {
+    min-height: 34px;
+    padding: 7px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    color: #475467;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .output-task-check.done {
+    color: #166534;
+    border-color: #86efac;
+    background: #dcfce7;
+  }
+  .output-practice-list,
+  .retell-step-list,
+  .confusion-list,
+  .retell-fill-list,
+  .rubric-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .output-practice-item,
+  .retell-step,
+  .retell-level,
+  .confusion-item,
+  .retell-fill-item,
+  .rubric-item {
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: #344054;
+    background: rgba(255,255,255,0.76);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .output-practice-item b,
+  .retell-step b,
+  .retell-level b {
+    display: block;
+    color: #1d4ed8;
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+  .retell-level span {
+    display: block;
+    padding: 5px 0;
+    border-top: 1px dashed rgba(148,163,184,0.35);
+  }
+  .retell-level span:first-of-type {
+    border-top: 0;
+  }
+  .confusion-pair {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .confusion-pair span {
+    padding: 4px 7px;
+    border-radius: 999px;
+    color: #7c2d12;
+    background: #ffedd5;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .confusion-pair em {
+    color: #98a2b3;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 800;
+  }
+  .confusion-item p {
+    color: #475467;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .retell-fill-item {
+    border: 1px dashed rgba(59,130,246,0.28);
+    background: rgba(239,246,255,0.82);
+  }
+  .retell-fill-item b,
+  .rubric-item b {
+    display: block;
+    color: #1d4ed8;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .retell-fill-item span {
+    color: #334155;
+    line-height: 1.55;
+  }
+  .retell-fill-answer {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(148,163,184,0.35);
+    color: #166534;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .retell-fill-toggle {
+    margin-top: 8px;
+    min-height: 30px;
+    padding: 6px 9px;
+    border: none;
+    border-radius: 8px;
+    color: #1d4ed8;
+    background: #dbeafe;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .rubric-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .rubric-item .rubric-mark {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    color: #fff;
+    background: #0f766e;
+    font-size: 11px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rubric-item span {
+    color: #475467;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .confusion-quiz {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(245,158,11,0.24);
+    background: linear-gradient(135deg, #fff7ed, #fffbeb);
+  }
+  .confusion-quiz-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .confusion-quiz-head h4 {
+    color: #9a3412;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .confusion-quiz-head p {
+    color: #78716c;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .confusion-quiz-status {
+    flex: 0 0 auto;
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: #9a3412;
+    background: #fed7aa;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .confusion-quiz-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .confusion-question {
+    padding: 11px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.82);
+  }
+  .confusion-question b {
+    color: #9a3412;
+    font-size: 12px;
+  }
+  .confusion-question p {
+    margin: 6px 0 8px;
+    color: #344054;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .confusion-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .confusion-options button {
+    min-height: 32px;
+    padding: 6px 10px;
+    border: 1px solid #fdba74;
+    border-radius: 9px;
+    color: #7c2d12;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .confusion-options button.correct {
+    color: #166534;
+    border-color: #86efac;
+    background: #dcfce7;
+  }
+  .confusion-options button.wrong {
+    color: #991b1b;
+    border-color: #fca5a5;
+    background: #fee2e2;
+  }
+  .confusion-options button.disabled {
+    pointer-events: none;
+  }
+  .confusion-feedback {
+    margin-top: 8px;
+    color: #78716c;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .confusion-feedback.success {
+    color: #166534;
+  }
+  .confusion-feedback.error {
+    color: #991b1b;
+  }
+  .parent-checklist {
+    margin-top: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(16,185,129,0.18);
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf3);
+  }
+  .parent-checklist h4 {
+    color: #166534;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .parent-checklist > p {
+    color: #475467;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .parent-checklist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .parent-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 9px;
+    background: rgba(255,255,255,0.82);
+  }
+  .parent-check-item.done {
+    border: 1px solid rgba(134,239,172,0.7);
+  }
+  .parent-check-mark {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    color: #fff;
+    background: #cbd5e1;
+    font-size: 12px;
+    font-weight: 900;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .parent-check-item.done .parent-check-mark {
+    background: #22c55e;
+  }
+  .parent-check-text strong {
+    display: block;
+    color: #14532d;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  .parent-check-text span {
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .output-task-scene {
+    margin-bottom: 8px;
+    color: #0f766e;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.5;
+  }
+  .output-practice-prompts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .output-practice-prompts span {
+    padding: 7px 9px;
+    border-radius: 8px;
+    color: #475467;
+    background: rgba(255,255,255,0.78);
+    font-size: 13px;
+    line-height: 1.45;
+  }
 
   /* Learning tips section */
   .learning-tips {
@@ -636,6 +2550,50 @@
     cursor: pointer;
   }
 
+  .quiz-recommendation {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f8fbff, #fff7e8);
+    border: 1px solid rgba(77, 150, 255, 0.14);
+  }
+
+  .quiz-recommendation strong {
+    display: block;
+    font-size: 15px;
+    color: #1f2937;
+  }
+
+  .quiz-recommendation span {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #64748b;
+  }
+
+  .quiz-score-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .quiz-score-actions button {
+    margin-top: 0;
+    min-width: 138px;
+  }
+
+  .quiz-score-actions .secondary {
+    background: linear-gradient(90deg, #4d96ff, #6bbcff);
+  }
+
+  .quiz-score-actions .ghost {
+    background: linear-gradient(90deg, #e2e8f0, #cbd5e1);
+    color: #0f172a;
+  }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -662,6 +2620,19 @@
     body { padding-bottom: 32px; }
     .header { font-size: 20px; padding: 16px 12px 12px; letter-spacing: 1px; }
     .header span { font-size: 13px; line-height: 1.45; }
+    .study-hub { margin-top: 12px; padding: 0 10px; }
+    .study-hub-shell { border-radius: 18px; padding: 14px; }
+    .study-hub-top,
+    .study-hub-bottom { grid-template-columns: 1fr; gap: 12px; }
+    .study-hub-copy h2 { font-size: 22px; }
+    .study-hub-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mistake-arena { padding: 0 10px; }
+    .mistake-arena-shell { border-radius: 18px; padding: 14px; }
+    .mistake-arena-head { grid-template-columns: 1fr; }
+    .hub-stat { padding: 12px 8px; }
+    .hub-stat strong { font-size: 18px; }
+    .hub-progress-row { align-items: flex-start; flex-direction: column; }
+    .hub-action { flex: 1 1 calc(50% - 5px); padding: 10px 12px; font-size: 13px; }
     .course-switcher { justify-content: flex-start; padding: 8px; }
     .course-switcher a { min-height: 32px; padding: 6px 11px; font-size: 12px; }
     .voice-controls { gap: 8px; margin-top: 10px; }
@@ -672,11 +2643,28 @@
     .container { padding: 12px 10px; }
     .unit-title { padding: 16px 12px; font-size: 19px; }
     .unit-title small { font-size: 12px; line-height: 1.45; }
+    .unit-guide-card { padding: 14px; }
+    .unit-guide-card strong { font-size: 16px; }
+    .unit-guide-actions { gap: 8px; }
+    .unit-guide-btn { flex: 1 1 132px; font-size: 13px; padding: 9px 12px; }
     .section-header { padding: 13px 14px; font-size: 16px; }
     .section-body.open { padding: 12px; }
     .word-grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 10px; }
     .word-card { min-height: 112px; padding: 12px 10px; }
     .word-card .english { font-size: 16px; overflow-wrap: anywhere; }
+    .dictation-box { padding: 14px; border-radius: 16px; }
+    .dictation-prompt { grid-template-columns: 1fr; }
+    .dictation-emoji { width: 64px; height: 64px; border-radius: 18px; font-size: 34px; }
+    .dictation-cn { font-size: 20px; }
+    .dictation-actions,
+    .dictation-submit-row,
+    .dictation-foot { gap: 8px; }
+    .dictation-btn { flex: 1 1 140px; }
+    .dictation-input { flex-basis: 100%; }
+    .mistake-redo-input-row,
+    .mistake-redo-actions { gap: 8px; }
+    .mistake-redo-btn { flex: 1 1 132px; }
+    .mistake-redo-input { flex-basis: 100%; }
     .sentence-card { padding: 14px 34px 14px 12px; }
     .sentence-card .en { font-size: 16px; }
     .grammar-list { padding: 0; }
@@ -689,6 +2677,12 @@
     .quiz-question .big-emoji { font-size: 52px; }
     .quiz-question .q-text { font-size: 18px; line-height: 1.4; }
     .quiz-options { grid-template-columns: 1fr; }
+    .theme-review-summary,
+    .theme-sprint-top,
+    .theme-sprint-stats { grid-template-columns: 1fr; }
+    .theme-sprint-shell { padding: 14px; }
+    .theme-sprint-copy h3 { font-size: 18px; }
+    .theme-sprint-focus-item { width: 100%; text-align: left; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -749,6 +2743,93 @@
     <span id="voiceStatus" class="speed-label" style="color:#ffa500;"></span>
   </div>
 </div>
+
+<section class="study-hub" id="studyHub">
+  <div class="study-hub-shell">
+    <div class="study-hub-top">
+      <div class="study-hub-copy">
+        <span class="study-hub-kicker">🧭 今日学习驾驶舱</span>
+        <h2 id="hubTitle">先听单词，再练拼写，最后做小测验。</h2>
+        <p id="hubSubtitle">把一节课拆成几个很短的动作，孩子更容易开始，也更容易完成。</p>
+        <div class="study-hub-actions">
+          <button class="hub-action primary" type="button" onclick="startCurrentLesson()">开始当前单元</button>
+          <button class="hub-action secondary" type="button" onclick="jumpToDictation()">听写拼写练习</button>
+          <button class="hub-action ghost" type="button" id="hubMistakeButton" onclick="jumpToGlobalMistakes()">错题再练</button>
+        </div>
+      </div>
+      <div class="study-hub-stats">
+        <div class="hub-stat">
+          <strong id="hubUnitCount">0</strong>
+          <span>学习单元</span>
+        </div>
+        <div class="hub-stat">
+          <strong id="hubMasteryCount">0 / 0</strong>
+          <span>已会拼写</span>
+        </div>
+        <div class="hub-stat">
+          <strong id="hubMistakeCount">0</strong>
+          <span>待复习错题</span>
+        </div>
+      </div>
+    </div>
+    <div class="study-hub-bottom">
+      <div class="hub-card" id="hubTaskCard">
+        <h3>当前单元任务</h3>
+        <div class="hub-progress-box">
+          <div class="hub-progress-row">
+            <strong id="hubProgressPercent">0%</strong>
+            <span id="hubProgressText">今天还没开始，先完成第一个小任务。</span>
+          </div>
+          <div class="hub-progress-bar">
+            <span class="hub-progress-fill" id="hubProgressFill"></span>
+          </div>
+          <div class="hub-progress-steps" id="hubProgressSteps"></div>
+        </div>
+        <div class="hub-task-list" id="hubTaskList"></div>
+        <div class="hub-reward" id="hubRewardBox">
+          <strong id="hubRewardTitle">今天先拿下第一个小任务。</strong>
+          <span id="hubRewardText">先点开几个核心词听发音，页面会自动记录今天的学习进度。</span>
+        </div>
+      </div>
+      <div class="hub-card" id="hubMistakeCard">
+        <h3>最近错题提醒</h3>
+        <div id="hubMistakePreview"></div>
+      </div>
+    </div>
+  </div>
+  <div class="theme-review-card" id="themeReviewCard">
+    <div class="theme-review-head">
+      <div>
+        <h3>专项复习入口</h3>
+        <p>不按 Unit 走，直接按能力主题回看重点句型、口语输出和易错点。</p>
+      </div>
+      <span class="theme-review-badge" id="themeReviewBadge">8 主题</span>
+    </div>
+    <div class="theme-review-summary" id="themeReviewSummary"></div>
+    <div class="theme-review-grid" id="themeReviewGrid"></div>
+  </div>
+</section>
+
+<section class="mistake-arena" id="globalMistakeArena">
+  <div class="mistake-arena-shell">
+    <div class="mistake-arena-head">
+      <div class="mistake-arena-copy">
+        <span class="mistake-arena-kicker">🧩 全页总错题模式</span>
+        <h3 id="globalMistakeTitle">把所有单元的错题集中再练。</h3>
+        <p id="globalMistakeText">这里会自动汇总整页所有答错的小测题。可以在这里集中重做，也可以跳回对应单元继续巩固。</p>
+      </div>
+      <div class="mistake-arena-stat">
+        <strong id="globalMistakeTotal">0</strong>
+        <span>全页总错题</span>
+      </div>
+    </div>
+    <div class="mistake-arena-actions">
+      <button class="hub-action secondary" type="button" id="globalMistakeLatestButton" onclick="jumpToMistakes()">跳到最近错题</button>
+      <button class="hub-action ghost" type="button" onclick="startCurrentLesson()">回当前单元</button>
+    </div>
+    <div id="globalMistakeList"></div>
+  </div>
+</section>
 
 <div class="nav-bar" id="navBar"></div>
 
@@ -1064,6 +3145,7 @@ const unitsData = [
       { en: 'have fun', cn: '玩得高兴' },
       { en: 'after class', cn: '课后' },
       { en: 'in the tree', cn: '在树上' },
+      { en: 'by the tree', cn: '在树旁边' },
       { en: 'after-class activities', cn: '课后活动' },
       { en: 'in the playground', cn: '在操场上' },
       { en: 'play hide-and-seek', cn: '玩捉迷藏' },
@@ -1075,9 +3157,10 @@ const unitsData = [
       { q: '"under" 是什么意思？', answer: '在…下面', options: ['在…上面', '在…后面', '在…下面', '在…旁边'] },
       { q: '"Where is the duck?" 意思是？', answer: '鸭子在哪里？', options: ['鸭子是什么？', '鸭子在哪里？', '鸭子在干什么？', '鸭子有几只？'] },
       { q: '"behind" 是什么意思？', answer: '在…后面', options: ['在…前面', '在…上面', '在…后面', '在…下面'] },
+      { q: '"by the tree" 意思是？', answer: '在树旁边', options: ['在树上', '在树下', '在树旁边', '在树后面'] },
       { emoji: '🦋', q: 'butterfly 是什么意思？', answer: '蝴蝶', options: ['蜻蜓', '蝴蝶', '蜜蜂', '小鸟'] },
     ],
-    grammar: ['Where is ...?', 'It\'s on/in/under/behind ...', 'How + adjective!', 'I can\'t ...', 'Let\'s ...', 'I want to ...']
+    grammar: ['Where is ...?', 'It\'s on/in/under/behind/by ...', 'by the tree = 在树旁边', 'How + adjective!', 'I can\'t ...', 'Let\'s ...', 'I want to ...']
   },
   {
     id: 'unit5',
@@ -1491,9 +3574,10 @@ const grammarData = {
       name: '介词',
       icon: '📍',
       rules: [
-        { rule: '表示位置', cn: '地点介词', example: 'on the desk, in the classroom, under the tree, behind you' },
+        { rule: '表示位置', cn: '地点介词', example: 'on the desk, in the classroom, under the tree, behind you, by the tree' },
         { rule: '表示时间', cn: '时间介词', example: 'in the morning, on Monday, at 3 o\'clock' },
         { rule: '表示方向', cn: '方向介词', example: 'go to school, come from China, look at the picture' },
+        { rule: 'by', cn: '在……旁边；乘坐；通过；被……', example: 'by the tree, by bus, learn by listening, protected by us' },
         { rule: 'Put ... in ...', cn: '把……放进……里', example: 'Put your pen in the pencil case.' },
         { rule: 'Look at ...', cn: '看……', example: 'Look at the elephant! Look at the rules.' },
       ]
@@ -1605,6 +3689,308 @@ const pdfExtraWords = {
     { en: 'What colour is...?', cn: '……是什么颜色的？', emoji: '🎨', tip: 'What colour is it?' },
     { en: 'How come?', cn: '怎么回事？', emoji: '❓', tip: 'How come?' },
   ],
+};
+
+const unitOutputPractice = {
+  unit1: {
+    coreSubstitutions: [
+      { pattern: 'What\'s this/that?', examples: ['What\'s this?', 'What\'s that?', 'What\'s that in your schoolbag?'] },
+      { pattern: 'It\'s a/an ...', examples: ['It\'s a pen.', 'It\'s a rubber.', 'It\'s a pencil case.'] },
+      { pattern: 'Put ... in ...', examples: ['Put your pen in the pencil case.', 'Put your ruler in your schoolbag.', 'Put your rubber in the box.'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '书桌上有钢笔、尺子和铅笔盒', prompts: ['Point and ask: What\'s this?', 'Answer: It\'s a ruler.', 'Say one action: Put the ruler in the pencil case.'] },
+      { scene: '书包里露出一件学习用品', prompts: ['Ask: What\'s that in your schoolbag?', 'Guess with Is it a ...?', 'Use Yes, it is. / No, it isn\'t.'] },
+    ],
+    retellTemplate: ['Mike and his friends are talking about school things.', 'They ask: What\'s this? / What\'s that?', 'They guess: Is it a ...?', 'At last, they know it is a pen / rubber / pencil case.'],
+  },
+  unit2: {
+    coreSubstitutions: [
+      { pattern: 'Let\'s ...', examples: ['Let\'s clean the classroom.', 'Let\'s sweep the floor.', 'Let\'s put away our things.'] },
+      { pattern: 'Please ...', examples: ['Please close the window.', 'Please clean the blackboard.', 'Please clean your desk.'] },
+      { pattern: 'Keep ... clean', examples: ['Keep the classroom clean.', 'Keep your desk clean.', 'Keep the floor clean.'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '教室地板有纸屑，黑板没有擦', prompts: ['Say the problem: The floor is dirty.', 'Give a suggestion: Let\'s sweep the floor.', 'Make a polite request: Please clean the blackboard.'] },
+      { scene: '同学们分工打扫教室', prompts: ['Use I can ... to choose a job.', 'Use Me too! to join a classmate.', 'End with: Our classroom is clean now.'] },
+    ],
+    retellTemplate: ['The classroom is dirty.', 'The students want to clean it.', 'Su Hai can clean the blackboard. Liu Tao and Mike sweep the floor.', 'Now the classroom is clean. They keep it clean.'],
+  },
+  unit3: {
+    coreSubstitutions: [
+      { pattern: 'Don\'t ...', examples: ['Don\'t run.', 'Don\'t shout.', 'Don\'t eat in the library.'] },
+      { pattern: 'Be ...', examples: ['Be quiet.', 'Be careful.', 'Be a good student.'] },
+      { pattern: 'Would you like ...?', examples: ['Would you like a sweet?', 'Would you like a book?', 'Would you like a pencil?'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '图书馆里有人跑、说话、吃糖', prompts: ['Choose one rule: Don\'t run in the library.', 'Choose another rule: Be quiet.', 'Add a polite line: I\'m sorry. That\'s all right.'] },
+      { scene: '班级规则海报', prompts: ['Read three rules aloud.', 'Use Don\'t ... for two rules.', 'Use Please ... or Be ... for one rule.'] },
+    ],
+    retellTemplate: ['Mike is in the library.', 'Mrs Li tells him: Sit down, please. Don\'t talk.', 'Mike says sorry.', 'Liu Tao shows a sweet, but they can\'t eat there.', 'They follow the rules.'],
+  },
+  unit4: {
+    coreSubstitutions: [
+      { pattern: 'Where is ...?', examples: ['Where is the duck?', 'Where is my plane?', 'Where is the butterfly?'] },
+      { pattern: 'It\'s on/in/under/behind/by ...', examples: ['It\'s under the tree.', 'It\'s behind you.', 'It\'s by the tree.'] },
+      { pattern: 'How + adjective!', examples: ['How beautiful!', 'How lovely!', 'How nice!'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '花园里有树、花、鸭子和蝴蝶', prompts: ['Ask: Where is the duck?', 'Answer with a place word.', 'Add one feeling sentence: How beautiful!'] },
+      { scene: '纸飞机落在不同位置', prompts: ['Say: My plane is ...', 'Use on / in / under / behind.', 'Finish with: I can / can\'t find it.'] },
+    ],
+    retellTemplate: ['The students are in the garden after class.', 'They see flowers and a butterfly.', 'They ask where the butterfly is.', 'It is by the tree, then behind Su Hai, then on the duck.', 'They think it is lovely.'],
+  },
+  unit5: {
+    coreSubstitutions: [
+      { pattern: 'I have ...', examples: ['I have an orange.', 'I have two apples.', 'I have some grapes.'] },
+      { pattern: 'Do you have ...?', examples: ['Do you have a banana?', 'Do you have a mango?', 'Do you have some grapes?'] },
+      { pattern: 'I like ... They are ...', examples: ['I like bananas. They are sweet.', 'I like apples. They are good.', 'I like mangoes. They are nice.'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '桌上有橙子、苹果、葡萄和香蕉', prompts: ['Say what you have: I have ...', 'Ask a friend: Do you have ...?', 'Share: Here you are. / Thank you.'] },
+      { scene: '大家一起做水果沙拉', prompts: ['Invite: Let\'s make a fruit salad together.', 'Say one fruit you like.', 'End with: Fruit is good for us.'] },
+    ],
+    retellTemplate: ['The children want to make a fruit salad.', 'Mike has an orange. Liu Tao has apples.', 'Su Hai has a mango and Yang Ling has grapes.', 'Wang Bing gives Su Hai a banana.', 'They make and share the fruit salad.'],
+  },
+  unit6: {
+    coreSubstitutions: [
+      { pattern: 'What are these/those?', examples: ['What are these?', 'What are those?', 'What are those under the tree?'] },
+      { pattern: 'They\'re ...', examples: ['They\'re pigs.', 'They\'re sheep.', 'They\'re rabbits.'] },
+      { pattern: 'Are these/those ...?', examples: ['Are those chickens?', 'Are they sheep?', 'Are these carrots?'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '农场里近处有猪，远处有牛和羊', prompts: ['Use these for near animals.', 'Use those for far animals.', 'Answer with They\'re ...'] },
+      { scene: '树下有动物，篮子里有胡萝卜', prompts: ['Ask: What are those under the tree?', 'Guess: Are they sheep?', 'Say what rabbits like: They like carrots.'] },
+    ],
+    retellTemplate: ['Liu Tao and Liu Hao visit Grandpa\'s farm.', 'Grandpa shows them pigs, cows and rabbits.', 'They ask: What are these? What are those?', 'The rabbits are cute and they like carrots.', 'The farm is fun.'],
+  },
+  unit7: {
+    coreSubstitutions: [
+      { pattern: 'I like ... They\'re ...', examples: ['I like tigers. They\'re cool.', 'I like monkeys. They\'re cute.', 'I like bears. They\'re big.'] },
+      { pattern: 'Do you like ...?', examples: ['Do you like lions?', 'Do you like pandas?', 'Do you like fish?'] },
+      { pattern: 'Don\'t ...', examples: ['Don\'t feed the animals.', 'Don\'t run in the zoo.', 'Don\'t shout at the animals.'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '动物园里有老虎、熊、猴子和大象', prompts: ['Name three animals.', 'Say what you like and why.', 'Ask a friend: Do you like ...?'] },
+      { scene: '小朋友想给猴子香蕉', prompts: ['Say the rule: Don\'t feed the animals.', 'Say sorry.', 'Suggest: Let\'s go to see the pandas.'] },
+    ],
+    retellTemplate: ['Liu Tao and his family are at the zoo.', 'They see tigers, bears and monkeys.', 'They talk about the animals they like.', 'Liu Hao wants to feed a monkey, but Liu Tao stops him.', 'They go to see the pandas.'],
+  },
+  unit8: {
+    coreSubstitutions: [
+      { pattern: 'What colour is ...?', examples: ['What colour is it?', 'What colour is the balloon?', 'What colour is the chameleon now?'] },
+      { pattern: 'It\'s + colour.', examples: ['It\'s green.', 'It\'s brown.', 'It\'s yellow and red.'] },
+      { pattern: 'I want ...', examples: ['I want a pink balloon.', 'I want a green balloon.', 'I want a little balloon.'] },
+    ],
+    pictureSpeakingTasks: [
+      { scene: '气球摊上有不同颜色的气球', prompts: ['Ask: What colour do you like?', 'Say: I want a ... balloon.', 'Use Here you are. / Sure.'] },
+      { scene: '变色龙在树叶、树干和花旁边', prompts: ['Ask the colour now.', 'Answer with one or two colours.', 'Use How come? when the colour changes.'] },
+    ],
+    retellTemplate: ['The children see a chameleon.', 'At first, it is green.', 'Then it is brown, then yellow and red.', 'They ask: What colour is it now?', 'At last, it is green again. They think it is cool.'],
+  },
+};
+
+const unitOutputEnhancements = {
+  unit1: {
+    retellFillBlanks: [
+      'Mike and his friends are talking about school _____.',
+      'They ask: What\'s _____? What\'s _____?',
+      'They guess: Is it a _____?',
+      'At last, they know it is a pencil _____ / pen / rubber.',
+    ],
+    retellFillAnswers: ['things', 'this / that', 'pen / ruler / pencil case', 'case'],
+    pictureSpeakingRubric: [
+      '能说出 3 句完整英文，不只报单词。',
+      '至少用 1 个本单元核心句型，如 What\'s that? / It\'s ...',
+      '至少替换 2 个词，比如 pen 换成 ruler、rubber。',
+      '声音清楚，别人能听懂主要意思。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['This is a story about school things.', 'The children ask: What\'s this? What\'s that?', 'They guess: Is it a pen / rubber / pencil case?', 'At last, they find the right school thing.'] },
+      { level: '关键词版', steps: ['school things', 'What\'s this/that?', 'Is it a ...?', 'Yes, it is. / No, it isn\'t.', 'Put ... in ...'] },
+      { level: '挑战版', steps: ['不用中文提示，用 5 句英文介绍一次“猜学习用品”的过程。至少用一次 What\'s that? 和 Put ... in ...。'] },
+    ],
+    commonConfusions: [
+      { left: 'this', right: 'that', tip: 'this 指近处“这个”，that 指远处“那个”。' },
+      { left: 'What\'s this?', right: 'Is it a pen?', tip: 'What 开头是开放提问；Is it 开头是猜测确认。' },
+      { left: 'in the pencil case', right: 'on the pencil case', tip: '放进铅笔盒用 in；放在铅笔盒上面才用 on。' },
+    ],
+  },
+  unit2: {
+    retellFillBlanks: [
+      'The classroom is _____.',
+      'The students want to _____ it.',
+      'Some students clean the _____. Some students sweep the _____.',
+      'Now the classroom is _____.',
+    ],
+    retellFillAnswers: ['dirty', 'clean', 'blackboard / floor', 'clean'],
+    pictureSpeakingRubric: [
+      '先说问题，再说建议，再说分工。',
+      '至少用 1 个 Let\'s ... 和 1 个 Please ...',
+      '能说出 1 个地方或物品词，如 floor / blackboard / desk。',
+      '结尾能说出结果，如 Our classroom is clean now.',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['The classroom is dirty.', 'The students clean the classroom together.', 'Some students clean the blackboard. Some students sweep the floor.', 'Now the classroom is clean.'] },
+      { level: '关键词版', steps: ['dirty classroom', 'Let\'s clean it', 'clean the blackboard', 'sweep the floor', 'keep it clean'] },
+      { level: '挑战版', steps: ['用 5 句英文复述打扫教室过程，并给两位同学分配任务。必须用 Let\'s ... 和 Please ...。'] },
+    ],
+    commonConfusions: [
+      { left: 'clean', right: 'dirty', tip: 'clean 是干净的/打扫；dirty 是脏的。' },
+      { left: 'Let\'s ...', right: 'Please ...', tip: 'Let\'s 是一起做；Please 是请别人做。' },
+      { left: 'clean the blackboard', right: 'sweep the floor', tip: '黑板用 clean；地板用 sweep。' },
+    ],
+  },
+  unit3: {
+    retellFillBlanks: [
+      'Mike is in the _____.',
+      'Mrs Li says: Sit down, please. Don\'t _____.',
+      'Mike says _____.',
+      'They follow the _____.',
+    ],
+    retellFillAnswers: ['library', 'talk', 'sorry', 'rules'],
+    pictureSpeakingRubric: [
+      '至少说出 2 条规则。',
+      '能区分 Don\'t ... 和 Be ... 两种句式。',
+      '能补一句礼貌回应，如 I\'m sorry. / That\'s all right.',
+      '语气清楚，像在提醒别人遵守规则。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['Mike is in the library.', 'Mrs Li says: Sit down, please. Don\'t talk.', 'Mike says sorry.', 'They look at the rules and follow them.'] },
+      { level: '关键词版', steps: ['in the library', 'Don\'t talk', 'Be quiet', 'I\'m sorry', 'follow the rules'] },
+      { level: '挑战版', steps: ['假设你是图书馆管理员，用 5 句英文介绍图书馆规则。至少用 3 个 Don\'t ... 句子。'] },
+    ],
+    commonConfusions: [
+      { left: 'Don\'t run.', right: 'Be quiet.', tip: 'Don\'t 后接动词原形；Be 后接形容词或状态。' },
+      { left: 'I\'m sorry.', right: 'That\'s all right.', tip: '做错事先说 I\'m sorry；回应原谅说 That\'s all right.' },
+      { left: 'talk', right: 'shout', tip: 'talk 是说话；shout 是大声喊。' },
+    ],
+  },
+  unit4: {
+    retellFillBlanks: [
+      'The students are in the _____ after class.',
+      'They see flowers and a _____.',
+      'They ask: Where is the _____?',
+      'It is by the tree, behind Su Hai, and on the _____.',
+    ],
+    retellFillAnswers: ['garden', 'butterfly', 'butterfly', 'duck'],
+    pictureSpeakingRubric: [
+      '至少说出 3 个位置句。',
+      '位置词要准确，如 on / under / behind / by。',
+      '至少加 1 句感叹句，如 How beautiful!',
+      '能先问再答，不只单独报位置。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['The students are in the garden.', 'They see flowers and a butterfly.', 'They ask: Where is the butterfly?', 'The butterfly moves to different places.'] },
+      { level: '关键词版', steps: ['after class', 'in the garden', 'Where is ...?', 'by / behind / on', 'How lovely!'] },
+      { level: '挑战版', steps: ['看一张花园图，用 6 句英文描述 3 个物品的位置，并加入一句感叹句。'] },
+    ],
+    commonConfusions: [
+      { left: 'in the tree', right: 'on the tree', tip: '外来的东西在树上常用 in the tree；树本身长出的东西常用 on the tree。' },
+      { left: 'by', right: 'behind', tip: 'by 是旁边；behind 是后面。' },
+      { left: 'Where is ...?', right: 'What is ...?', tip: 'Where 问位置；What 问是什么。' },
+    ],
+  },
+  unit5: {
+    retellFillBlanks: [
+      'The children want to make a fruit _____.',
+      'Mike has an _____. Liu Tao has _____.',
+      'Su Hai has a mango and Yang Ling has some _____.',
+      'They make and _____ the fruit salad.',
+    ],
+    retellFillAnswers: ['salad', 'orange / apples', 'grapes', 'share'],
+    pictureSpeakingRubric: [
+      '能说出自己有什么水果。',
+      '至少问 1 句 Do you have ...?',
+      '至少说 1 句 I like ... / They are ...',
+      '结尾能说出分享或健康表达。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['The children make a fruit salad.', 'They talk about the fruit they have.', 'They share the fruit.', 'They like the fruit salad. Fruit is good for us.'] },
+      { level: '关键词版', steps: ['make a fruit salad', 'I have ...', 'Do you have ...?', 'Here you are', 'share the fruit salad'] },
+      { level: '挑战版', steps: ['用 6 句英文介绍一次做水果沙拉活动。必须说出 3 种水果和 2 个问答句。'] },
+    ],
+    commonConfusions: [
+      { left: 'I have ...', right: 'Do you have ...?', tip: 'I have 是陈述“我有”；Do you have 是询问“你有吗”。' },
+      { left: 'a banana', right: 'an orange', tip: 'banana 前用 a；orange / apple 前常用 an。' },
+      { left: 'They are sweet.', right: 'It is sweet.', tip: '复数水果用 They are；单个水果用 It is。' },
+    ],
+  },
+  unit6: {
+    retellFillBlanks: [
+      'Liu Tao and Liu Hao visit Grandpa\'s _____.',
+      'They see pigs, cows, rabbits and _____.',
+      'They ask: What are _____? What are _____?',
+      'The rabbits are cute and they like _____.',
+    ],
+    retellFillAnswers: ['farm', 'ducks', 'these / those', 'carrots'],
+    pictureSpeakingRubric: [
+      '近处远处要分清 these 和 those。',
+      '至少说出 3 种动物名称。',
+      '至少问 1 句 Are they ...?',
+      '能说出 1 个动物喜欢什么。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['Liu Tao and Liu Hao visit Grandpa\'s farm.', 'They see pigs, cows, rabbits and ducks.', 'They ask: What are these? What are those?', 'Grandpa answers their questions. The farm is fun.'] },
+      { level: '关键词版', steps: ['Welcome to my farm', 'these / those', 'They\'re ...', 'Are they ...?', 'They like carrots'] },
+      { level: '挑战版', steps: ['画一个农场平面图，用 6 句英文介绍近处和远处动物。必须区分 these 和 those。'] },
+    ],
+    commonConfusions: [
+      { left: 'this / that', right: 'these / those', tip: 'this/that 指单数；these/those 指复数。' },
+      { left: 'What are these?', right: 'What are those?', tip: 'these 问近处这些；those 问远处那些。' },
+      { left: 'They\'re sheep.', right: 'They\'re sheeps.', tip: 'sheep 单复数同形，不能加 s。' },
+    ],
+  },
+  unit7: {
+    retellFillBlanks: [
+      'The family are at the _____.',
+      'They see many _____.',
+      'They talk about the animals they _____.',
+      'Liu Hao wants to feed a monkey, but Liu Tao says _____.',
+    ],
+    retellFillAnswers: ['zoo', 'animals', 'like', 'no'],
+    pictureSpeakingRubric: [
+      '至少说出 3 种动物。',
+      '至少说 1 句 I like ... They\'re ...',
+      '至少问 1 句 Do you like ...?',
+      '能补 1 条动物园规则。',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['The family are at the zoo.', 'They see many animals.', 'They talk about the animals they like.', 'Liu Hao wants to feed a monkey, but Liu Tao says no.'] },
+      { level: '关键词版', steps: ['at the zoo', 'Look at ...', 'I like ... They\'re ...', 'Do you like ...?', 'Don\'t feed animals'] },
+      { level: '挑战版', steps: ['做一次“动物园小导游”，用 6 句英文介绍 4 种动物，并提醒游客一个规则。'] },
+    ],
+    commonConfusions: [
+      { left: 'I like tigers.', right: 'I like tiger.', tip: '表达喜欢一类动物时，常用复数 tigers。' },
+      { left: 'Do you like ...?', right: 'Would you like ...?', tip: 'Do you like 问喜好；Would you like 问想不想要。' },
+      { left: 'Don\'t feed animals.', right: 'Don\'t see animals.', tip: '动物园规则是不喂动物，不是不能看动物。' },
+    ],
+  },
+  unit8: {
+    retellFillBlanks: [
+      'The children see a _____.',
+      'At first, it is _____.',
+      'Then it is _____, then yellow and _____.',
+      'At last, it is green again. They think it is _____.',
+    ],
+    retellFillAnswers: ['chameleon', 'green', 'brown / red', 'cool'],
+    pictureSpeakingRubric: [
+      '至少说出 3 个颜色词。',
+      '至少问 1 句 What colour is it?',
+      '能用 now / before 或先后顺序表达变化。',
+      '结尾能补一句感受，如 It is cool.',
+    ],
+    retellLevels: [
+      { level: '基础版', steps: ['The children see a chameleon.', 'They ask: What colour is it?', 'It changes colours.', 'At last, it is green again. It is cool.'] },
+      { level: '关键词版', steps: ['a chameleon', 'What colour is it?', 'green / brown / yellow and red', 'How come?', 'cool'] },
+      { level: '挑战版', steps: ['用 6 句英文讲一个“变色龙变色”的小故事。至少使用 4 个颜色词。'] },
+    ],
+    commonConfusions: [
+      { left: 'What colour is it?', right: 'What is it?', tip: 'What colour 问颜色；What 问是什么东西。' },
+      { left: 'blue and red', right: 'blue red', tip: '两个颜色并列，中间要加 and。' },
+      { left: 'It is green now.', right: 'It was blue before.', tip: 'now 用现在 is；before 说过去用 was。' },
+    ],
+  },
 };
 
 const wordPhonetics = {
@@ -1746,6 +4132,9 @@ const wordPhonetics = {
 };
 
 unitsData.forEach(unit => {
+  Object.assign(unit, unitOutputPractice[unit.id] || {});
+  Object.assign(unit, unitOutputEnhancements[unit.id] || {});
+
   const extras = pdfExtraWords[unit.id] || [];
   const existing = new Set(unit.words.map(word => normalizeVocabKey(word.en)));
   extras.forEach(word => {
@@ -1897,7 +4286,7 @@ function getAudioSlug(text) {
 }
 
 function getLocalAudioPath(text) {
-  return `${localAudioBasePath}/${getAudioSlug(text)}-${getAudioHash(text)}.wav`;
+  return `${localAudioBasePath}/${getAudioSlug(text)}-${getAudioHash(text)}.mp3`;
 }
 
 function isEnglishAudioText(text) {
@@ -2187,8 +4576,2511 @@ document.addEventListener('keydown', event => {
 // ====== 构建页面 ======
 const navBar = document.getElementById('navBar');
 const container = document.getElementById('container');
+const hubElements = {
+  title: document.getElementById('hubTitle'),
+  subtitle: document.getElementById('hubSubtitle'),
+  unitCount: document.getElementById('hubUnitCount'),
+  masteryCount: document.getElementById('hubMasteryCount'),
+  mistakeCount: document.getElementById('hubMistakeCount'),
+  progressPercent: document.getElementById('hubProgressPercent'),
+  progressText: document.getElementById('hubProgressText'),
+  progressFill: document.getElementById('hubProgressFill'),
+  progressSteps: document.getElementById('hubProgressSteps'),
+  taskList: document.getElementById('hubTaskList'),
+  mistakePreview: document.getElementById('hubMistakePreview'),
+  mistakeButton: document.getElementById('hubMistakeButton'),
+  taskCard: document.getElementById('hubTaskCard'),
+  mistakeCard: document.getElementById('hubMistakeCard'),
+  rewardBox: document.getElementById('hubRewardBox'),
+  rewardTitle: document.getElementById('hubRewardTitle'),
+  rewardText: document.getElementById('hubRewardText'),
+  themeReviewBadge: document.getElementById('themeReviewBadge'),
+  themeReviewSummary: document.getElementById('themeReviewSummary'),
+  themeReviewGrid: document.getElementById('themeReviewGrid'),
+};
+
+const globalMistakeElements = {
+  arena: document.getElementById('globalMistakeArena'),
+  title: document.getElementById('globalMistakeTitle'),
+  text: document.getElementById('globalMistakeText'),
+  total: document.getElementById('globalMistakeTotal'),
+  list: document.getElementById('globalMistakeList'),
+  latestButton: document.getElementById('globalMistakeLatestButton'),
+};
+
+const reviewThemes = [
+  { id: 'things', label: '物品问答', desc: 'What is this/that 与 school things', unitId: 'unit1', jump: 'output' },
+  { id: 'classroom', label: '教室指令', desc: 'Let\'s / Please / Keep ... clean', unitId: 'unit2', jump: 'output' },
+  { id: 'rules', label: '规则表达', desc: 'Don\'t / Be / Follow the rules', unitId: 'unit3', jump: 'confusion' },
+  { id: 'places', label: '位置表达', desc: 'Where is ...? on / in / under / behind / by', unitId: 'unit4', jump: 'output' },
+  { id: 'fruit', label: '水果拥有', desc: 'I have ... / Do you have ...?', unitId: 'unit5', jump: 'output' },
+  { id: 'farm', label: 'these/those', desc: '农场复数问答与远近区分', unitId: 'unit6', jump: 'confusion' },
+  { id: 'animals', label: '动物喜好', desc: 'I like ... / Do you like ...?', unitId: 'unit7', jump: 'output' },
+  { id: 'colours', label: '颜色变化', desc: 'What colour is ...? / It was ... before.', unitId: 'unit8', jump: 'output' },
+];
+
+const themeQuizState = {};
+const themeSprintState = {
+  queue: [],
+  current: 0,
+  score: 0,
+  finished: false,
+  answered: false,
+  rotationOffset: 0,
+};
+
+const themeQuestionTypeLabels = {
+  core: '核心句型',
+  prompt: '开口任务',
+  confusion: '易错对比',
+};
+
+function createThemeTypeStats() {
+  return {
+    core: { correct: 0, total: 0 },
+    prompt: { correct: 0, total: 0 },
+    confusion: { correct: 0, total: 0 },
+  };
+}
+
+function normalizeThemeTypeStats(source) {
+  const base = createThemeTypeStats();
+  if (!source || typeof source !== 'object') return base;
+  Object.keys(base).forEach(key => {
+    const item = source[key] || {};
+    const total = Math.max(0, Number(item.total || 0));
+    const correct = Math.max(0, Math.min(total, Number(item.correct || 0)));
+    base[key] = { correct, total };
+  });
+  return base;
+}
+
+function getThemeProgressKey(themeId) {
+  return `english-theme-review:${getPageStorageName()}:${getTodayKey()}:${themeId}`;
+}
+
+function readThemeProgress(themeId) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getThemeProgressKey(themeId)) || '{}');
+    return {
+      rounds: Number(parsed.rounds || 0),
+      bestScore: Number(parsed.bestScore || 0),
+      lastScore: Number(parsed.lastScore || 0),
+      typeStats: normalizeThemeTypeStats(parsed.typeStats),
+    };
+  } catch {
+    return { rounds: 0, bestScore: 0, lastScore: 0, typeStats: createThemeTypeStats() };
+  }
+}
+
+function writeThemeProgress(themeId, data) {
+  localStorage.setItem(getThemeProgressKey(themeId), JSON.stringify({
+    rounds: Number(data.rounds || 0),
+    bestScore: Number(data.bestScore || 0),
+    lastScore: Number(data.lastScore || 0),
+    typeStats: normalizeThemeTypeStats(data.typeStats),
+  }));
+}
+
+function getThemeSprintProgressKey() {
+  return `english-theme-sprint:${getPageStorageName()}:${getTodayKey()}`;
+}
+
+function readThemeSprintProgress() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getThemeSprintProgressKey()) || '{}');
+    return {
+      rounds: Number(parsed.rounds || 0),
+      bestScore: Number(parsed.bestScore || 0),
+      lastScore: Number(parsed.lastScore || 0),
+    };
+  } catch {
+    return { rounds: 0, bestScore: 0, lastScore: 0 };
+  }
+}
+
+function writeThemeSprintProgress(data) {
+  localStorage.setItem(getThemeSprintProgressKey(), JSON.stringify({
+    rounds: Number(data.rounds || 0),
+    bestScore: Number(data.bestScore || 0),
+    lastScore: Number(data.lastScore || 0),
+  }));
+}
+
+function getThemePracticeMistakeKey() {
+  return `english-theme-mistakes:${getPageStorageName()}:${getTodayKey()}`;
+}
+
+function buildThemePracticeMistakeId(item) {
+  return item?.id || getAudioHash(`${item?.themeId || ''}|${item?.type || ''}|${item?.question || ''}|${item?.correct || ''}`);
+}
+
+function readThemePracticeMistakes() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getThemePracticeMistakeKey()) || '[]');
+    return Array.isArray(parsed)
+      ? parsed.map(item => ({
+          id: buildThemePracticeMistakeId(item),
+          themeId: item?.themeId || '',
+          themeLabel: item?.themeLabel || '',
+          unitId: item?.unitId || '',
+          type: item?.type || 'core',
+          source: item?.source || 'theme',
+          sourceLabel: item?.sourceLabel || '',
+          question: item?.question || '',
+          options: Array.isArray(item?.options) ? item.options.filter(Boolean).slice(0, 4) : [],
+          selected: item?.selected || '',
+          correct: item?.correct || '',
+          time: Number(item?.time || 0),
+        })).filter(item => item.themeId && item.question && item.correct)
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeThemePracticeMistakes(items) {
+  localStorage.setItem(getThemePracticeMistakeKey(), JSON.stringify(
+    (items || []).map(item => ({
+      id: buildThemePracticeMistakeId(item),
+      themeId: item?.themeId || '',
+      themeLabel: item?.themeLabel || '',
+      unitId: item?.unitId || '',
+      type: item?.type || 'core',
+      source: item?.source || 'theme',
+      sourceLabel: item?.sourceLabel || '',
+      question: item?.question || '',
+      options: Array.isArray(item?.options) ? [...new Set(item.options.filter(Boolean))].slice(0, 4) : [],
+      selected: item?.selected || '',
+      correct: item?.correct || '',
+      time: Number(item?.time || 0),
+    })).slice(-24)
+  ));
+}
+
+function addThemePracticeMistake(item) {
+  const nextItem = {
+    id: buildThemePracticeMistakeId(item),
+    themeId: item?.themeId || '',
+    themeLabel: item?.themeLabel || '',
+    unitId: item?.unitId || '',
+    type: item?.type || 'core',
+    source: item?.source || 'theme',
+    sourceLabel: item?.sourceLabel || '',
+    question: item?.question || '',
+    options: Array.isArray(item?.options) ? [...new Set(item.options.filter(Boolean))].slice(0, 4) : [],
+    selected: item?.selected || '',
+    correct: item?.correct || '',
+    time: Date.now(),
+  };
+  if (!nextItem.themeId || !nextItem.question || !nextItem.correct) return;
+  const items = readThemePracticeMistakes().filter(record => record.id !== nextItem.id);
+  items.push(nextItem);
+  writeThemePracticeMistakes(items);
+}
+
+function getThemePracticeMistakes(data = getThemeReviewData()) {
+  const themeMap = new Map((data || []).map(theme => [theme.id, theme]));
+  return readThemePracticeMistakes()
+    .map(item => {
+      const theme = themeMap.get(item.themeId);
+      return {
+        ...item,
+        themeLabel: item.themeLabel || theme?.label || item.themeId,
+        unitId: item.unitId || theme?.unit?.id || '',
+        sourceLabel: item.sourceLabel || (item.source === 'sprint' ? '混合冲刺' : '主题速练'),
+        typeLabel: getThemeQuestionTypeLabel(item.type),
+        statusText: theme?.stats?.statusText || '',
+      };
+    })
+    .sort((a, b) => (b.time || 0) - (a.time || 0));
+}
+
+function removeThemePracticeMistake(mistakeId, shouldRefresh = true) {
+  const next = readThemePracticeMistakes().filter(item => item.id !== mistakeId);
+  writeThemePracticeMistakes(next);
+  if (shouldRefresh) {
+    refreshThemeSprint();
+    refreshHub();
+  }
+}
+
+function getThemeQuestionTypeLabel(type) {
+  return themeQuestionTypeLabels[type] || type;
+}
+
+function recordThemeTypeResult(themeId, type, isCorrect) {
+  if (!themeId || !type || !themeQuestionTypeLabels[type]) return;
+  const current = readThemeProgress(themeId);
+  const typeStats = normalizeThemeTypeStats(current.typeStats);
+  typeStats[type].total += 1;
+  if (isCorrect) {
+    typeStats[type].correct += 1;
+  }
+  writeThemeProgress(themeId, {
+    ...current,
+    typeStats,
+  });
+}
+
+function getThemeReviewStats(theme) {
+  const progress = readThemeProgress(theme.id);
+  const unit = unitsData.find(item => item.id === theme.unitId);
+  const daily = unit ? readDailyProgress(unit.id) : null;
+  const outputDone = unit ? (daily?.outputTasks || []).length >= getOutputTaskTarget(unit) : false;
+  const confusionDone = Boolean(daily?.confusionQuizCompleted);
+  const practiced = progress.rounds > 0;
+  const weak = practiced && progress.lastScore < 2;
+  const needsWork = !practiced || weak || (theme.jump === 'confusion' ? !confusionDone : !outputDone);
+  return {
+    progress,
+    outputDone,
+    confusionDone,
+    practiced,
+    weak,
+    needsWork,
+    statusText: !practiced ? '今天还没刷这个主题' : `最近一轮 ${progress.lastScore} 分，最佳 ${progress.bestScore} 分`,
+  };
+}
+
+function getThemeReviewData() {
+  return reviewThemes.map(theme => {
+    const unit = unitsData.find(item => item.id === theme.unitId);
+    if (!unit) return null;
+    const stats = getThemeReviewStats(theme);
+    return {
+      ...theme,
+      unit,
+      core: (unit.coreSubstitutions || []).slice(0, 2).flatMap(item => item.examples || []).slice(0, 4),
+      prompts: (unit.pictureSpeakingTasks || []).slice(0, 1).flatMap(item => item.prompts || []).slice(0, 3),
+      confusion: (unit.commonConfusions || []).slice(0, 2).map(item => `${item.left} vs ${item.right}`),
+      stats,
+      quiz: buildThemeQuiz(theme, unit),
+    };
+  }).filter(Boolean);
+}
+
+function buildThemeQuiz(theme, unit) {
+  const questions = [];
+  const allThemes = reviewThemes.map(item => ({
+    id: item.id,
+    label: item.label,
+    prompts: ((unitsData.find(unitItem => unitItem.id === item.unitId)?.pictureSpeakingTasks || []).flatMap(task => task.prompts || []).filter(Boolean)),
+    examples: ((unitsData.find(unitItem => unitItem.id === item.unitId)?.coreSubstitutions || []).flatMap(task => task.examples || []).filter(Boolean)),
+  }));
+  const currentThemeMeta = allThemes.find(item => item.id === theme.id) || { examples: [], prompts: [] };
+  const coreExamples = currentThemeMeta.examples;
+  const prompts = currentThemeMeta.prompts;
+  const confusions = unit.commonConfusions || [];
+  const otherExamples = allThemes.filter(item => item.id !== theme.id).flatMap(item => item.examples).filter(Boolean);
+  const otherPrompts = allThemes.filter(item => item.id !== theme.id).flatMap(item => item.prompts).filter(Boolean);
+
+  coreExamples.forEach(example => {
+    const distractors = otherExamples.filter(item => item !== example).slice(0, 3);
+    const options = [...new Set([example, ...distractors])];
+    if (options.length >= 3) {
+      questions.push({
+        type: 'core',
+        question: `哪个句子最符合“${theme.label}”这个主题？`,
+        answer: example,
+        options,
+        sortKey: `${theme.id}|core|${example}`,
+      });
+    }
+  });
+
+  prompts.forEach(prompt => {
+    const distractors = otherPrompts.filter(item => item !== prompt).slice(0, 3);
+    const options = [...new Set([prompt, ...distractors])];
+    if (options.length >= 3) {
+      questions.push({
+        type: 'prompt',
+        question: '下面哪个更适合作为这个主题的开口任务？',
+        answer: prompt,
+        options,
+        sortKey: `${theme.id}|prompt|${prompt}`,
+      });
+    }
+  });
+
+  confusions.forEach((item, index) => {
+    questions.push({
+      type: 'confusion',
+      question: item.tip,
+      answer: item.left,
+      options: getStableOptionOrder(theme.id, `${theme.id}-theme-confusion-${index}`, [item.left, item.right]),
+      sortKey: `${theme.id}|confusion|${item.left}|${item.right}`,
+    });
+  });
+
+  return questions;
+}
+
+function getThemeQuestionTypes(theme) {
+  return [...new Set((theme.quiz || []).map(item => item.type).filter(Boolean))];
+}
+
+function getThemeTypeSnapshot(theme, type) {
+  const stat = theme?.stats?.progress?.typeStats?.[type] || { correct: 0, total: 0 };
+  const total = Math.max(0, Number(stat.total || 0));
+  const correct = Math.max(0, Math.min(total, Number(stat.correct || 0)));
+  const wrong = Math.max(0, total - correct);
+  const accuracy = total ? Math.round((correct / total) * 100) : null;
+  return {
+    themeId: theme.id,
+    themeLabel: theme.label,
+    unitId: theme.unit.id,
+    jump: theme.jump,
+    type,
+    label: getThemeQuestionTypeLabel(type),
+    total,
+    correct,
+    wrong,
+    accuracy,
+  };
+}
+
+function getThemeWeakTypePreview(theme, limit = 2) {
+  return getThemeQuestionTypes(theme)
+    .map(type => getThemeTypeSnapshot(theme, type))
+    .filter(item => item.total > 0)
+    .sort((a, b) => {
+      const accuracyDiff = (a.accuracy ?? 101) - (b.accuracy ?? 101);
+      if (accuracyDiff !== 0) return accuracyDiff;
+      const wrongDiff = b.wrong - a.wrong;
+      if (wrongDiff !== 0) return wrongDiff;
+      return a.label.localeCompare(b.label, 'zh-Hans-CN');
+    })
+    .slice(0, limit);
+}
+
+function getThemeWeakTypeItems(data = getThemeReviewData(), limit = 3) {
+  return data
+    .flatMap(theme => getThemeWeakTypePreview(theme, 3))
+    .filter(item => item.wrong > 0)
+    .sort((a, b) => {
+      const accuracyDiff = (a.accuracy ?? 101) - (b.accuracy ?? 101);
+      if (accuracyDiff !== 0) return accuracyDiff;
+      const wrongDiff = b.wrong - a.wrong;
+      if (wrongDiff !== 0) return wrongDiff;
+      return a.themeLabel.localeCompare(b.themeLabel, 'zh-Hans-CN');
+    })
+    .slice(0, limit);
+}
 
 let quizState = {};
+let currentUnitIndex = 0;
+
+const dictationState = {
+  activeUnitId: unitsData[0]?.id || '',
+  currentIndex: 0,
+  done: [],
+  correct: 0,
+  queue: [],
+  mistakes: [],
+  retryMode: false,
+};
+
+const mistakeRedoState = {};
+
+function htmlEscape(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function escapeJsString(value) {
+  return String(value ?? '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, '\\\'');
+}
+
+function getPageStorageName() {
+  const parts = (location.pathname || '').split('/');
+  return parts[parts.length - 1] || 'english-learning.html';
+}
+
+function getAssistMistakeKey(unitId) {
+  return `english-assist-mistakes:${getPageStorageName()}:${unitId}`;
+}
+
+function getTodayKey() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+function getDailyProgressKey(unitId) {
+  return `english-learning-daily:${getPageStorageName()}:${getTodayKey()}:${unitId}`;
+}
+
+function readDailyProgress(unitId) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(getDailyProgressKey(unitId)) || '{}');
+    return {
+      listenedWords: Array.isArray(parsed.listenedWords) ? parsed.listenedWords : [],
+      dictationCorrect: Array.isArray(parsed.dictationCorrect) ? parsed.dictationCorrect : [],
+      quizCompleted: Boolean(parsed.quizCompleted),
+      outputTasks: Array.isArray(parsed.outputTasks) ? parsed.outputTasks : [],
+      confusionQuizCompleted: Boolean(parsed.confusionQuizCompleted),
+      confusionAnswers: parsed.confusionAnswers && typeof parsed.confusionAnswers === 'object' ? parsed.confusionAnswers : {},
+    };
+  } catch {
+    return { listenedWords: [], dictationCorrect: [], quizCompleted: false, outputTasks: [], confusionQuizCompleted: false, confusionAnswers: {} };
+  }
+}
+
+function writeDailyProgress(unitId, data) {
+  localStorage.setItem(getDailyProgressKey(unitId), JSON.stringify({
+    listenedWords: Array.isArray(data.listenedWords) ? data.listenedWords : [],
+    dictationCorrect: Array.isArray(data.dictationCorrect) ? data.dictationCorrect : [],
+    quizCompleted: Boolean(data.quizCompleted),
+    outputTasks: Array.isArray(data.outputTasks) ? data.outputTasks : [],
+    confusionQuizCompleted: Boolean(data.confusionQuizCompleted),
+    confusionAnswers: data.confusionAnswers && typeof data.confusionAnswers === 'object' ? data.confusionAnswers : {},
+  }));
+}
+
+function updateDailyProgress(unitId, updater) {
+  const current = readDailyProgress(unitId);
+  const next = updater({ ...current });
+  writeDailyProgress(unitId, next || current);
+}
+
+function readMistakes(unitId) {
+  try {
+    return JSON.parse(localStorage.getItem(getAssistMistakeKey(unitId)) || '[]');
+  } catch {
+    return [];
+  }
+}
+
+function writeMistakes(unitId, items) {
+  localStorage.setItem(getAssistMistakeKey(unitId), JSON.stringify(items.slice(-20)));
+}
+
+function recordAssistMistake(unitId, question, selected, correct) {
+  if (!unitId || !question || !correct || selected === correct) return;
+  const items = readMistakes(unitId);
+  const last = items[items.length - 1];
+  if (
+    last &&
+    String(last.question) === String(question) &&
+    String(last.selected) === String(selected) &&
+    String(last.correct) === String(correct) &&
+    Math.abs((last.time || 0) - Date.now()) < 1500
+  ) {
+    return;
+  }
+  items.push({
+    question: String(question).replace(/\s+/g, ' ').trim(),
+    selected: String(selected).replace(/\s+/g, ' ').trim(),
+    correct: String(correct).replace(/\s+/g, ' ').trim(),
+    time: Date.now()
+  });
+  writeMistakes(unitId, items);
+}
+
+function getMistakeItemId(item) {
+  return getAudioHash(`${item.time || 0}|${item.question || ''}|${item.correct || ''}|${item.selected || ''}`);
+}
+
+function removeMistakeRecord(unitId, mistakeId) {
+  const next = readMistakes(unitId).filter(item => getMistakeItemId(item) !== mistakeId);
+  writeMistakes(unitId, next);
+}
+
+function ensureMistakeRedoState(unitId, mistakeId) {
+  if (!mistakeRedoState[unitId]) mistakeRedoState[unitId] = {};
+  if (!mistakeRedoState[unitId][mistakeId]) {
+    mistakeRedoState[unitId][mistakeId] = {
+      input: '',
+      feedback: '',
+      result: null,
+      showAnswer: false,
+    };
+  }
+  return mistakeRedoState[unitId][mistakeId];
+}
+
+function getWordLessonKey(unitId) {
+  return `english-word-lesson:${location.pathname}:${unitId}`;
+}
+
+function readWordLessonProgress(unitId) {
+  try {
+    return JSON.parse(localStorage.getItem(getWordLessonKey(unitId)) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+function writeWordLessonProgress(unitId, data) {
+  localStorage.setItem(getWordLessonKey(unitId), JSON.stringify(data));
+}
+
+function setWordMastery(unitId, word, level) {
+  if (!unitId || !word) return;
+  const progress = readWordLessonProgress(unitId);
+  const current = Number(progress[word] || 0);
+  progress[word] = Math.max(current, level);
+  writeWordLessonProgress(unitId, progress);
+}
+
+function getUnitVocabulary(unit) {
+  const seen = new Set();
+  return [...(unit.words || []), ...(unit.phrases || [])].filter(item => {
+    if (!item || !item.en) return false;
+    const key = normalizeVocabKey(item.en);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function getDictationWords(unit) {
+  return getUnitVocabulary(unit).filter(item => /[a-zA-Z]/.test(item.en || ''));
+}
+
+function buildDictationHint(expected, actual) {
+  const want = normalizeVocabKey(expected);
+  const got = normalizeVocabKey(actual);
+  if (!got) return '先听一遍，再试着把英文写出来。';
+  if (got === want) return '拼写正确，继续下一个。';
+  if (got.replace(/\s+/g, '') === want.replace(/\s+/g, '')) {
+    return '字母基本对了，注意单词或短语之间的空格。';
+  }
+  if (Math.abs(got.length - want.length) >= 2) {
+    return got.length < want.length ? '好像少写了几个字母，按发音再补一遍。' : '好像多写了几个字母，重新慢慢拼一遍。';
+  }
+  for (let i = 0; i < Math.max(want.length, got.length); i++) {
+    if (want[i] !== got[i]) {
+      if (!want[i]) return '后面多写了一点，删掉尾部再试。';
+      if (!got[i]) return `后面还差一个字母，看看是不是 ${want[i]}。`;
+      return `注意第 ${i + 1} 个位置，应该更接近 ${want[i]}。`;
+    }
+  }
+  return '顺序有点乱，听一遍慢速发音再写一次。';
+}
+
+function getTotalMistakeCount() {
+  return unitsData.reduce((total, unit) => total + readMistakes(unit.id).length, 0);
+}
+
+function getRecentMistakes(limit = 3) {
+  return unitsData.flatMap(unit => readMistakes(unit.id).map(item => ({ ...item, unitId: unit.id })))
+    .sort((a, b) => (b.time || 0) - (a.time || 0))
+    .slice(0, limit);
+}
+
+function getMasterySummary() {
+  let learned = 0;
+  let total = 0;
+  unitsData.forEach(unit => {
+    const progress = readWordLessonProgress(unit.id);
+    getUnitVocabulary(unit).forEach(item => {
+      total++;
+      if (Number(progress[item.en] || 0) >= 3) {
+        learned++;
+      }
+    });
+  });
+  return { learned, total };
+}
+
+function getCurrentUnit() {
+  return unitsData[currentUnitIndex] || unitsData[0];
+}
+
+function findUnitIndex(unitId) {
+  return unitsData.findIndex(unit => unit.id === unitId);
+}
+
+function getMistakesSectionForUnit(unitId) {
+  return document.getElementById(`mistake-redo-${unitId}`)
+    || document.querySelector(`.assist-box[data-assist-unit="${unitId}"] .assist-mistakes`);
+}
+
+function getDictationSectionForUnit(unitId) {
+  return document.getElementById(`dictation-section-${unitId}`);
+}
+
+function getCurrentMistakesSection() {
+  return getMistakesSectionForUnit(getCurrentUnit().id);
+}
+
+function getCurrentDictationSection() {
+  return getDictationSectionForUnit(getCurrentUnit().id);
+}
+
+function getPreferredMistakeUnitId() {
+  const currentUnitId = getCurrentUnit().id;
+  if (readMistakes(currentUnitId).length) {
+    return currentUnitId;
+  }
+  const latest = getRecentMistakes(1)[0];
+  return latest?.unitId || currentUnitId;
+}
+
+function goToNextUnit(unitId) {
+  const currentIndex = findUnitIndex(unitId);
+  if (currentIndex < 0) return;
+  const nextIndex = Math.min(unitsData.length - 1, currentIndex + 1);
+  switchUnit(nextIndex);
+  const guideCard = document.getElementById(`unit-guide-${getCurrentUnit().id}`);
+  scrollIntoViewAndFlash(guideCard || document.querySelector(`#${getCurrentUnit().id} .section-card`));
+}
+
+function scrollIntoViewAndFlash(target) {
+  if (!target) return;
+  const sectionCard = target.classList.contains('section-card') ? target : target.closest('.section-card');
+  if (sectionCard) {
+    const header = sectionCard.querySelector('.section-header');
+    if (header && !header.classList.contains('open')) setSectionOpen(header, true);
+  }
+  target.classList.remove('flash');
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  requestAnimationFrame(() => {
+    target.classList.add('flash');
+  });
+  window.setTimeout(() => {
+    target.classList.remove('flash');
+  }, 1200);
+}
+
+function getListeningTarget(unit) {
+  return Math.max(1, Math.min(5, getUnitVocabulary(unit).length || 1));
+}
+
+function getDictationTarget(unit) {
+  const count = getDictationWords(unit).length;
+  if (!count) return 0;
+  return Math.max(1, Math.min(3, count));
+}
+
+function getOutputTaskKeys(unit) {
+  if (!unit || !unit.coreSubstitutions?.length || !unit.pictureSpeakingTasks?.length) return [];
+  return ['substitution', 'picture', 'retell'];
+}
+
+function getOutputTaskTarget(unit) {
+  return getOutputTaskKeys(unit).length;
+}
+
+function getOutputTaskLabel(key) {
+  const map = {
+    substitution: '核心替换句',
+    picture: '看图说话',
+    retell: '复述模板',
+  };
+  return map[key] || key;
+}
+
+function getStableOptionOrder(unitId, questionId, options) {
+  return [...options].sort((a, b) => {
+    const aKey = getAudioHash(`${unitId}|${questionId}|${a}`);
+    const bKey = getAudioHash(`${unitId}|${questionId}|${b}`);
+    return aKey.localeCompare(bKey);
+  });
+}
+
+function getConfusionQuizQuestions(unit) {
+  if (!unit?.commonConfusions?.length) return [];
+  return unit.commonConfusions.map((item, index) => ({
+    q: item.tip,
+    answer: item.left,
+    options: getStableOptionOrder(unit.id, `${unit.id}-confusion-${index}`, [item.left, item.right]),
+    tip: item.tip,
+    id: `${unit.id}-confusion-${index}`,
+  }));
+}
+
+function getParentChecklist(unit) {
+  const listeningTarget = getListeningTarget(unit);
+  const dictationTarget = getDictationTarget(unit);
+  const outputTarget = getOutputTaskTarget(unit);
+  const confusionTarget = getConfusionQuizQuestions(unit).length ? 1 : 0;
+  return [
+    { key: 'listen', label: `能听完至少 ${listeningTarget} 个核心词`, desc: '点词卡听发音后自动计入。', done: daily => daily.listenedWords.length >= listeningTarget },
+    { key: 'dictation', label: `能拼对至少 ${dictationTarget || 0} 个听写词`, desc: '听写拼写自动计入。', done: daily => dictationTarget === 0 || daily.dictationCorrect.length >= dictationTarget },
+    { key: 'output', label: `能完成 ${outputTarget || 0} 个口语输出步骤`, desc: '替换句、看图说话、复述都勾完。', done: daily => outputTarget === 0 || getOutputTaskKeys(unit).every(key => daily.outputTasks.includes(key)) },
+    { key: 'confusion', label: confusionTarget ? '能分清本单元易错句型' : '本单元暂无易错句型小测', desc: confusionTarget ? '易错小测全部答对后完成。' : '无需额外检查。', done: daily => confusionTarget === 0 || daily.confusionQuizCompleted },
+    { key: 'quiz', label: '能独立完成单元小测验', desc: '完整做完一次单元小测。', done: daily => daily.quizCompleted },
+  ];
+}
+
+function getHubProgress(unit) {
+  const daily = readDailyProgress(unit.id);
+  const listeningTarget = getListeningTarget(unit);
+  const dictationTarget = getDictationTarget(unit);
+  const outputTaskKeys = getOutputTaskKeys(unit);
+  const outputTarget = getOutputTaskTarget(unit);
+  const outputCount = outputTaskKeys.filter(key => daily.outputTasks.includes(key)).length;
+  const confusionTarget = getConfusionQuizQuestions(unit).length ? 1 : 0;
+  const listenedCount = daily.listenedWords.length;
+  const dictationCount = daily.dictationCorrect.length;
+  const listeningRatio = listeningTarget ? Math.min(1, listenedCount / listeningTarget) : 1;
+  const dictationRatio = dictationTarget ? Math.min(1, dictationCount / dictationTarget) : 1;
+  const quizRatio = daily.quizCompleted ? 1 : 0;
+  const outputRatio = outputTarget ? Math.min(1, outputCount / outputTarget) : 1;
+  const confusionRatio = confusionTarget ? (daily.confusionQuizCompleted ? 1 : 0) : 1;
+  const ratios = [listeningRatio, dictationRatio, quizRatio, outputRatio, confusionRatio];
+  const percent = Math.round((ratios.reduce((sum, ratio) => sum + ratio, 0) / ratios.length) * 100);
+  const tasks = [
+    {
+      key: 'listen',
+      done: listenedCount >= listeningTarget,
+      label: `听核心词汇 ${Math.min(listenedCount, listeningTarget)} / ${listeningTarget}`,
+      desc: `至少听 ${listeningTarget} 个单词或短语。`,
+    },
+    {
+      key: 'dictation',
+      done: dictationTarget === 0 || dictationCount >= dictationTarget,
+      label: dictationTarget ? `做听写拼写 ${Math.min(dictationCount, dictationTarget)} / ${dictationTarget}` : '本单元暂无听写词',
+      desc: dictationTarget ? `至少答对 ${dictationTarget} 个听写词。` : '当前单元没有可用的听写词。',
+    },
+    {
+      key: 'quiz',
+      done: daily.quizCompleted,
+      label: daily.quizCompleted ? '完成小测验 1 / 1' : '完成小测验 0 / 1',
+      desc: '把当前单元小测完整做完一次。',
+    },
+    {
+      key: 'output',
+      done: outputTarget === 0 || outputCount >= outputTarget,
+      label: outputTarget ? `口语输出 ${outputCount} / ${outputTarget}` : '本单元暂无口语任务',
+      desc: outputTarget ? '完成替换句、看图说话和复述三步。' : '当前单元没有配置口语输出任务。',
+    },
+    {
+      key: 'confusion',
+      done: confusionTarget === 0 || daily.confusionQuizCompleted,
+      label: confusionTarget ? (daily.confusionQuizCompleted ? '易错小测 1 / 1' : '易错小测 0 / 1') : '本单元暂无易错小测',
+      desc: confusionTarget ? '完成本单元易错句型对比小测。' : '当前单元没有易错对比题。',
+    }
+  ];
+  return { percent, tasks };
+}
+
+function getHubProgressText(progress) {
+  if (progress.percent >= 100) {
+    return '今天这单元已经完成，可以去错题再练里巩固一下。';
+  }
+  const nextTask = progress.tasks.find(item => !item.done);
+  if (!nextTask) return '继续保持今天的学习节奏。';
+  if (nextTask.key === 'listen') return '先去点开核心词汇，多听几遍标准发音。';
+  if (nextTask.key === 'dictation') return '下一步做听写拼写，把会听变成会写。';
+  if (nextTask.key === 'quiz') return '接着把单元小测做完，检查词句是否掌握。';
+  if (nextTask.key === 'output') return '现在进入口语输出，把会读的句子变成会说的内容。';
+  if (nextTask.key === 'confusion') return '最后做易错句型小测，把容易混的表达分清楚。';
+  return '把最后一个小任务做完，今天的单元任务就完成了。';
+}
+
+function getHubReward(progress, unit) {
+  const unitMistakes = readMistakes(unit.id).length;
+  if (progress.percent >= 100) {
+    return unitMistakes
+      ? {
+          done: true,
+          title: '今日任务完成，顺手清一清错题。',
+          text: `当前单元还有 ${unitMistakes} 道错题，去“错题再练”把薄弱点补上，记得会更牢。`,
+        }
+      : {
+          done: true,
+          title: '今日任务完成。',
+          text: '听词、拼写、小测、口语输出和易错对比都完成了，可以切换下一个单元，或者再跟读一遍课文巩固语感。',
+        };
+  }
+  if (progress.percent >= 67) {
+    return {
+      done: false,
+      title: '快完成了，再拿下最后一步。',
+      text: '已经进入收尾阶段，把最后一个小任务做完，今天这单元就能顺利通关。',
+    };
+  }
+  if (progress.percent >= 34) {
+    return {
+      done: false,
+      title: '已经进入状态了。',
+      text: '再完成一个小任务，进度条会明显往前走，孩子更容易保持学习节奏。',
+    };
+  }
+  return {
+    done: false,
+    title: '先拿下第一个小任务。',
+    text: '先点开几个核心词听发音，再去做听写，进入状态会更自然。',
+  };
+}
+
+function refreshHub() {
+  const unit = getCurrentUnit();
+  const mastery = getMasterySummary();
+  const mistakes = getRecentMistakes();
+  const currentProgress = readWordLessonProgress(unit.id);
+  const currentWords = getUnitVocabulary(unit);
+  const currentKnown = currentWords.filter(item => Number(currentProgress[item.en] || 0) >= 3).length;
+  const currentTotal = currentWords.length;
+  const progress = getHubProgress(unit);
+  const reward = getHubReward(progress, unit);
+
+  hubElements.unitCount.textContent = String(unitsData.length);
+  hubElements.masteryCount.textContent = `${mastery.learned} / ${mastery.total}`;
+  hubElements.mistakeCount.textContent = String(getTotalMistakeCount());
+  hubElements.title.textContent = `${unit.title} ${unit.subtitle}：先听词，再写词，最后做测验。`;
+  hubElements.subtitle.textContent = `当前单元已掌握 ${currentKnown} / ${currentTotal} 个词汇或短语。按听词、听写、小测、口语、易错对比推进。`;
+  hubElements.mistakeButton.textContent = `错题再练${getTotalMistakeCount() ? ` (${getTotalMistakeCount()})` : ''}`;
+  hubElements.progressPercent.textContent = `${progress.percent}%`;
+  hubElements.progressText.textContent = getHubProgressText(progress);
+  hubElements.progressFill.style.width = `${progress.percent}%`;
+  hubElements.progressSteps.innerHTML = progress.tasks.map((task, index) => `
+    <span class="hub-progress-step ${task.done ? 'done' : ''}">${task.done ? '✓' : index + 1} ${task.label}</span>
+  `).join('');
+
+  hubElements.taskList.innerHTML = progress.tasks.map((task, index) => `
+    <div class="hub-task ${task.done ? 'done' : ''}">
+      <span class="hub-task-mark">${task.done ? '✓' : index + 1}</span>
+      <div class="hub-task-text">
+        <strong>${task.key === 'listen' ? '先听核心词汇' : task.key === 'dictation' ? '做听写拼写' : task.key === 'quiz' ? '完成小测验' : task.key === 'output' ? '完成口语输出' : '易错句型小测'}</strong>
+        <span>${task.desc}</span>
+      </div>
+    </div>
+  `).join('');
+  hubElements.rewardBox.classList.toggle('done', Boolean(reward.done));
+  hubElements.rewardTitle.textContent = reward.title;
+  hubElements.rewardText.textContent = reward.text;
+  renderThemeReview();
+  refreshUnitGuide(unit.id);
+  renderGlobalMistakeArena();
+
+  if (!mistakes.length) {
+    hubElements.mistakePreview.innerHTML = `<div class="hub-empty">目前还没有错题。做完小测验后，答错的题会自动收集到这里，方便集中复习。</div>`;
+    return;
+  }
+
+  hubElements.mistakePreview.innerHTML = `<div class="hub-mistake-list">${
+    mistakes.map(item => `
+      <div class="hub-mistake-item">
+        <strong>${htmlEscape(item.question)}</strong>
+        <span>你选了 ${htmlEscape(item.selected)}，正确答案是 ${htmlEscape(item.correct)}</span>
+      </div>
+    `).join('')
+  }</div>`;
+}
+
+function jumpToThemeReview(themeId) {
+  showThemeReviewPage(themeId);
+}
+
+function getThemePriorityRank(theme) {
+  const pendingTask = theme.jump === 'confusion' ? !theme.stats.confusionDone : !theme.stats.outputDone;
+  if (theme.stats.weak) return 0;
+  if (!theme.stats.practiced) return 1;
+  if (pendingTask) return 2;
+  return 3;
+}
+
+function getThemePriorityThemes(data = getThemeReviewData()) {
+  return [...data].sort((a, b) => {
+    const rankDiff = getThemePriorityRank(a) - getThemePriorityRank(b);
+    if (rankDiff !== 0) return rankDiff;
+    const lastScoreDiff = a.stats.progress.lastScore - b.stats.progress.lastScore;
+    if (lastScoreDiff !== 0) return lastScoreDiff;
+    const roundDiff = a.stats.progress.rounds - b.stats.progress.rounds;
+    if (roundDiff !== 0) return roundDiff;
+    return a.label.localeCompare(b.label, 'zh-Hans-CN');
+  });
+}
+
+function getThemeCardFlag(theme) {
+  const pendingTask = theme.jump === 'confusion' ? !theme.stats.confusionDone : !theme.stats.outputDone;
+  if (theme.stats.weak) return { text: '薄弱', className: 'weak' };
+  if (!theme.stats.practiced) return { text: '待开始', className: 'pending' };
+  if (pendingTask) return { text: '待补', className: 'pending' };
+  return { text: '已刷', className: '' };
+}
+
+function getThemeTaskText(theme) {
+  if (theme.jump === 'confusion') {
+    return theme.stats.confusionDone ? '易错对比已完成' : '易错对比待完成';
+  }
+  return theme.stats.outputDone ? '口语输出已完成' : '口语输出待完成';
+}
+
+function renderThemeReview() {
+  if (!hubElements.themeReviewGrid) return;
+  const data = getThemeReviewData();
+  const practicedCount = data.filter(theme => theme.stats.practiced).length;
+  const weakThemes = getThemePriorityThemes(data).filter(theme => theme.stats.needsWork).slice(0, 3);
+  const weakTypeItems = getThemeWeakTypeItems(data, 3);
+  const themeMistakes = getThemePracticeMistakes(data);
+  const mistakeThemeButtons = [];
+  const seenMistakeThemes = new Set();
+  themeMistakes.forEach(item => {
+    if (seenMistakeThemes.has(item.themeId) || mistakeThemeButtons.length >= 2) return;
+    seenMistakeThemes.add(item.themeId);
+    mistakeThemeButtons.push(item);
+  });
+
+  if (hubElements.themeReviewBadge) {
+    hubElements.themeReviewBadge.textContent = `${data.length} 主题 | 已刷 ${practicedCount} | 错题 ${themeMistakes.length}`;
+  }
+
+  if (hubElements.themeReviewSummary) {
+    hubElements.themeReviewSummary.innerHTML = `
+      <div class="theme-review-summary-card">
+        <strong>今天已经刷了 ${practicedCount} / ${data.length} 个主题</strong>
+        <span>${practicedCount ? `累计完成 ${data.reduce((sum, theme) => sum + theme.stats.progress.rounds, 0)} 轮主题速练。` : '先从一个主题开始，速练和单元输出页会互相补位。'}</span>
+      </div>
+      <div class="theme-review-summary-card">
+        <strong>${weakThemes.length ? '优先补这几个主题' : '当前没有明显薄弱项'}</strong>
+        <span>${weakThemes.length ? '先回看最近一轮得分低或还没开始的主题。' : '可以直接去专题页开一轮混合冲刺。'}</span>
+        ${weakThemes.length ? `<div class="theme-review-focus">${weakThemes.map(theme => `<button type="button" onclick="jumpToThemeReview('${escapeJsString(theme.id)}')">${htmlEscape(theme.label)}</button>`).join('')}</div>` : ''}
+      </div>
+      <div class="theme-review-summary-card">
+        <strong>${weakTypeItems.length ? '今天最弱题型' : '题型诊断等待数据'}</strong>
+        <span>${weakTypeItems.length ? '先补低正确率题型，比只看总分更有效。' : '做完几题后，这里会自动显示最容易错的题型。'}</span>
+        ${weakTypeItems.length ? `<div class="theme-review-focus">${weakTypeItems.map(item => `<button type="button" class="weak" onclick="openThemeTypePractice('${escapeJsString(item.themeId)}','${escapeJsString(item.type)}')">${htmlEscape(item.themeLabel)} · ${htmlEscape(item.label)} ${item.accuracy}%</button>`).join('')}</div>` : ''}
+      </div>
+      <div class="theme-review-summary-card">
+        <strong>${themeMistakes.length ? `专题错题池 ${themeMistakes.length} 题` : '专题错题池为空'}</strong>
+        <span>${themeMistakes.length ? '主题速练和混合冲刺里的错题会自动进池，答对后会移出。' : '开始做专题速练后，错题会自动集中到这里。'}</span>
+        ${mistakeThemeButtons.length ? `<div class="theme-review-focus">${mistakeThemeButtons.map(item => `<button type="button" class="weak" onclick="jumpToThemeReview('${escapeJsString(item.themeId)}')">${htmlEscape(item.themeLabel)} · ${htmlEscape(item.typeLabel)}</button>`).join('')}</div>` : ''}
+      </div>
+    `;
+  }
+
+  hubElements.themeReviewGrid.innerHTML = data.map(theme => {
+    const flag = getThemeCardFlag(theme);
+    return `
+      <div class="theme-review-item ${theme.stats.weak ? 'weak' : ''}">
+        <div class="theme-review-item-top">
+          <strong>${htmlEscape(theme.label)}</strong>
+          <span class="theme-review-flag ${flag.className}">${flag.text}</span>
+        </div>
+        <span>${htmlEscape(theme.desc)}</span>
+        <em>${htmlEscape(theme.stats.statusText)} | ${htmlEscape(getThemeTaskText(theme))}</em>
+        <button type="button" onclick="jumpToThemeReview('${escapeJsString(theme.id)}')">${theme.stats.needsWork ? '先补这个主题' : '进入专项复习'}</button>
+      </div>
+    `;
+  }).join('');
+  enhanceInteractiveElements(hubElements.themeReviewGrid.parentElement || hubElements.themeReviewGrid);
+}
+
+function getThemeState(themeId, total = 0) {
+  if (!themeQuizState[themeId]) {
+    themeQuizState[themeId] = {
+      queue: [],
+      current: 0,
+      score: 0,
+      finished: false,
+      total,
+      answered: false,
+    };
+  }
+  if (total) themeQuizState[themeId].total = total;
+  return themeQuizState[themeId];
+}
+
+function buildThemeRound(theme) {
+  const pool = [...(theme.quiz || [])];
+  pool.sort((a, b) => String(a.sortKey || a.question).localeCompare(String(b.sortKey || b.question)));
+  const stats = readThemeProgress(theme.id);
+  if (pool.length > 1) {
+    const shift = stats.rounds % pool.length;
+    const rotated = pool.slice(shift).concat(pool.slice(0, shift));
+    return rotated.slice(0, Math.min(3, rotated.length));
+  }
+  return pool.slice(0, Math.min(3, pool.length));
+}
+
+function renderThemeQuiz(theme) {
+  const pool = theme.quiz || [];
+  const stats = readThemeProgress(theme.id);
+  const state = getThemeState(theme.id, pool.length);
+  if (!pool.length) {
+    return `<div class="theme-quiz"><div class="theme-quiz-result">这个主题暂时没有可用的速练题。</div></div>`;
+  }
+
+  if (!state.queue.length) {
+    state.queue = buildThemeRound(theme);
+    state.total = state.queue.length;
+  }
+
+  const questions = state.queue;
+
+  if (state.finished || state.current >= questions.length) {
+    return `<div class="theme-quiz">
+      <div class="theme-quiz-head">
+        <h4>主题速练</h4>
+        <span class="theme-quiz-progress">${state.score} / ${questions.length}</span>
+      </div>
+      <div class="theme-quiz-result">这一轮答对 ${state.score} / ${questions.length} 题。今日已完成 ${stats.rounds} 轮，最佳成绩 ${stats.bestScore} 分，最近一轮 ${stats.lastScore} 分。</div>
+      <div class="theme-quiz-actions">
+        <button type="button" onclick="restartThemeQuiz('${escapeJsString(theme.id)}')">再来一轮</button>
+      </div>
+    </div>`;
+  }
+
+  const current = questions[state.current];
+  const options = getStableOptionOrder(theme.id, current.sortKey || current.question, [...new Set(current.options || [])]);
+  if (!options.includes(current.answer)) options.push(current.answer);
+
+  return `<div class="theme-quiz" id="theme-quiz-${theme.id}">
+    <div class="theme-quiz-head">
+      <h4>主题速练</h4>
+      <span class="theme-quiz-progress">第 ${state.current + 1} / ${questions.length} 题</span>
+    </div>
+    <div class="theme-quiz-question">${htmlEscape(current.question)}</div>
+    <div class="quiz-options">
+      ${options.map(option => `<div class="quiz-option" onclick="answerThemeQuiz('${escapeJsString(theme.id)}','${escapeJsString(option)}')">${htmlEscape(option)}</div>`).join('')}
+    </div>
+    <div class="theme-quiz-actions">
+      <button type="button" style="display:none;" id="theme-next-${theme.id}" onclick="nextThemeQuiz('${escapeJsString(theme.id)}')">下一题</button>
+      <button type="button" onclick="restartThemeQuiz('${escapeJsString(theme.id)}')">重置</button>
+    </div>
+  </div>`;
+}
+
+function buildThemeSprintRound(data = getThemeReviewData()) {
+  const orderedThemes = getThemePriorityThemes(data);
+  const maxSize = Math.min(6, orderedThemes.reduce((sum, theme) => sum + (theme.quiz?.length || 0), 0));
+  const sprintProgress = readThemeSprintProgress();
+  const questionSets = orderedThemes.map((theme, themeIndex) => {
+    const sorted = [...(theme.quiz || [])].sort((a, b) => String(a.sortKey || a.question).localeCompare(String(b.sortKey || b.question)));
+    const shiftBase = sorted.length ? (sprintProgress.rounds + themeSprintState.rotationOffset + theme.stats.progress.rounds + themeIndex) % sorted.length : 0;
+    return { theme, sorted, shiftBase };
+  });
+  const queue = [];
+  const used = new Set();
+
+  for (let offset = 0; queue.length < maxSize && offset < 8; offset++) {
+    questionSets.forEach(({ theme, sorted, shiftBase }) => {
+      if (!sorted.length || queue.length >= maxSize) return;
+      const item = sorted[(shiftBase + offset) % sorted.length];
+      const itemKey = `${theme.id}|${item.sortKey || item.question}|${item.answer}`;
+      if (used.has(itemKey)) return;
+      used.add(itemKey);
+      queue.push({
+        ...item,
+        itemKey,
+        themeId: theme.id,
+        themeLabel: theme.label,
+        unitId: theme.unit.id,
+        jump: theme.jump,
+      });
+    });
+  }
+
+  return queue;
+}
+
+function ensureThemeSprintState(data = getThemeReviewData()) {
+  if (!themeSprintState.queue.length) {
+    themeSprintState.queue = buildThemeSprintRound(data);
+    themeSprintState.current = 0;
+    themeSprintState.score = 0;
+    themeSprintState.finished = false;
+    themeSprintState.answered = false;
+  }
+  return themeSprintState;
+}
+
+function renderThemeSprintSection(data = getThemeReviewData()) {
+  const sprintProgress = readThemeSprintProgress();
+  const totalRounds = data.reduce((sum, theme) => sum + theme.stats.progress.rounds, 0);
+  const practicedCount = data.filter(theme => theme.stats.practiced).length;
+  const weakThemes = getThemePriorityThemes(data).filter(theme => theme.stats.needsWork).slice(0, 4);
+  const weakTypeItems = getThemeWeakTypeItems(data, 4);
+  const themeMistakes = getThemePracticeMistakes(data).slice(0, 6);
+  const state = ensureThemeSprintState(data);
+  const current = state.queue[state.current];
+
+  let quizHtml = `<div class="theme-sprint-result">当前还没有可用的混合题。</div>`;
+  if (state.queue.length) {
+    if (state.finished || state.current >= state.queue.length) {
+      quizHtml = `
+        <div class="theme-sprint-result">
+          这一轮混合冲刺答对 ${state.score} / ${state.queue.length} 题。
+          ${weakThemes.length ? `建议先回看 ${weakThemes.slice(0, 2).map(theme => theme.label).join('、')}。` : '可以直接再开一轮，继续巩固不同主题。'}
+        </div>
+        <div class="theme-sprint-result-actions">
+          ${weakThemes.slice(0, 2).map(theme => `<button type="button" onclick="jumpToThemeReview('${escapeJsString(theme.id)}')">回看 ${htmlEscape(theme.label)}</button>`).join('')}
+          <button type="button" onclick="restartThemeSprint()">再来一轮</button>
+        </div>
+      `;
+    } else if (current) {
+      const options = getStableOptionOrder('theme-sprint', `${current.itemKey}|${state.current}`, [...new Set(current.options || [])]);
+      if (!options.includes(current.answer)) options.push(current.answer);
+      quizHtml = `
+        <div class="theme-sprint-head">
+          <h5>混合冲刺</h5>
+          <span class="theme-sprint-progress">第 ${state.current + 1} / ${state.queue.length} 题</span>
+        </div>
+        <div class="theme-sprint-question">${htmlEscape(current.question)}</div>
+        <div class="theme-sprint-tag">${htmlEscape(current.themeLabel)}</div>
+        <div class="quiz-options">
+          ${options.map(option => `<div class="quiz-option" onclick="answerThemeSprint('${escapeJsString(option)}')">${htmlEscape(option)}</div>`).join('')}
+        </div>
+        <div class="theme-sprint-actions">
+          <button type="button" style="display:none;" id="theme-sprint-next" onclick="nextThemeSprint()">下一题</button>
+          <button type="button" onclick="restartThemeSprint()">换一轮</button>
+        </div>
+      `;
+    }
+  }
+
+  return `
+    <div class="theme-sprint-shell">
+      <div class="theme-sprint-top">
+        <div class="theme-sprint-copy">
+          <h3>考前冲刺模式</h3>
+          <p>每轮混合抽题，优先覆盖最近得分低、还没刷过或单元输出还没补齐的主题。先冲一轮，再回看薄弱主题。</p>
+          <div class="theme-sprint-stats">
+            <div class="theme-sprint-stat">
+              <strong>${practicedCount}</strong>
+              <span>今日已刷主题</span>
+            </div>
+            <div class="theme-sprint-stat">
+              <strong>${weakThemes.length}</strong>
+              <span>优先回看主题</span>
+            </div>
+            <div class="theme-sprint-stat">
+              <strong>${sprintProgress.rounds}</strong>
+              <span>今日冲刺轮次</span>
+            </div>
+            <div class="theme-sprint-stat">
+              <strong>${sprintProgress.rounds ? `${sprintProgress.bestScore}/${Math.max(1, state.queue.length || 6)}` : '--'}</strong>
+              <span>冲刺最佳成绩</span>
+            </div>
+          </div>
+        </div>
+        <div class="theme-sprint-focus-box">
+          <h4>先补哪里</h4>
+          <p>${weakThemes.length ? '先补最近得分低、还没刷，或单元专项还没完成的主题。' : '当前没有明显薄弱项，直接开一轮混合冲刺即可。'}</p>
+          ${weakThemes.length ? `
+            <div class="theme-sprint-focus-list">
+              ${weakThemes.map(theme => `
+                <button type="button" class="theme-sprint-focus-item ${theme.stats.weak ? 'weak' : ''}" onclick="jumpToThemeReview('${escapeJsString(theme.id)}')">
+                  ${htmlEscape(theme.label)}
+                  <small>${htmlEscape(theme.stats.statusText)}</small>
+                </button>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+      <div class="theme-sprint-diagnostics">
+        <div class="theme-sprint-diagnostic-box">
+          <h4>今日最弱题型</h4>
+          <p>${weakTypeItems.length ? '优先回看正确率最低的题型，别只盯着主题总分。' : '做完主题速练或冲刺题后，这里会自动抓出最容易错的题型。'}</p>
+          ${weakTypeItems.length ? `
+            <div class="theme-sprint-diagnostic-list">
+              ${weakTypeItems.map(item => `
+                <div class="theme-sprint-diagnostic-item">
+                  <div class="theme-sprint-diagnostic-copy">
+                    <strong>${htmlEscape(item.themeLabel)} · ${htmlEscape(item.label)}</strong>
+                    <span>已做 ${item.total} 题，错了 ${item.wrong} 题。</span>
+                    <span class="theme-sprint-diagnostic-score">正确率 ${item.accuracy}%</span>
+                  </div>
+                  <button type="button" onclick="openThemeTypePractice('${escapeJsString(item.themeId)}','${escapeJsString(item.type)}')">去补这类</button>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+        <div class="theme-sprint-diagnostic-box">
+          <h4>冲刺记录</h4>
+          <p>${sprintProgress.rounds ? `今天已完成 ${sprintProgress.rounds} 轮混合冲刺，最佳 ${sprintProgress.bestScore} 分，最近一轮 ${sprintProgress.lastScore} 分。` : '今天还没有完成混合冲刺，先开一轮，系统才会给出更可靠的题型诊断。'}</p>
+          <div class="theme-sprint-result-actions">
+            <button type="button" onclick="restartThemeSprint()">${sprintProgress.rounds ? '再开一轮' : '开始第一轮'}</button>
+            ${weakThemes[0] ? `<button type="button" onclick="jumpToThemeReview('${escapeJsString(weakThemes[0].id)}')">先看 ${htmlEscape(weakThemes[0].label)}</button>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="theme-mistake-pool">
+        <h4>专题错题回练池</h4>
+        <p>${themeMistakes.length ? '先在这里把专题错题答对，再去刷新一轮混合冲刺。' : '主题速练和混合冲刺里答错的题，会自动收集到这里。'}</p>
+        ${themeMistakes.length ? `
+          <div class="theme-mistake-list">
+            ${themeMistakes.map(item => `
+              <div class="theme-mistake-item" id="theme-mistake-${htmlEscape(item.id)}">
+                <div class="theme-mistake-head">
+                  <div class="theme-mistake-copy">
+                    <strong>${htmlEscape(item.themeLabel)} · ${htmlEscape(item.typeLabel)}</strong>
+                    <span>${htmlEscape(item.sourceLabel)} | 上次你选了 ${htmlEscape(item.selected || '未作答')}</span>
+                  </div>
+                  <button type="button" onclick="openThemeTypePractice('${escapeJsString(item.themeId)}','${escapeJsString(item.type)}')">去补这类</button>
+                </div>
+                <div class="theme-mistake-question">${htmlEscape(item.question)}</div>
+                <div class="quiz-options">
+                  ${getStableOptionOrder(item.themeId, `${item.id}|redo`, [...new Set(item.options && item.options.length ? item.options : [item.selected, item.correct].filter(Boolean))]).map(option => `
+                    <div class="quiz-option" onclick="answerThemePracticeMistake('${escapeJsString(item.id)}','${escapeJsString(option)}')">${htmlEscape(option)}</div>
+                  `).join('')}
+                </div>
+                <div class="theme-mistake-feedback" id="theme-mistake-feedback-${htmlEscape(item.id)}">正确答案是 ${htmlEscape(item.correct)}。答对后会自动移出错题池。</div>
+                <div class="theme-mistake-actions">
+                  <button type="button" onclick="jumpToThemeReview('${escapeJsString(item.themeId)}')">回到主题卡</button>
+                  <button type="button" onclick="removeThemePracticeMistake('${escapeJsString(item.id)}')">移出题池</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+      <div class="theme-sprint-quiz-box">
+        <h4>混合题组</h4>
+        <p>这一轮会混合多个专题的句型、开口任务和易错点。累计主题速练 ${totalRounds} 轮。</p>
+        <div class="theme-sprint-quiz" id="themeSprintQuiz">${quizHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderThemePageCard(theme) {
+  const weakTypes = getThemeWeakTypePreview(theme, 2);
+  return `
+    <div class="theme-page-card ${theme.stats.weak ? 'weak' : ''}" id="theme-card-${htmlEscape(theme.id)}">
+      <h3>${htmlEscape(theme.label)}</h3>
+      <p>${htmlEscape(theme.desc)}</p>
+      <span class="theme-page-meta">${htmlEscape(theme.unit.title)} ${htmlEscape(theme.unit.subtitle)}</span>
+      <div class="theme-page-block">
+        <h4>今日状态</h4>
+        <div class="theme-page-list">
+          <span>${htmlEscape(theme.stats.statusText)}</span>
+          <span>${htmlEscape(getThemeTaskText(theme))}</span>
+        </div>
+      </div>
+      ${weakTypes.length ? `
+        <div class="theme-page-block">
+          <h4>薄弱题型</h4>
+          <div class="theme-type-chip-list">
+            ${weakTypes.map(item => `
+              <button type="button" class="theme-type-chip weak" onclick="openThemeTypePractice('${escapeJsString(theme.id)}','${escapeJsString(item.type)}')">
+                ${htmlEscape(item.label)}
+                <small>正确率 ${item.accuracy}% (${item.correct}/${item.total})</small>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+      <div class="theme-page-block">
+        <h4>核心句型</h4>
+        <div class="theme-page-list">
+          ${theme.core.map(item => `<span>${htmlEscape(item)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="theme-page-block">
+        <h4>开口任务</h4>
+        <div class="theme-page-list">
+          ${theme.prompts.map(item => `<span>${htmlEscape(item)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="theme-page-block">
+        <h4>易错提醒</h4>
+        <div class="theme-page-list">
+          ${theme.confusion.map(item => `<span>${htmlEscape(item)}</span>`).join('')}
+        </div>
+      </div>
+      <div class="theme-page-actions">
+        <button type="button" onclick="openThemeUnit('${escapeJsString(theme.unit.id)}','output')">去口语输出</button>
+        <button type="button" onclick="openThemeUnit('${escapeJsString(theme.unit.id)}','${escapeJsString(theme.jump)}')">去专项练习</button>
+      </div>
+      ${renderThemeQuiz(theme)}
+    </div>
+  `;
+}
+
+function renderThemeReviewPageContent() {
+  const page = document.getElementById('theme-review-page');
+  if (!page) return;
+  const themeReviewData = getThemeReviewData();
+  page.innerHTML = `
+    <div class="unit-title" style="background:linear-gradient(90deg, #0f766e, #34d399)">
+      专项复习页
+      <small>按能力主题集中复习，不按单元切碎来回找</small>
+    </div>
+    ${renderThemeSprintSection(themeReviewData)}
+    <div class="theme-page-nav">
+      ${themeReviewData.map(theme => `
+        <button type="button" onclick="showThemeReviewPage('${escapeJsString(theme.id)}')">${htmlEscape(theme.label)}</button>
+      `).join('')}
+    </div>
+    <div class="theme-page-grid">
+      ${themeReviewData.map(theme => renderThemePageCard(theme)).join('')}
+    </div>
+  `;
+  enhanceInteractiveElements(page);
+}
+
+function showThemeReviewPage(themeId = '') {
+  document.querySelectorAll('.unit-section').forEach(section => {
+    section.classList.remove('active');
+  });
+  renderThemeReviewPageContent();
+  const page = document.getElementById('theme-review-page');
+  if (!page) return;
+  page.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(button => {
+    button.classList.remove('active');
+    button.style.background = '';
+    button.style.color = '';
+  });
+  if (themeId) {
+    const target = document.getElementById(`theme-card-${themeId}`);
+    if (target) scrollIntoViewAndFlash(target);
+  } else {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function openThemeUnit(unitId, jumpType = 'output') {
+  if (jumpType === 'confusion') {
+    jumpToConfusionQuiz(unitId);
+    return;
+  }
+  jumpToOutputPractice(unitId);
+}
+
+function openThemeTypePractice(themeId, type = 'core') {
+  const theme = getThemeReviewData().find(item => item.id === themeId);
+  if (!theme) return;
+  if (type === 'confusion') {
+    openThemeUnit(theme.unit.id, 'confusion');
+    return;
+  }
+  openThemeUnit(theme.unit.id, 'output');
+}
+
+function answerThemePracticeMistake(mistakeId, selected) {
+  const item = getThemePracticeMistakes().find(record => record.id === mistakeId);
+  if (!item) return;
+  const card = document.getElementById(`theme-mistake-${mistakeId}`);
+  const options = card?.querySelectorAll('.quiz-option') || [];
+  options.forEach(opt => {
+    opt.classList.add('disabled');
+    if (opt.textContent === item.correct) opt.classList.add('correct');
+    if (opt.textContent === selected && selected !== item.correct) opt.classList.add('wrong');
+  });
+  const feedback = document.getElementById(`theme-mistake-feedback-${mistakeId}`);
+  const isCorrect = selected === item.correct;
+  if (feedback) {
+    feedback.textContent = isCorrect
+      ? `答对了：${item.correct}。这题会从错题池移出。`
+      : `还不对，正确答案是 ${item.correct}。先去补这类题，再回来重做。`;
+  }
+  speak(item.correct);
+  if (isCorrect) {
+    window.setTimeout(() => {
+      removeThemePracticeMistake(mistakeId);
+    }, 380);
+    return;
+  }
+  addThemePracticeMistake({
+    ...item,
+    selected,
+  });
+  window.setTimeout(() => {
+    refreshThemeSprint();
+    refreshHub();
+  }, 650);
+}
+
+function refreshThemeQuiz(themeId) {
+  const page = document.getElementById('theme-review-page');
+  if (!page) return;
+  const wasActive = page.classList.contains('active');
+  renderThemeReviewPageContent();
+  if (wasActive) page.classList.add('active');
+}
+
+function answerThemeQuiz(themeId, selected) {
+  const theme = getThemeReviewData().find(item => item.id === themeId);
+  const state = getThemeState(themeId, theme?.quiz?.length || 0);
+  if (!theme || state.finished || state.answered) return;
+  const current = state.queue[state.current];
+  if (!current) return;
+  const themeMistakeId = buildThemePracticeMistakeId({
+    themeId: theme.id,
+    type: current.type,
+    question: current.question,
+    correct: current.answer,
+  });
+  const card = document.getElementById(`theme-card-${themeId}`);
+  const options = card?.querySelectorAll('.quiz-option') || [];
+  options.forEach(opt => {
+    opt.classList.add('disabled');
+    if (opt.textContent === current.answer) opt.classList.add('correct');
+    if (opt.textContent === selected && selected !== current.answer) opt.classList.add('wrong');
+  });
+  if (selected === current.answer) {
+    state.score += 1;
+    removeThemePracticeMistake(themeMistakeId, false);
+  } else {
+    recordAssistMistake(theme.unit.id, `专题速练：${current.question}`, selected, current.answer);
+    addThemePracticeMistake({
+      themeId: theme.id,
+      themeLabel: theme.label,
+      unitId: theme.unit.id,
+      type: current.type,
+      source: 'theme',
+      sourceLabel: '主题速练',
+      question: current.question,
+      options: current.options,
+      selected,
+      correct: current.answer,
+    });
+    refreshMistakeRedoSections(theme.unit.id);
+  }
+  recordThemeTypeResult(theme.id, current.type, selected === current.answer);
+  state.answered = true;
+  const nextButton = document.getElementById(`theme-next-${themeId}`);
+  if (nextButton) nextButton.style.display = 'inline-flex';
+  speak(current.answer);
+  refreshHub();
+}
+
+function nextThemeQuiz(themeId) {
+  const theme = getThemeReviewData().find(item => item.id === themeId);
+  const state = getThemeState(themeId, theme?.quiz?.length || 0);
+  state.current += 1;
+  state.answered = false;
+  if (theme && state.current >= state.queue.length) {
+    state.finished = true;
+    const currentStats = readThemeProgress(themeId);
+    writeThemeProgress(themeId, {
+      rounds: currentStats.rounds + 1,
+      bestScore: Math.max(currentStats.bestScore, state.score),
+      lastScore: state.score,
+    });
+  }
+  refreshThemeQuiz(themeId);
+  refreshHub();
+}
+
+function restartThemeQuiz(themeId) {
+  const theme = getThemeReviewData().find(item => item.id === themeId);
+  themeQuizState[themeId] = {
+    queue: theme ? buildThemeRound(theme) : [],
+    current: 0,
+    score: 0,
+    finished: false,
+    total: Math.min(3, theme?.quiz?.length || 0),
+    answered: false,
+  };
+  refreshThemeQuiz(themeId);
+  refreshHub();
+}
+
+function refreshThemeSprint() {
+  const page = document.getElementById('theme-review-page');
+  if (!page) return;
+  const wasActive = page.classList.contains('active');
+  renderThemeReviewPageContent();
+  if (wasActive) page.classList.add('active');
+}
+
+function answerThemeSprint(selected) {
+  const state = ensureThemeSprintState();
+  if (state.finished || state.answered) return;
+  const current = state.queue[state.current];
+  if (!current) return;
+  const themeMistakeId = buildThemePracticeMistakeId({
+    themeId: current.themeId,
+    type: current.type,
+    question: current.question,
+    correct: current.answer,
+  });
+  const options = document.querySelectorAll('#themeSprintQuiz .quiz-option');
+  options.forEach(opt => {
+    opt.classList.add('disabled');
+    if (opt.textContent === current.answer) opt.classList.add('correct');
+    if (opt.textContent === selected && selected !== current.answer) opt.classList.add('wrong');
+  });
+  if (selected === current.answer) {
+    state.score += 1;
+    removeThemePracticeMistake(themeMistakeId, false);
+  } else {
+    recordAssistMistake(current.unitId, `冲刺模式(${current.themeLabel})：${current.question}`, selected, current.answer);
+    addThemePracticeMistake({
+      themeId: current.themeId,
+      themeLabel: current.themeLabel,
+      unitId: current.unitId,
+      type: current.type,
+      source: 'sprint',
+      sourceLabel: '混合冲刺',
+      question: current.question,
+      options: current.options,
+      selected,
+      correct: current.answer,
+    });
+    refreshMistakeRedoSections(current.unitId);
+  }
+  recordThemeTypeResult(current.themeId, current.type, selected === current.answer);
+  state.answered = true;
+  const nextButton = document.getElementById('theme-sprint-next');
+  if (nextButton) nextButton.style.display = 'inline-flex';
+  speak(current.answer);
+  refreshHub();
+}
+
+function nextThemeSprint() {
+  const state = ensureThemeSprintState();
+  state.current += 1;
+  state.answered = false;
+  if (state.current >= state.queue.length) {
+    state.finished = true;
+    const sprintProgress = readThemeSprintProgress();
+    writeThemeSprintProgress({
+      rounds: sprintProgress.rounds + 1,
+      bestScore: Math.max(sprintProgress.bestScore, state.score),
+      lastScore: state.score,
+    });
+  }
+  refreshThemeSprint();
+  refreshHub();
+}
+
+function restartThemeSprint() {
+  const data = getThemeReviewData();
+  themeSprintState.rotationOffset += 1;
+  themeSprintState.queue = buildThemeSprintRound(data);
+  themeSprintState.current = 0;
+  themeSprintState.score = 0;
+  themeSprintState.finished = false;
+  themeSprintState.answered = false;
+  refreshThemeSprint();
+  refreshHub();
+}
+
+function startCurrentLesson(unitId) {
+  const targetIndex = typeof unitId === 'string' ? findUnitIndex(unitId) : currentUnitIndex;
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  const wordsSection = document.querySelector(`#${getCurrentUnit().id} .section-card`);
+  scrollIntoViewAndFlash(wordsSection);
+}
+
+function jumpToOutputPractice(unitId) {
+  const targetIndex = typeof unitId === 'string' ? findUnitIndex(unitId) : currentUnitIndex;
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  scrollIntoViewAndFlash(document.getElementById(`output-practice-${getCurrentUnit().id}`));
+}
+
+function jumpToConfusionQuiz(unitId) {
+  const targetIndex = typeof unitId === 'string' ? findUnitIndex(unitId) : currentUnitIndex;
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  const target = document.getElementById(`confusion-quiz-${getCurrentUnit().id}`)
+    || document.getElementById(`confusion-compare-${getCurrentUnit().id}`)
+    || document.getElementById(`output-practice-${getCurrentUnit().id}`);
+  scrollIntoViewAndFlash(target);
+}
+
+function jumpToDictation(unitId) {
+  const targetIndex = typeof unitId === 'string' ? findUnitIndex(unitId) : currentUnitIndex;
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  scrollIntoViewAndFlash(getCurrentDictationSection());
+}
+
+function jumpToMistakes(unitId) {
+  if (!getTotalMistakeCount() && typeof unitId !== 'string') {
+    jumpToDictation();
+    return;
+  }
+  const targetUnitId = typeof unitId === 'string' ? unitId : getPreferredMistakeUnitId();
+  const targetIndex = findUnitIndex(targetUnitId);
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  const target = getCurrentMistakesSection() || getCurrentDictationSection();
+  scrollIntoViewAndFlash(target);
+}
+
+function jumpToQuiz(unitId) {
+  const targetIndex = typeof unitId === 'string' ? findUnitIndex(unitId) : currentUnitIndex;
+  switchUnit(targetIndex >= 0 ? targetIndex : currentUnitIndex);
+  const quizArea = document.getElementById(`quiz-${getCurrentUnit().id}`);
+  scrollIntoViewAndFlash(quizArea?.closest('.section-card') || quizArea);
+}
+
+function jumpToGlobalMistakes() {
+  if (!getTotalMistakeCount()) {
+    jumpToDictation();
+    return;
+  }
+  renderGlobalMistakeArena();
+  const shell = globalMistakeElements.arena?.querySelector('.mistake-arena-shell') || globalMistakeElements.arena;
+  scrollIntoViewAndFlash(shell);
+}
+
+function getQuizRecommendation(unitId, pct) {
+  const currentMistakeCount = readMistakes(unitId).length;
+  const totalMistakeCount = getTotalMistakeCount();
+  const currentIndex = findUnitIndex(unitId);
+  const hasNextUnit = currentIndex >= 0 && currentIndex < unitsData.length - 1;
+
+  if (pct < 60) {
+    return {
+      title: '先回到听写和词汇，再回来挑战。',
+      text: '这次分数说明核心词和拼写还不够稳。建议先做听写拼写，再回词汇区多听几遍发音。',
+      actions: [
+        `<button class="secondary" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">先练听写</button>`,
+        `<button class="ghost" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回词汇区</button>`,
+        `<button type="button" onclick="restartQuiz('${escapeJsString(unitId)}')">再做一次</button>`
+      ]
+    };
+  }
+
+  if (pct < 80) {
+    return {
+      title: currentMistakeCount ? '先把这几道错题补上，再做一轮会更稳。' : '已经掌握大半，再做一轮会更稳。',
+      text: currentMistakeCount
+        ? `当前单元新增了 ${currentMistakeCount} 道错题，先去错题再练，修正后再回来测一次。`
+        : '基础已经有了，建议先做一轮听写或重新测验，把容易丢分的地方压下来。',
+      actions: [
+        currentMistakeCount
+          ? `<button class="secondary" type="button" onclick="jumpToMistakes('${escapeJsString(unitId)}')">去练错题</button>`
+          : `<button class="secondary" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">再练听写</button>`,
+        `<button type="button" onclick="restartQuiz('${escapeJsString(unitId)}')">再做一次</button>`
+      ]
+    };
+  }
+
+  if (currentMistakeCount) {
+    return {
+      title: '测验完成，顺手把本单元错题清掉。',
+      text: `正确率已经不错了，但当前单元还有 ${currentMistakeCount} 道题值得再练一遍，巩固后会更扎实。`,
+      actions: [
+        `<button class="secondary" type="button" onclick="jumpToMistakes('${escapeJsString(unitId)}')">清理错题</button>`,
+        hasNextUnit
+          ? `<button class="ghost" type="button" onclick="goToNextUnit('${escapeJsString(unitId)}')">下一单元</button>`
+          : `<button class="ghost" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回本单元复习</button>`
+      ]
+    };
+  }
+
+  return {
+    title: hasNextUnit ? '这一单元可以收尾了，保持节奏去下一单元。' : '这一册的当前单元已经掌握得不错。',
+    text: totalMistakeCount
+      ? `当前单元完成得很好。全页还有 ${totalMistakeCount} 道历史错题，做完它们再继续，会更稳。`
+      : '词汇、听写和测验都比较顺，可以继续推进新单元，或者回课文区再跟读一遍。',
+    actions: [
+      hasNextUnit
+        ? `<button class="secondary" type="button" onclick="goToNextUnit('${escapeJsString(unitId)}')">下一单元</button>`
+        : `<button class="secondary" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回本单元复习</button>`,
+      totalMistakeCount
+        ? `<button class="ghost" type="button" onclick="jumpToGlobalMistakes()">查看全页错题</button>`
+        : `<button class="ghost" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">再做听写</button>`
+    ]
+  };
+}
+
+function renderUnitGuide(unit) {
+  return `<div class="unit-guide-card" id="unit-guide-${unit.id}"></div>`;
+}
+
+function getUnitLabel(unitId) {
+  const unit = unitsData.find(item => item.id === unitId);
+  return unit ? `${unit.title} ${unit.subtitle}` : unitId;
+}
+
+function getAllMistakeEntries() {
+  return unitsData.flatMap(unit => readMistakes(unit.id).map(item => ({
+    ...item,
+    unitId: unit.id,
+    unitLabel: `${unit.title} ${unit.subtitle}`,
+  }))).sort((a, b) => (b.time || 0) - (a.time || 0));
+}
+
+function getMistakeRedoInputElement(unitId, mistakeId, source = '') {
+  if (source === 'global') {
+    return document.getElementById(`global-mistake-input-${unitId}-${mistakeId}`)
+      || document.getElementById(`mistake-redo-input-${unitId}-${mistakeId}`);
+  }
+  if (source === 'unit') {
+    return document.getElementById(`mistake-redo-input-${unitId}-${mistakeId}`)
+      || document.getElementById(`global-mistake-input-${unitId}-${mistakeId}`);
+  }
+  const activeInput = document.activeElement;
+  if (
+    activeInput &&
+    activeInput.classList?.contains('mistake-redo-input') &&
+    activeInput.dataset.redoUnit === unitId &&
+    activeInput.dataset.redoId === mistakeId
+  ) {
+    return activeInput;
+  }
+  return document.getElementById(`mistake-redo-input-${unitId}-${mistakeId}`)
+    || document.getElementById(`global-mistake-input-${unitId}-${mistakeId}`);
+}
+
+function renderGlobalMistakeArena() {
+  if (!globalMistakeElements.list) return;
+  const mistakes = getAllMistakeEntries();
+  const latest = mistakes[0];
+  globalMistakeElements.total.textContent = String(mistakes.length);
+  globalMistakeElements.latestButton.textContent = latest
+    ? `跳到最近错题 · ${getUnitLabel(latest.unitId)}`
+    : '回当前听写';
+  globalMistakeElements.latestButton.setAttribute('onclick', latest
+    ? `jumpToMistakes('${escapeJsString(latest.unitId)}')`
+    : 'jumpToDictation()');
+
+  if (!mistakes.length) {
+    globalMistakeElements.title.textContent = '全页目前没有错题。';
+    globalMistakeElements.text.textContent = '继续做听写和小测验，答错的题会自动汇总到这里，方便集中复习。';
+    globalMistakeElements.list.innerHTML = `<div class="hub-empty">现在还没有需要集中复习的错题。可以先去当前单元做听写或小测，页面会自动把错题收集到这里。</div>`;
+    return;
+  }
+
+  globalMistakeElements.title.textContent = `全页共有 ${mistakes.length} 道错题，集中再练更省力。`;
+  globalMistakeElements.text.textContent = '先做最近错的题，再回到对应单元巩固，孩子更容易形成完整复习闭环。';
+  globalMistakeElements.list.innerHTML = `<div class="global-mistake-list">${
+    mistakes.map(item => {
+      const mistakeId = getMistakeItemId(item);
+      const state = ensureMistakeRedoState(item.unitId, mistakeId);
+      return `
+        <div class="global-mistake-card">
+          <span class="global-mistake-unit">${htmlEscape(item.unitLabel)}</span>
+          <div class="mistake-redo-question">${htmlEscape(item.question)}</div>
+          <div class="mistake-redo-meta">上次答案：${htmlEscape(item.selected)} · 正确答案：${htmlEscape(item.correct)}</div>
+          <div class="mistake-redo-input-row">
+            <input class="mistake-redo-input" id="global-mistake-input-${item.unitId}-${mistakeId}" data-redo-unit="${htmlEscape(item.unitId)}" data-redo-id="${htmlEscape(mistakeId)}" data-redo-source="global" type="text" autocomplete="off" value="${htmlEscape(state.input || '')}" placeholder="重新输入正确答案">
+            <button class="mistake-redo-btn primary" type="button" onclick="submitMistakeRedo('${escapeJsString(item.unitId)}','${escapeJsString(mistakeId)}','global')">提交重做</button>
+          </div>
+          <div class="mistake-redo-actions">
+            <button class="mistake-redo-btn" type="button" onclick="playMistakeRedoAnswer('${escapeJsString(item.unitId)}','${escapeJsString(mistakeId)}')">🔊 听答案</button>
+            <button class="mistake-redo-btn" type="button" onclick="toggleMistakeRedoAnswer('${escapeJsString(item.unitId)}','${escapeJsString(mistakeId)}')">👀 ${state.showAnswer ? '隐藏答案' : '查看答案'}</button>
+            <button class="mistake-redo-btn" type="button" onclick="jumpToMistakes('${escapeJsString(item.unitId)}')">回原单元</button>
+          </div>
+          <div class="mistake-redo-feedback ${state.result === true ? 'success' : state.result === false ? 'error' : ''}">${htmlEscape(state.feedback || '在这里把全页错题一口气清掉，再回单元复习会更轻松。')}</div>
+          ${state.showAnswer ? `<div class="mistake-redo-answer"><strong>正确答案：</strong>${htmlEscape(item.correct)}</div>` : ''}
+        </div>`;
+    }).join('')
+  }</div>`;
+  enhanceInteractiveElements(globalMistakeElements.list);
+}
+
+function refreshUnitGuide(unitId) {
+  const card = document.getElementById(`unit-guide-${unitId}`);
+  const unit = unitsData.find(item => item.id === unitId);
+  if (!card || !unit) return;
+
+  const progress = getHubProgress(unit);
+  const mistakes = readMistakes(unitId).length;
+  const nextTask = progress.tasks.find(task => !task.done);
+  const nextIndex = findUnitIndex(unitId) + 1;
+  const hasNextUnit = nextIndex > 0 && nextIndex < unitsData.length;
+  let title = '先从核心词汇开始热身。';
+  let text = '先点开几个核心词听发音，再进入听写和小测，孩子会更容易进入状态。';
+  let primaryAction = `<button class="unit-guide-btn primary" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">先听核心词</button>`;
+  let secondaryAction = `<button class="unit-guide-btn" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">去听写</button>`;
+  let ghostAction = `<button class="unit-guide-btn ghost" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">去小测验</button>`;
+
+  if (progress.percent >= 100) {
+    title = mistakes ? '本单元主线完成了，把错题清掉就更稳。' : '本单元主线完成了，可以继续推进。';
+    text = mistakes
+      ? `当前单元还有 ${mistakes} 道错题，先补薄弱点，再进入下一单元会更轻松。`
+      : (hasNextUnit ? '这一单元已经顺完了，建议直接进下一单元的核心词汇。' : '这一单元已经完成，可以回课文区再跟读一遍做巩固。');
+    primaryAction = mistakes
+      ? `<button class="unit-guide-btn primary" type="button" onclick="jumpToMistakes('${escapeJsString(unitId)}')">去清错题</button>`
+      : hasNextUnit
+        ? `<button class="unit-guide-btn primary" type="button" onclick="goToNextUnit('${escapeJsString(unitId)}')">进入下一单元</button>`
+        : `<button class="unit-guide-btn primary" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">再做一次小测</button>`;
+    secondaryAction = `<button class="unit-guide-btn" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">回小测验</button>`;
+    ghostAction = `<button class="unit-guide-btn ghost" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回词汇区</button>`;
+  } else if (nextTask?.key === 'dictation') {
+    title = '先把会听变成会写。';
+    text = '你已经听过一部分词了，现在最合适的下一步是做听写拼写，把输入变成主动输出。';
+    primaryAction = `<button class="unit-guide-btn primary" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">开始听写</button>`;
+    secondaryAction = `<button class="unit-guide-btn" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回词汇区</button>`;
+    ghostAction = `<button class="unit-guide-btn ghost" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">先看小测</button>`;
+  } else if (nextTask?.key === 'quiz') {
+    title = '听词和拼写都推进了，现在去做小测验。';
+    text = mistakes
+      ? `当前单元还有 ${mistakes} 道历史错题，不过可以先完成本轮小测，再集中清错。`
+      : '现在最适合进入小测验，用几道题检查今天这单元是不是已经真正掌握。';
+    primaryAction = `<button class="unit-guide-btn primary" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">开始小测验</button>`;
+    secondaryAction = `<button class="unit-guide-btn" type="button" onclick="jumpToDictation('${escapeJsString(unitId)}')">回听写</button>`;
+    ghostAction = `<button class="unit-guide-btn ghost" type="button" onclick="jumpToMistakes('${escapeJsString(unitId)}')">看错题</button>`;
+  } else if (nextTask?.key === 'output') {
+    title = '现在把会读的句子说出来。';
+    text = '完成替换句、看图说话和复述三步，孩子才算真正能把本单元内容用出来。';
+    primaryAction = `<button class="unit-guide-btn primary" type="button" onclick="jumpToOutputPractice('${escapeJsString(unitId)}')">去口语输出</button>`;
+    secondaryAction = `<button class="unit-guide-btn" type="button" onclick="jumpToQuiz('${escapeJsString(unitId)}')">回小测验</button>`;
+    ghostAction = `<button class="unit-guide-btn ghost" type="button" onclick="jumpToConfusionQuiz('${escapeJsString(unitId)}')">看易错小测</button>`;
+  } else if (nextTask?.key === 'confusion') {
+    title = '最后把易混句型分清楚。';
+    text = '这些是本单元最容易混的表达，做完小测后再进入下一单元会更稳。';
+    primaryAction = `<button class="unit-guide-btn primary" type="button" onclick="jumpToConfusionQuiz('${escapeJsString(unitId)}')">做易错小测</button>`;
+    secondaryAction = `<button class="unit-guide-btn" type="button" onclick="jumpToOutputPractice('${escapeJsString(unitId)}')">回口语输出</button>`;
+    ghostAction = mistakes
+      ? `<button class="unit-guide-btn ghost" type="button" onclick="jumpToMistakes('${escapeJsString(unitId)}')">清错题</button>`
+      : `<button class="unit-guide-btn ghost" type="button" onclick="startCurrentLesson('${escapeJsString(unitId)}')">回词汇区</button>`;
+  }
+
+  card.innerHTML = `
+    <span class="unit-guide-kicker">🚀 单元起步卡</span>
+    <strong>${title}</strong>
+    <p>${text}</p>
+    <div class="unit-guide-steps">
+      ${progress.tasks.map((task, index) => `<span class="unit-guide-step ${task.done ? 'done' : ''}">${task.done ? '✓' : index + 1} ${htmlEscape(task.label)}</span>`).join('')}
+    </div>
+    <div class="unit-guide-actions">
+      ${primaryAction}
+      ${secondaryAction}
+      ${ghostAction}
+    </div>
+  `;
+  enhanceInteractiveElements(card);
+}
+
+function renderOutputPracticeSection(unit) {
+  const hasOutputPractice =
+    (unit.coreSubstitutions && unit.coreSubstitutions.length) ||
+    (unit.pictureSpeakingTasks && unit.pictureSpeakingTasks.length) ||
+    (unit.retellTemplate && unit.retellTemplate.length) ||
+    (unit.retellLevels && unit.retellLevels.length) ||
+    (unit.commonConfusions && unit.commonConfusions.length);
+
+  if (!hasOutputPractice) return '';
+
+  const daily = readDailyProgress(unit.id);
+  const outputTasks = Array.isArray(daily.outputTasks) ? daily.outputTasks : [];
+  const outputTaskButtons = getOutputTaskKeys(unit).map(key => `
+    <button class="output-task-check ${outputTasks.includes(key) ? 'done' : ''}" type="button" data-output-task="${htmlEscape(key)}" onclick="toggleOutputTask('${escapeJsString(unit.id)}','${escapeJsString(key)}')">
+      ${outputTasks.includes(key) ? '✓' : '+'} ${htmlEscape(getOutputTaskLabel(key))}
+    </button>`).join('');
+
+  const substitutionHtml = (unit.coreSubstitutions || []).map(item => `
+    <div class="output-practice-item">
+      <b>${htmlEscape(item.pattern)}</b>
+      ${(item.examples || []).map(example => htmlEscape(example)).join('<br>')}
+    </div>`).join('');
+
+  const pictureTaskHtml = (unit.pictureSpeakingTasks || []).map(item => `
+    <div class="output-practice-item">
+      <div class="output-task-scene">${htmlEscape(item.scene)}</div>
+      <div class="output-practice-prompts">
+        ${(item.prompts || []).map(prompt => `<span>${htmlEscape(prompt)}</span>`).join('')}
+      </div>
+    </div>`).join('');
+
+  const pictureRubricHtml = (unit.pictureSpeakingRubric || []).map((item, index) => `
+    <div class="rubric-item">
+      <span class="rubric-mark">${index + 1}</span>
+      <span>${htmlEscape(item)}</span>
+    </div>`).join('');
+
+  const retellHtml = unit.retellLevels?.length
+    ? unit.retellLevels.map(item => `
+      <div class="retell-level">
+        <b>${htmlEscape(item.level)}</b>
+        ${(item.steps || []).map(step => `<span>${htmlEscape(step)}</span>`).join('')}
+      </div>`).join('')
+    : (unit.retellTemplate || []).map((step, index) => `
+    <div class="retell-step">
+      <b>Step ${index + 1}</b>
+      ${htmlEscape(step)}
+    </div>`).join('');
+
+  const retellFillHtml = (unit.retellFillBlanks || []).map((item, index) => `
+    <div class="retell-fill-item">
+      <b>Fill ${index + 1}</b>
+      <span>${htmlEscape(item)}</span>
+      ${(unit.retellFillAnswers || [])[index] ? `
+        <button class="retell-fill-toggle" type="button" onclick="toggleRetellFillAnswer('${escapeJsString(unit.id)}','${index}')">显示答案</button>
+        <div class="retell-fill-answer" id="retell-fill-answer-${unit.id}-${index}" style="display:none;">参考答案：${htmlEscape((unit.retellFillAnswers || [])[index])}</div>
+      ` : ''}
+    </div>`).join('');
+
+  const confusionHtml = (unit.commonConfusions || []).map(item => `
+    <div class="confusion-item">
+      <div class="confusion-pair">
+        <span>${htmlEscape(item.left)}</span>
+        <em>vs</em>
+        <span>${htmlEscape(item.right)}</span>
+      </div>
+      <p>${htmlEscape(item.tip)}</p>
+    </div>`).join('');
+
+  return `<div class="section-card" id="output-practice-${unit.id}">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">🗣️</span> 口语输出任务
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <p style="font-size:13px;color:#999;margin-bottom:12px;">先替换句子，再看图说 3 句，最后按模板复述课文。</p>
+      <div class="output-task-checks">${outputTaskButtons}</div>
+      <div class="output-practice-grid">
+        <div class="output-practice-card">
+          <h4>核心替换句</h4>
+          <div class="output-practice-list">${substitutionHtml}</div>
+        </div>
+        <div class="output-practice-card">
+          <h4>看图说话任务</h4>
+          <div class="output-practice-list">${pictureTaskHtml}</div>
+        </div>
+        <div class="output-practice-card">
+          <h4>复述模板</h4>
+          <div class="retell-step-list">${retellHtml}</div>
+        </div>
+        ${pictureRubricHtml ? `<div class="output-practice-card">
+          <h4>看图说话评分提示</h4>
+          <div class="rubric-list">${pictureRubricHtml}</div>
+        </div>` : ''}
+        ${retellFillHtml ? `<div class="output-practice-card">
+          <h4>复述填空版</h4>
+          <div class="retell-fill-list">${retellFillHtml}</div>
+        </div>` : ''}
+        ${confusionHtml ? `<div class="output-practice-card" id="confusion-compare-${unit.id}">
+          <h4>易错句型对比</h4>
+          <div class="confusion-list">${confusionHtml}</div>
+        </div>` : ''}
+      </div>
+      ${renderConfusionQuizSection(unit, daily)}
+      ${renderParentChecklistSection(unit, daily)}
+    </div>
+  </div>`;
+}
+
+function renderConfusionQuizSection(unit, daily = readDailyProgress(unit.id)) {
+  const questions = getConfusionQuizQuestions(unit);
+  if (!questions.length) return '';
+  return `<div class="confusion-quiz" id="confusion-quiz-${unit.id}">
+    <div class="confusion-quiz-head">
+      <div>
+        <h4>易错句型小测</h4>
+        <p>${daily.confusionQuizCompleted ? '已完成。还想巩固的话，可以重新点选答案。' : '每组易错点选出更符合提示的一项，全部答对后计入今日进度。'}</p>
+      </div>
+      <span class="confusion-quiz-status">${daily.confusionQuizCompleted ? '已完成' : `${questions.length} 题`}</span>
+    </div>
+    <div class="confusion-quiz-list">
+      ${questions.map((question, index) => `
+        <div class="confusion-question" data-confusion-question="${htmlEscape(question.id)}">
+          <b>第 ${index + 1} 题</b>
+          <p>${htmlEscape(question.q)}</p>
+          <div class="confusion-options">
+            ${question.options.map(option => `
+              <button type="button" onclick="answerConfusionQuestion('${escapeJsString(unit.id)}','${escapeJsString(question.id)}','${escapeJsString(option)}','${escapeJsString(question.answer)}')">
+                ${htmlEscape(option)}
+              </button>`).join('')}
+          </div>
+          <div class="confusion-feedback" id="confusion-feedback-${htmlEscape(question.id)}">${htmlEscape(question.tip)}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function renderParentChecklistSection(unit, daily = readDailyProgress(unit.id)) {
+  const items = getParentChecklist(unit);
+  return `<div class="parent-checklist">
+    <h4>家长检查清单</h4>
+    <p>不用额外记笔记，按下面 5 项看今天这一单元是否真正过关。</p>
+    <div class="parent-checklist-list">
+      ${items.map(item => {
+        const done = item.done(daily);
+        return `
+          <div class="parent-check-item ${done ? 'done' : ''}">
+            <span class="parent-check-mark">${done ? '✓' : item.key === 'listen' ? '1' : item.key === 'dictation' ? '2' : item.key === 'output' ? '3' : item.key === 'confusion' ? '4' : '5'}</span>
+            <div class="parent-check-text">
+              <strong>${htmlEscape(item.label)}</strong>
+              <span>${htmlEscape(item.desc)}</span>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function refreshOutputPracticeSection(unitId) {
+  const unit = unitsData.find(item => item.id === unitId);
+  const current = document.getElementById(`output-practice-${unitId}`);
+  if (!unit || !current) return;
+  const wasOpen = current.querySelector('.section-header')?.classList.contains('open');
+  current.outerHTML = renderOutputPracticeSection(unit);
+  const next = document.getElementById(`output-practice-${unitId}`);
+  if (wasOpen) {
+    const header = next?.querySelector('.section-header');
+    if (header) setSectionOpen(header, true);
+  }
+  enhanceInteractiveElements(next);
+  hydrateConfusionQuizState(unitId);
+}
+
+function toggleOutputTask(unitId, taskKey) {
+  updateDailyProgress(unitId, data => {
+    const tasks = Array.isArray(data.outputTasks) ? data.outputTasks : [];
+    data.outputTasks = tasks.includes(taskKey)
+      ? tasks.filter(item => item !== taskKey)
+      : [...tasks, taskKey];
+    return data;
+  });
+  refreshOutputPracticeSection(unitId);
+  refreshHub();
+}
+
+function hydrateConfusionQuizState(unitId) {
+  const daily = readDailyProgress(unitId);
+  const answers = daily.confusionAnswers || {};
+  Object.entries(answers).forEach(([questionId, state]) => {
+    if (!state?.selected || !state?.correct) return;
+    const questionEl = document.querySelector(`[data-confusion-question="${questionId}"]`);
+    if (!questionEl) return;
+    const feedback = document.getElementById(`confusion-feedback-${questionId}`);
+    const isCorrect = state.selected === state.correct;
+    questionEl.dataset.answered = isCorrect ? 'true' : 'false';
+    questionEl.dataset.correct = isCorrect ? 'true' : 'false';
+    questionEl.querySelectorAll('button').forEach(button => {
+      button.classList.remove('correct', 'wrong', 'disabled');
+      if (button.textContent.trim() === state.correct) button.classList.add('correct');
+      if (button.textContent.trim() === state.selected && !isCorrect) button.classList.add('wrong');
+      if (isCorrect) button.classList.add('disabled');
+    });
+    if (feedback) {
+      feedback.textContent = isCorrect ? '答对了。这个易错点已经分清楚。' : `再看一遍对比：正确答案是 ${state.correct}。`;
+      feedback.classList.toggle('success', isCorrect);
+      feedback.classList.toggle('error', !isCorrect);
+    }
+  });
+}
+
+function toggleRetellFillAnswer(unitId, index) {
+  const answer = document.getElementById(`retell-fill-answer-${unitId}-${index}`);
+  const button = answer?.previousElementSibling;
+  if (!answer || !button) return;
+  const shouldShow = answer.style.display === 'none';
+  answer.style.display = shouldShow ? 'block' : 'none';
+  button.textContent = shouldShow ? '隐藏答案' : '显示答案';
+}
+
+function answerConfusionQuestion(unitId, questionId, selected, correct) {
+  const questionEl = document.querySelector(`[data-confusion-question="${questionId}"]`);
+  if (!questionEl) return;
+  const feedback = document.getElementById(`confusion-feedback-${questionId}`);
+  const isCorrect = selected === correct;
+  updateDailyProgress(unitId, data => {
+    const answers = data.confusionAnswers && typeof data.confusionAnswers === 'object' ? data.confusionAnswers : {};
+    answers[questionId] = { selected, correct };
+    data.confusionAnswers = answers;
+    if (!isCorrect) data.confusionQuizCompleted = false;
+    return data;
+  });
+  questionEl.querySelectorAll('button').forEach(button => {
+    button.classList.toggle('disabled', isCorrect);
+    if (button.textContent.trim() === correct) button.classList.add('correct');
+    if (button.textContent.trim() === selected && !isCorrect) button.classList.add('wrong');
+  });
+  questionEl.dataset.answered = isCorrect ? 'true' : 'false';
+  questionEl.dataset.correct = isCorrect ? 'true' : 'false';
+  if (feedback) {
+    feedback.textContent = isCorrect ? '答对了。这个易错点已经分清楚。' : `再看一遍对比：正确答案是 ${correct}。`;
+    feedback.classList.toggle('success', isCorrect);
+    feedback.classList.toggle('error', !isCorrect);
+  }
+  if (!isCorrect) {
+    const questionText = questionEl.querySelector('p')?.textContent || '易错句型小测';
+    recordAssistMistake(unitId, `易错句型：${questionText}`, selected, correct);
+    refreshMistakeRedoSections(unitId);
+  }
+  const questions = Array.from(document.querySelectorAll(`#confusion-quiz-${unitId} [data-confusion-question]`));
+  const allAnswered = questions.length > 0 && questions.every(item => item.dataset.answered === 'true');
+  const allCorrect = questions.length > 0 && questions.every(item => item.dataset.correct === 'true');
+  if (allAnswered && allCorrect) {
+    updateDailyProgress(unitId, data => {
+      data.confusionQuizCompleted = true;
+      return data;
+    });
+    const status = document.querySelector(`#confusion-quiz-${unitId} .confusion-quiz-status`);
+    if (status) status.textContent = '已完成';
+  }
+  speak(correct);
+  refreshHub();
+}
+
+function renderDictationSection(unit) {
+  const words = getDictationWords(unit);
+  if (!words.length) return '';
+  return `<div class="section-card" id="dictation-section-${unit.id}">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">✍️</span> 听写拼写
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="dictation-tipline">💡 先听发音，再根据中文或图片提示写出英文。适合做主动回忆训练。</p>
+      <div class="dictation-box" id="dictation-box-${unit.id}"></div>
+    </div>
+  </div>`;
+}
+
+function renderMistakeRedoSection(unit) {
+  return `<div class="section-card" id="mistake-redo-${unit.id}">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="icon">♻️</span> 错题再练
+      <span class="arrow">▼</span>
+    </div>
+    <div class="section-body">
+      <p class="dictation-tipline">💡 做错的小测题会自动汇总到这里。可以重做、听答案、看答案，再从错题区移除。</p>
+      <div id="mistake-redo-list-${unit.id}"></div>
+    </div>
+  </div>`;
+}
+
+function refreshAssistMistakeBox(unitId) {
+  const box = document.querySelector(`.assist-mistake-list[data-assist-mistakes="${unitId}"]`);
+  if (!box) return;
+  const items = readMistakes(unitId);
+  if (!items.length) {
+    box.textContent = '还没有错题。小测答错后会自动收集到这里。';
+    return;
+  }
+  box.innerHTML = items.slice(-5).reverse().map(item => `
+    <div class="assist-mistake">
+      <div>${htmlEscape(item.question)}</div>
+      <small>你的答案：${htmlEscape(item.selected)}；正确答案：${htmlEscape(item.correct)}</small>
+    </div>
+  `).join('');
+}
+
+function updateMistakeRedoView(unitId) {
+  const containerEl = document.getElementById(`mistake-redo-list-${unitId}`);
+  if (!containerEl) return;
+  const items = readMistakes(unitId).slice(-5).reverse();
+  if (!items.length) {
+    containerEl.innerHTML = `<div class="hub-empty">当前单元还没有需要重做的错题。先完成小测验，答错的题会自动出现在这里。</div>`;
+    refreshAssistMistakeBox(unitId);
+    return;
+  }
+
+  containerEl.innerHTML = `<div class="mistake-review-list">${
+    items.map(item => {
+      const mistakeId = getMistakeItemId(item);
+      const state = ensureMistakeRedoState(unitId, mistakeId);
+      return `
+        <div class="mistake-redo-card">
+          <div class="mistake-redo-question">${htmlEscape(item.question)}</div>
+          <div class="mistake-redo-meta">上次答案：${htmlEscape(item.selected)} · 正确答案：${htmlEscape(item.correct)}</div>
+          <div class="mistake-redo-input-row">
+            <input class="mistake-redo-input" id="mistake-redo-input-${unitId}-${mistakeId}" data-redo-unit="${htmlEscape(unitId)}" data-redo-id="${htmlEscape(mistakeId)}" data-redo-source="unit" type="text" autocomplete="off" value="${htmlEscape(state.input || '')}" placeholder="重新输入正确答案">
+            <button class="mistake-redo-btn primary" type="button" onclick="submitMistakeRedo('${escapeJsString(unitId)}','${escapeJsString(mistakeId)}','unit')">提交重做</button>
+          </div>
+          <div class="mistake-redo-actions">
+            <button class="mistake-redo-btn" type="button" onclick="playMistakeRedoAnswer('${escapeJsString(unitId)}','${escapeJsString(mistakeId)}')">🔊 听答案</button>
+            <button class="mistake-redo-btn" type="button" onclick="toggleMistakeRedoAnswer('${escapeJsString(unitId)}','${escapeJsString(mistakeId)}')">👀 ${state.showAnswer ? '隐藏答案' : '查看答案'}</button>
+          </div>
+          <div class="mistake-redo-feedback ${state.result === true ? 'success' : state.result === false ? 'error' : ''}">${htmlEscape(state.feedback || '把这道题重新做对，就会自动从错题区移除。')}</div>
+          ${state.showAnswer ? `<div class="mistake-redo-answer"><strong>正确答案：</strong>${htmlEscape(item.correct)}</div>` : ''}
+        </div>`;
+    }).join('')
+  }</div>`;
+  refreshAssistMistakeBox(unitId);
+}
+
+function refreshMistakeRedoSections(onlyUnitId) {
+  if (onlyUnitId) {
+    updateMistakeRedoView(onlyUnitId);
+    return;
+  }
+  unitsData.forEach(unit => updateMistakeRedoView(unit.id));
+}
+
+function getMistakeRecord(unitId, mistakeId) {
+  return readMistakes(unitId).find(item => getMistakeItemId(item) === mistakeId) || null;
+}
+
+function playMistakeRedoAnswer(unitId, mistakeId) {
+  const item = getMistakeRecord(unitId, mistakeId);
+  if (!item) return;
+  speak(item.correct, { rate: getSpeechLang(item.correct) === 'en-US' ? getSlowWordRate() : 0.9 });
+}
+
+function toggleMistakeRedoAnswer(unitId, mistakeId) {
+  const state = ensureMistakeRedoState(unitId, mistakeId);
+  state.showAnswer = !state.showAnswer;
+  updateMistakeRedoView(unitId);
+  renderGlobalMistakeArena();
+}
+
+function submitMistakeRedo(unitId, mistakeId, source = '') {
+  const item = getMistakeRecord(unitId, mistakeId);
+  if (!item) {
+    updateMistakeRedoView(unitId);
+    refreshHub();
+    return;
+  }
+  const state = ensureMistakeRedoState(unitId, mistakeId);
+  const input = getMistakeRedoInputElement(unitId, mistakeId, source);
+  const answer = input ? input.value : state.input || '';
+  state.input = answer;
+  if (normalizeVocabKey(answer) === normalizeVocabKey(item.correct)) {
+    delete mistakeRedoState[unitId]?.[mistakeId];
+    removeMistakeRecord(unitId, mistakeId);
+    refreshMistakeRedoSections(unitId);
+    refreshHub();
+    return;
+  }
+  state.result = false;
+  state.showAnswer = true;
+  state.feedback = buildDictationHint(item.correct, answer);
+  updateMistakeRedoView(unitId);
+  refreshHub();
+}
+
+function buildDictationQueue(words, indexes) {
+  const source = Array.isArray(indexes) && indexes.length ? indexes : words.map((_, index) => index);
+  const seen = new Set();
+  return source.filter(index => Number.isInteger(index) && index >= 0 && index < words.length && !seen.has(index) && seen.add(index));
+}
+
+function getCurrentDictationEntry(unit) {
+  const words = getDictationWords(unit);
+  const queue = buildDictationQueue(words, dictationState.queue);
+  dictationState.queue = queue;
+  if (!queue.length) {
+    return { words, queue, pointer: 0, rawIndex: -1, item: null };
+  }
+  const pointer = Math.max(0, Math.min(dictationState.currentIndex, queue.length - 1));
+  const rawIndex = queue[pointer];
+  return { words, queue, pointer, rawIndex, item: words[rawIndex] || null };
+}
+
+function addDictationMistake(rawIndex) {
+  if (!Number.isInteger(rawIndex)) return;
+  if (!dictationState.mistakes.includes(rawIndex)) {
+    dictationState.mistakes.push(rawIndex);
+  }
+}
+
+function clearDictationMistake(rawIndex) {
+  dictationState.mistakes = dictationState.mistakes.filter(index => index !== rawIndex);
+}
+
+function startMistakeDictation(unitId = getCurrentUnit().id) {
+  const unit = unitsData.find(item => item.id === unitId);
+  if (!unit) return;
+  const words = getDictationWords(unit);
+  const mistakeQueue = buildDictationQueue(words, dictationState.mistakes);
+  if (!mistakeQueue.length) {
+    refreshHub();
+    return;
+  }
+  dictationState.activeUnitId = unitId;
+  dictationState.queue = mistakeQueue;
+  dictationState.currentIndex = 0;
+  dictationState.retryMode = true;
+  dictationState.lastFeedback = '开始只练这轮答错或跳过的词，把薄弱点补上。';
+  dictationState.lastResult = null;
+  dictationState.lastInput = '';
+  dictationState.showAnswer = false;
+  updateDictationView();
+  refreshHub();
+}
+
+function renderDictationResult(unitId) {
+  const words = getDictationWords(unitsData.find(item => item.id === unitId) || {});
+  const total = words.length;
+  const pct = total ? Math.round((dictationState.correct / total) * 100) : 0;
+  const mistakesLeft = dictationState.mistakes.length;
+  const title = mistakesLeft === 0
+    ? (dictationState.retryMode ? '错词清空啦，拼写闯关完成' : (pct >= 80 ? '拼写闯关完成' : '本轮听写完成'))
+    : (dictationState.retryMode ? '错词再练还差一点' : (pct >= 60 ? '继续加油，再练几遍' : '先回顾一下再试'));
+  const note = mistakesLeft === 0
+    ? '你已经可以进入小测验或错题复习。'
+    : `这一轮还有 ${mistakesLeft} 个词需要再练，建议直接进入“只练错词”。`;
+  const retryButton = mistakesLeft
+    ? `<button class="dictation-btn primary" type="button" onclick="startMistakeDictation('${escapeJsString(unitId)}')">${dictationState.retryMode ? `再练剩下 ${mistakesLeft} 个错词` : `只练错词 (${mistakesLeft})`}</button>`
+    : '';
+  return `
+    <div class="dictation-result">
+      <div class="result-emoji">${pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '💪'}</div>
+      <h4>${title}</h4>
+      <p>答对 ${dictationState.correct} / ${total} 个，正确率 ${pct}% 。${note}</p>
+    </div>
+    <div class="dictation-foot">
+      ${retryButton}
+      <button class="dictation-btn ${retryButton ? '' : 'primary'}" type="button" onclick="restartDictation('${escapeJsString(unitId)}')">再练一次</button>
+      <button class="dictation-btn" type="button" onclick="jumpToMistakes()">去看错题</button>
+    </div>`;
+}
+
+function updateDictationView() {
+  const unit = unitsData.find(item => item.id === dictationState.activeUnitId);
+  if (!unit) return;
+  const containerEl = document.getElementById(`dictation-box-${unit.id}`);
+  if (!containerEl) return;
+  const { words, queue, pointer, rawIndex, item } = getCurrentDictationEntry(unit);
+  if (!words.length) {
+    containerEl.innerHTML = `<div class="hub-empty">本单元暂时没有可用于听写的词汇。</div>`;
+    return;
+  }
+
+  if (dictationState.currentIndex >= queue.length) {
+    containerEl.innerHTML = renderDictationResult(unit.id);
+    return;
+  }
+
+  if (!item) {
+    containerEl.innerHTML = renderDictationResult(unit.id);
+    return;
+  }
+  const feedback = dictationState.lastFeedback || '先点“听发音”，再把英文拼写写出来。';
+  const feedbackClass = dictationState.lastResult === true ? 'success' : (dictationState.lastResult === false ? 'error' : '');
+  const answerHtml = dictationState.showAnswer ? `
+    <div class="dictation-answer">
+      <strong>答案：</strong>${htmlEscape(item.en)}
+      ${item.ipa || item.phonetic ? ` · ${htmlEscape(item.ipa || item.phonetic)}` : ''}
+      ${item.example ? `<br><strong>例句：</strong>${htmlEscape(item.example)}` : ''}
+    </div>` : '';
+
+  containerEl.innerHTML = `
+    <div class="dictation-head">
+      <span class="dictation-stage">${dictationState.retryMode ? '错词再练模式' : '当前单元听写练习'}</span>
+      <div class="dictation-meta">
+        <span class="dictation-pill">第 ${pointer + 1} / ${queue.length} 个</span>
+        <span class="dictation-pill">已答对 ${dictationState.correct} 个</span>
+        ${dictationState.mistakes.length ? `<span class="dictation-pill">待再练 ${dictationState.mistakes.length} 个</span>` : ''}
+      </div>
+    </div>
+    <div class="dictation-prompt">
+      <div class="dictation-emoji">${htmlEscape(item.emoji || '🔤')}</div>
+      <div>
+        <div class="dictation-cn">${htmlEscape(item.cn || '请听发音写英文')}</div>
+        <div class="dictation-note">提示：${htmlEscape(item.example || item.tip || '先听一遍，再根据意思拼写英文。')}</div>
+      </div>
+    </div>
+    <div class="dictation-actions">
+      <button class="dictation-btn primary" type="button" onclick="playDictationWord()">🔊 听发音</button>
+      <button class="dictation-btn" type="button" onclick="playDictationWord(true)">🐢 慢速再听</button>
+      <button class="dictation-btn" type="button" onclick="toggleDictationAnswer()">👀 ${dictationState.showAnswer ? '隐藏答案' : '查看答案'}</button>
+    </div>
+    <div class="dictation-submit-row">
+      <input class="dictation-input" id="dictation-input-${unit.id}" type="text" autocomplete="off" placeholder="在这里写英文单词或短语">
+      <button class="dictation-btn primary" type="button" onclick="checkDictationAnswer()">提交</button>
+      <button class="dictation-btn" type="button" onclick="skipDictationWord()">跳过</button>
+    </div>
+    <div class="dictation-feedback ${feedbackClass}" id="dictation-feedback-${unit.id}">${htmlEscape(feedback)}</div>
+    ${answerHtml}
+    <div class="dictation-foot">
+      <button class="dictation-btn" type="button" onclick="restartDictation('${escapeJsString(unit.id)}')">重新开始</button>
+      <button class="dictation-btn" type="button" onclick="nextDictationWord()">下一个</button>
+    </div>
+  `;
+
+  const input = document.getElementById(`dictation-input-${unit.id}`);
+  if (input && typeof dictationState.lastInput === 'string') {
+    input.value = dictationState.lastInput;
+  }
+  enhanceInteractiveElements(containerEl);
+}
+
+function resetDictationState(unitId = getCurrentUnit().id) {
+  const unit = unitsData.find(item => item.id === unitId);
+  const words = getDictationWords(unit || {});
+  dictationState.activeUnitId = unitId;
+  dictationState.currentIndex = 0;
+  dictationState.done = [];
+  dictationState.correct = 0;
+  dictationState.queue = words.map((_, index) => index);
+  dictationState.mistakes = [];
+  dictationState.retryMode = false;
+  dictationState.lastFeedback = '';
+  dictationState.lastResult = null;
+  dictationState.lastInput = '';
+  dictationState.showAnswer = false;
+}
+
+function ensureDictationUnit(unitId = getCurrentUnit().id) {
+  if (dictationState.activeUnitId !== unitId) {
+    resetDictationState(unitId);
+  }
+}
+
+function playDictationWord(slower = false) {
+  const unit = unitsData.find(item => item.id === dictationState.activeUnitId);
+  if (!unit) return;
+  const item = getCurrentDictationEntry(unit).item;
+  if (!item) return;
+  speak(item.en, { rate: slower ? Math.max(0.4, getSlowWordRate() - 0.12) : getSlowWordRate() });
+}
+
+function toggleDictationAnswer() {
+  dictationState.showAnswer = !dictationState.showAnswer;
+  updateDictationView();
+}
+
+function nextDictationWord() {
+  const unit = unitsData.find(item => item.id === dictationState.activeUnitId);
+  if (!unit) return;
+  const { queue } = getCurrentDictationEntry(unit);
+  if (dictationState.currentIndex < queue.length - 1) {
+    dictationState.currentIndex++;
+  } else {
+    dictationState.currentIndex = queue.length;
+  }
+  dictationState.lastFeedback = '继续下一个，先听发音再拼写。';
+  dictationState.lastResult = null;
+  dictationState.lastInput = '';
+  dictationState.showAnswer = false;
+  updateDictationView();
+}
+
+function skipDictationWord() {
+  const unit = unitsData.find(item => item.id === dictationState.activeUnitId);
+  if (!unit) return;
+  const { rawIndex, item } = getCurrentDictationEntry(unit);
+  addDictationMistake(rawIndex);
+  dictationState.lastFeedback = item ? `${item.en} 先记到待再练，做完这一轮再回来攻克。` : '先跳过这个词，稍后再练。';
+  dictationState.lastResult = false;
+  dictationState.showAnswer = true;
+  updateDictationView();
+}
+
+function restartDictation(unitId) {
+  resetDictationState(unitId);
+  updateDictationView();
+  refreshHub();
+}
+
+function checkDictationAnswer() {
+  const unit = unitsData.find(item => item.id === dictationState.activeUnitId);
+  if (!unit) return;
+  const { item, rawIndex } = getCurrentDictationEntry(unit);
+  if (!item) return;
+  const input = document.getElementById(`dictation-input-${unit.id}`);
+  const answer = input ? input.value : '';
+  const cleanAnswer = normalizeVocabKey(answer);
+  const expected = normalizeVocabKey(item.en);
+
+  dictationState.lastInput = answer;
+  dictationState.showAnswer = true;
+
+  if (cleanAnswer === expected) {
+    const firstCorrect = !dictationState.done.includes(rawIndex);
+    if (firstCorrect) {
+      dictationState.correct++;
+      dictationState.done.push(rawIndex);
+      updateDailyProgress(unit.id, data => {
+        if (!data.dictationCorrect.includes(item.en)) {
+          data.dictationCorrect.push(item.en);
+        }
+        return data;
+      });
+    }
+    clearDictationMistake(rawIndex);
+    dictationState.lastResult = true;
+    dictationState.lastFeedback = `答对了，${item.en} 已加入“会拼”进度。`;
+    setWordMastery(unit.id, item.en, 3);
+    updateDictationView();
+    refreshHub();
+    return;
+  }
+
+  dictationState.lastResult = false;
+  addDictationMistake(rawIndex);
+  dictationState.lastFeedback = buildDictationHint(item.en, answer);
+  recordAssistMistake(unit.id, `听写：${item.cn || item.en}`, answer || '未作答', item.en);
+  updateDictationView();
+  refreshMistakeRedoSections(unit.id);
+  refreshHub();
+}
 
 unitsData.forEach((unit, idx) => {
   // Nav buttons
@@ -2208,8 +7100,9 @@ unitsData.forEach((unit, idx) => {
   let html = `
     <div class="unit-title" style="background:linear-gradient(90deg, ${unit.color}, ${unit.color}dd)">
       ${unit.title} ${unit.subtitle}
-      <small>学习目标 → 核心词汇 → 重点短语 → 重点句型 → 课文跟读 → 语法提示 → 小测验</small>
+      <small>学习目标 → 核心词汇 → 重点短语 → 听写拼写 → 重点句型 → 课文跟读 → 语法提示 → 小测验</small>
     </div>
+    ${renderUnitGuide(unit)}
   `;
 
   // Words section
@@ -2261,6 +7154,8 @@ unitsData.forEach((unit, idx) => {
 
     html += `</div></div></div>`;
   }
+
+  html += renderDictationSection(unit);
 
   // Sentences section
   html += `<div class="section-card">
@@ -2376,6 +7271,8 @@ unitsData.forEach((unit, idx) => {
     html += `</div></div></div>`;
   }
 
+  html += renderOutputPracticeSection(unit);
+
   // Learning tips section
   html += `<div class="section-card">
     <div class="section-header" onclick="toggleSection(this)">
@@ -2422,14 +7319,23 @@ unitsData.forEach((unit, idx) => {
           <div class="score-emoji">🎉</div>
           <div class="score-text">测验完成！</div>
           <div class="score-detail" id="sd-${unit.id}"></div>
-          <button onclick="restartQuiz('${unit.id}')">再做一次</button>
+          <div class="quiz-recommendation">
+            <strong id="sr-title-${unit.id}">下一步建议</strong>
+            <span id="sr-text-${unit.id}">先根据结果选择最合适的复习动作。</span>
+          </div>
+          <div class="quiz-score-actions" id="sa-${unit.id}">
+            <button type="button" onclick="restartQuiz('${unit.id}')">再做一次</button>
+          </div>
         </div>
       </div>
     </div>
   </div>`;
 
+  html += renderMistakeRedoSection(unit);
+
   section.innerHTML = html;
   container.appendChild(section);
+  hydrateConfusionQuizState(unit.id);
 
   // Init quiz
   quizState[unit.id] = { current: 0, score: 0 };
@@ -2482,7 +7388,18 @@ grammarData.categories.forEach((cat, catIdx) => {
 
 grammarSection.innerHTML = grammarHtml;
 container.appendChild(grammarSection);
+
+const themeReviewSection = document.createElement('div');
+themeReviewSection.className = 'unit-section';
+themeReviewSection.id = 'theme-review-page';
+container.appendChild(themeReviewSection);
+renderThemeReviewPageContent();
+
 enhanceInteractiveElements(document);
+resetDictationState(unitsData[0] ? unitsData[0].id : '');
+updateDictationView();
+refreshMistakeRedoSections();
+refreshHub();
 
 function showGrammarPage() {
   // Hide all unit sections
@@ -2531,6 +7448,7 @@ function revealGrammarDetail(card) {
 }
 
 function switchUnit(idx) {
+  currentUnitIndex = idx;
   const buttons = navBar.querySelectorAll('.nav-btn');
   const sections = document.querySelectorAll('.unit-section');
   buttons.forEach((b, i) => {
@@ -2548,6 +7466,10 @@ function switchUnit(idx) {
   });
   stopCurrentPlayback();
   clearSpeaking();
+  ensureDictationUnit(getCurrentUnit().id);
+  updateDictationView();
+  refreshMistakeRedoSections(getCurrentUnit().id);
+  refreshHub();
   const activeBtn = buttons[idx];
   navBar.scrollTo({
     left: Math.max(0, activeBtn ? activeBtn.offsetLeft - 12 : 0),
@@ -2562,6 +7484,15 @@ function toggleSection(header) {
 
 function revealWord(card) {
   const word = card.dataset.w;
+  const unitId = card.closest('.unit-section')?.id || getCurrentUnit().id;
+  if (unitId && word) {
+    updateDailyProgress(unitId, data => {
+      if (!data.listenedWords.includes(word)) {
+        data.listenedWords.push(word);
+      }
+      return data;
+    });
+  }
   showSpeaking(card);
   const playback = [{ text: word, rate: getSlowWordRate(), pauseAfterMs: repeatMode ? 450 : 0 }];
   if (repeatMode) {
@@ -2572,6 +7503,7 @@ function revealWord(card) {
   });
   card.classList.toggle('revealed');
   card.classList.toggle('flipped');
+  refreshHub();
 }
 
 function revealSentence(card) {
@@ -2644,6 +7576,19 @@ function showQuizQuestion(unitId) {
       scoreEl.querySelector('.score-emoji').textContent = '💪';
       scoreEl.querySelector('.score-text').textContent = '再复习一下吧！';
     }
+    const recommendation = getQuizRecommendation(unitId, pct);
+    const recTitle = document.getElementById(`sr-title-${unitId}`);
+    const recText = document.getElementById(`sr-text-${unitId}`);
+    const recActions = document.getElementById(`sa-${unitId}`);
+    if (recTitle) recTitle.textContent = recommendation.title;
+    if (recText) recText.textContent = recommendation.text;
+    if (recActions) recActions.innerHTML = recommendation.actions.join('');
+    updateDailyProgress(unitId, data => {
+      data.quizCompleted = true;
+      return data;
+    });
+    enhanceInteractiveElements(scoreEl);
+    refreshHub();
     return;
   }
 
@@ -2657,7 +7602,7 @@ function showQuizQuestion(unitId) {
   html += `<div class="quiz-options">`;
 
   quiz.options.forEach(opt => {
-    html += `<div class="quiz-option" onclick="checkAnswer('${unitId}','${opt}','${quiz.answer}')">${opt}</div>`;
+    html += `<div class="quiz-option" onclick="checkAnswer('${escapeJsString(unitId)}','${escapeJsString(opt)}','${escapeJsString(quiz.answer)}')">${htmlEscape(opt)}</div>`;
   });
 
   html += `</div>`;
@@ -2677,10 +7622,10 @@ function checkAnswer(unitId, selected, correct) {
   });
   if (selected === correct) {
     quizState[unitId].score++;
-    // 读正确答案
-    speak(correct);
   }
+  speak(correct);
   document.getElementById(`next-${unitId}`).style.display = 'block';
+  window.setTimeout(refreshHub, 40);
 }
 
 function nextQuestion(unitId) {
@@ -2694,6 +7639,7 @@ function restartQuiz(unitId) {
   document.getElementById(`qarea-${unitId}`).style.display = 'block';
   document.getElementById(`qp-${unitId}`).style.display = 'block';
   showQuizQuestion(unitId);
+  window.setTimeout(refreshHub, 40);
 }
 
 // ====== 学习加油站内容 ======
@@ -2792,9 +7738,50 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   }, { once: true });
+
+  document.addEventListener('click', function refreshHubAfterActions(event) {
+    if (event.target.closest('.quiz-option, [data-word-action], [data-word-select], [data-assist-clear]')) {
+      window.setTimeout(() => {
+        if (event.target.closest('.quiz-option')) {
+          refreshMistakeRedoSections(getCurrentUnit().id);
+        }
+        if (event.target.closest('[data-assist-clear]')) {
+          refreshMistakeRedoSections();
+        }
+        refreshHub();
+      }, 60);
+    }
+  });
+
+  document.addEventListener('keydown', function submitDictationOnEnter(event) {
+    if (event.key === 'Enter' && event.target.classList.contains('dictation-input')) {
+      event.preventDefault();
+      checkDictationAnswer();
+      return;
+    }
+
+    if (event.key === 'Enter' && event.target.classList.contains('mistake-redo-input')) {
+      const unitId = event.target.dataset.redoUnit;
+      const mistakeId = event.target.dataset.redoId;
+      if (!unitId || !mistakeId) return;
+      event.preventDefault();
+      submitMistakeRedo(unitId, mistakeId);
+    }
+  });
+
+  document.addEventListener('input', function keepMistakeRedoDraft(event) {
+    if (!event.target.classList.contains('mistake-redo-input')) {
+      return;
+    }
+    const unitId = event.target.dataset.redoUnit;
+    const mistakeId = event.target.dataset.redoId;
+    if (!unitId || !mistakeId) return;
+    const state = ensureMistakeRedoState(unitId, mistakeId);
+    state.input = event.target.value;
+  });
 });
 window.unitsData = unitsData;
 </script>
-<script src="english-assist.js?v=memory-all-20260515"></script>
+<script src="english-assist.js?v=memory-all-20260608b"></script>
 </body>
 </html>
